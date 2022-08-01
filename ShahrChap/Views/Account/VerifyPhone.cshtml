@@ -1,0 +1,41 @@
+﻿@model ViewModels.OTPViewModel
+
+@{
+    ViewBag.Title = "ثبت نام";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="container internal-style py-5">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="register-form py-4 px-3">
+                    <h5 class="m-0 py-2">فعالسازی شماره موبایل</h5>
+                    <span class="mobile-text d-block">
+                        پیامک حاوی کد فعالسازی برای شماره زیر ارسال شد
+                    </span>
+                    <B class="text-success">@ViewBag.Phone</B>
+                    <img src="/Content/img/OTP.png" class="img-fluid otp-image" alt="">
+                    <div class="mt-5 otp col-6">
+                        <div class="row">
+                            @Html.EditorFor(model => model.OTP, new { htmlAttributes = new { @class = "form-control otp-input col-6", @maxlength = "5", @minlength = "5", @inputmode = "numeric", @autocomplete = "one-time-password"} })
+                            @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
+                            <input type="submit" class="btn btn-success otp-submit col-4 mt-2" value="فعالسازی">
+                        </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <span class="d-block mobile-text">کد فعالسازی را دریافت نکردید؟</span>
+                        <span class="js-timer d-block font-weight-bold">2:00</span>
+                        <button type="button" class="font-weight-bold btn btn-outline-success btn-sm" id="resendCode"> <a onclick="location.href='@Url.Action("ResendOTP", "Account")'">ارسال مجدد</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>window.history.forward(1);</script>
+

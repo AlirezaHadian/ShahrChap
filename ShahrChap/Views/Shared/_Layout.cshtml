@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html lang="pr" dir="rtl">
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--Bootsrap css-->
+<link rel="stylesheet" href="/Content/css/bootstrap.rtl.min.css">
+<!--Main css-->
+<link rel="stylesheet" href="/Content/css/main.css">
+<!--Font awesome-->
+<script src="/Content/js/all.js"></script>
+<!--Owl carousel css-->
+<link rel="stylesheet" href="/Content/css/owl.carousel.min.css">
+<!--Owl theme css-->
+<link rel="stylesheet" href="/Content/css/owl.theme.default.min.css">
+<!--Jquery-->
+<script src="/Content/js/jquery-3.5.1 - min.js"></script>
+<!--Owl carousel Js-->
+<script src="/Content/js/owl.carousel.min.js"></script>
+
+<title>شهر چاپ</title>
+</head>
+
+<body>
+    <!--PreLoader-->
+    @*<div class="preloader d-flex justify-content-center align-items-center">
+            <img src="/Content/img/preloader.gif" alt="preloader">
+        </div>*@
+    <!--PreLoader-->
+    <!--Header-->
+    <header class="main-navigation">
+        <div class="navbar navbar-expand-lg navbar-light bg-light ">
+            <div class="container-fluid">
+                <ul class="nav">
+                    <li class="nav-item my-2 my-lg-1">
+                        <a class="navbar-brand order-2 order-lg-1 mr-auto mr-lg-3 ml-3 ml-lg-0" href="#">
+                            <img src="/Content/img/Logo.png"
+                                 width="50" height="50">
+                        </a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <button class="navbar-toggler my-3" type="button">
+                            <span><i class="fas fa-bars"></i></span>
+                        </button>
+                    </li>
+                    <h1 class="d-none d-lg-block">شهر <span>چاپ</span></h1>
+                </ul>
+                <ul class="nav">
+                    <li class="nav-item pe-1 ">
+                        <a href="/Register" class="btn btn-success navbar-link register-button">
+                            ثبت نام / ورود <i class="fas fa-user"></i>
+                        </a> |
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-primary navbar-link register-button position-relative">
+                            سبد خرید <i class="fas fa-shopping-cart"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                +1
+                                <span class="visually-hidden">محصول سبد خرید</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--Nav Overlay-->
+        <div class="nav-overlay d-flex d-lg-none"></div>
+        <!--End Nav Overlay-->
+        <!--Nav element-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+            <div class="container-fluid">
+                <div class="order-lg-2 bg-light d-lg-flex w-100 pb-3 pb-lg-0 sidebar" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-lg-auto mb-2 mb-lg-0">
+                        <li class="nav-item ">
+                            <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="#"></i> صفحه اصلی</a>
+                        </li>
+                        <li class="nav-item dropdown product-menu">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                محصولات
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">گروه مصحولات 1</a></li>
+                                <li><a class="dropdown-item" href="#">گروه مصحولات 2</a></li>
+                                <li><a class="dropdown-item" href="#">گروه مصحولات 3</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown product-menu">
+                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="#"></i>سفارش محصول</a>
+                        </li>
+
+                        <li class="nav-item dropdown product-menu">
+                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="#"></i>سفارش پرینت</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 px-lg-2" href="#">درباره ما</a>
+                        </li>
+
+
+                    </ul>
+
+                    <div class="search-box">
+                        <input type="text" class="input" placeholder="جستجو در محصولات ...">
+                        <button class="search-button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+        <!--End Nav element-->
+    </header>
+    <!--End Header-->
+    <!--Sections-->
+    <section>
+        <!--Slider-->
+        @RenderSection("Slider", false)
+        <!--End Slider-->
+        <div class="container">
+            @RenderBody()
+        </div>
+    </section>
+    <!--End Sections-->
+    <!-- Footer -->
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+
+                <!-- Section: Text -->
+                <section class="mb-4">
+
+                    <!-- Section: Links -->
+                    <section class="">
+                        <!--Grid row-->
+                        <div class="row">
+                            <!--Grid column-->
+                            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                                <h5 class="text-uppercase">شهر چاپ</h5>
+
+                                <h6 class="list-unstyled mb-0">
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و
+                                    متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
+                                </h6>
+                            </div>
+                            <!--Grid column-->
+                            <!--Grid column-->
+                            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                                <h5 class="text-uppercase">
+                                    تماس با ما
+                                    <i class="fas fa-address-book"></i>
+                                </h5>
+
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="#!" class="text-white">تلفن:</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="text-white">031-312345</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="text-white">اینستاگرام</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="text-white">تلگرام</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--Grid column-->
+                            <!--Grid column-->
+                            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                                <h5 class="text-uppercase">
+                                    آدرس
+                                    <i class="fas fa-map-marked-alt"></i>
+                                </h5>
+
+                                <h6 class="list-unstyled mb-0">
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+                                </h6>
+                            </div>
+                            <!--Grid column-->
+                            <!--Grid column-->
+                            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                                <h5 class="text-uppercase">
+                                    ساعت کاری
+                                    <i class="fas fa-clock"></i>
+                                </h5>
+
+                                <h6 class="list-unstyled mb-0">
+                                    صبح ها از ساعت 8:30 تا 14
+                                    بعداز ظهر ها از ساعت 15 تا 17:30
+                                </h6>
+                            </div>
+                            <!--Grid column-->
+
+                        </div>
+                        <!--Grid row-->
+                    </section>
+                    <!-- Section: Links -->
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="pb-2" style="background-color: rgba(0, 0, 0, 0.2);">
+            <div class="text-center p-2">
+                تمامی حقوق مادی و معنوی این سایت متعلق به <span class="copyright-title fw-bold">شهر چاپ</span> می باشد و هرگونه کپی برداری
+                غیرقانونی محسوب خواهد شد
+            </div>
+            <div class="text-center pb-2">
+                برنامه نویس و طراح سایت: <a href="#" style="color: white;">علیرضا هادیان</a>
+            </div>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
+</body>
+<script src="/Content/js/bootstrap.bundle.min.js"></script>
+<script src="/Content/js/swiped-events.min.js"></script>
+<script src="/Content/js/script.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</html>
