@@ -16,18 +16,25 @@ namespace DataLayer
     [MetadataType(typeof(UserMetaData))]
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.UserAddress = new HashSet<UserAddress>();
+        }
+    
         public int UserID { get; set; }
         public int RoleID { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string ActiveCode { get; set; }
         public string Phone { get; set; }
-        public string DigitCode { get; set; }
         public string Password { get; set; }
         public bool IsEmailActive { get; set; }
         public bool IsPhoneActive { get; set; }
         public System.DateTime RegisterDate { get; set; }
     
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserAddress> UserAddress { get; set; }
     }
 }

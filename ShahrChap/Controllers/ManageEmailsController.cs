@@ -13,5 +13,14 @@ namespace ShahrChap.Controllers
         {
             return PartialView();
         }
+
+        public ActionResult RecoveryPassword()
+        {
+            return PartialView();
+        }
+        public ActionResult EnableEmail()
+        {
+            return PartialView();
+        }
     }
 }

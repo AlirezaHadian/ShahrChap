@@ -1,32 +1,32 @@
 ﻿<!DOCTYPE html>
 <html lang="pr" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Bootsrap css-->
+    <link rel="stylesheet" href="/Content/css/bootstrap.rtl.min.css">
+    <!--Main css-->
+    <link rel="stylesheet" href="/Content/css/main.css">
+    <!--Font awesome-->
+    <script src="/Content/js/all.js"></script>
+    <!--Owl carousel css-->
+    <link rel="stylesheet" href="/Content/css/owl.carousel.min.css">
+    <!--Owl theme css-->
+    <link rel="stylesheet" href="/Content/css/owl.theme.default.min.css">
+    <!--Jquery-->
+    <script src="/Content/js/jquery-3.5.1 - min.js"></script>
+    <!--Owl carousel Js-->
+    <script src="/Content/js/owl.carousel.min.js"></script>
 
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--Bootsrap css-->
-<link rel="stylesheet" href="/Content/css/bootstrap.rtl.min.css">
-<!--Main css-->
-<link rel="stylesheet" href="/Content/css/main.css">
-<!--Font awesome-->
-<script src="/Content/js/all.js"></script>
-<!--Owl carousel css-->
-<link rel="stylesheet" href="/Content/css/owl.carousel.min.css">
-<!--Owl theme css-->
-<link rel="stylesheet" href="/Content/css/owl.theme.default.min.css">
-<!--Jquery-->
-<script src="/Content/js/jquery-3.5.1 - min.js"></script>
-<!--Owl carousel Js-->
-<script src="/Content/js/owl.carousel.min.js"></script>
-
-<title>شهر چاپ</title>
+    <title>شهر چاپ</title>
 </head>
 
 <body>
     <!--PreLoader-->
     @*<div class="preloader d-flex justify-content-center align-items-center">
-            <img src="/Content/img/preloader.gif" alt="preloader">
-        </div>*@
+        <img src="/Content/img/preloader.gif" alt="preloader">
+    </div>*@
     <!--PreLoader-->
     <!--Header-->
     <header class="main-navigation">
@@ -34,32 +34,30 @@
             <div class="container-fluid">
                 <ul class="nav">
                     <li class="nav-item my-2 my-lg-1">
-                        <a class="navbar-brand order-2 order-lg-1 mr-auto mr-lg-3 ml-3 ml-lg-0" href="#">
+                        <a class="navbar-brand order-2 order-lg-1 mr-auto mr-lg-3 ml-3 ml-lg-0" href="/">
                             <img src="/Content/img/Logo.png"
                                  width="50" height="50">
                         </a>
+                    </li>
+                    <li>
+                        <a href="/"><h1 class="d-none d-lg-block">شهر <span>چاپ</span></h1></a>
                     </li>
                     <li class="nav-item px-2">
                         <button class="navbar-toggler my-3" type="button">
                             <span><i class="fas fa-bars"></i></span>
                         </button>
                     </li>
-                    <h1 class="d-none d-lg-block">شهر <span>چاپ</span></h1>
                 </ul>
                 <ul class="nav">
-                    <li class="nav-item pe-1 ">
-                        <a href="/Register" class="btn btn-success navbar-link register-button">
-                            ثبت نام / ورود <i class="fas fa-user"></i>
-                        </a> |
-                    </li>
+                    @Html.Partial("_LoggedInUser")
                     <li class="nav-item">
-                        <button type="button" class="btn btn-primary navbar-link register-button position-relative">
+                        <a href="/ShopCart" class="btn btn-primary navbar-link register-button position-relative btn-sm">
                             سبد خرید <i class="fas fa-shopping-cart"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 +1
                                 <span class="visually-hidden">محصول سبد خرید</span>
                             </span>
-                        </button>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -74,7 +72,7 @@
                 <div class="order-lg-2 bg-light d-lg-flex w-100 pb-3 pb-lg-0 sidebar" id="navbarSupportedContent">
                     <ul class="navbar-nav me-lg-auto mb-2 mb-lg-0">
                         <li class="nav-item ">
-                            <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="#"></i> صفحه اصلی</a>
+                            <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="#"> صفحه اصلی</a>
                         </li>
                         <li class="nav-item dropdown product-menu">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
@@ -89,11 +87,11 @@
                         </li>
 
                         <li class="nav-item dropdown product-menu">
-                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="#"></i>سفارش محصول</a>
+                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="#">سفارش محصول</a>
                         </li>
 
                         <li class="nav-item dropdown product-menu">
-                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="#"></i>سفارش پرینت</a>
+                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="#">سفارش پرینت</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-3 px-lg-2" href="#">درباره ما</a>
@@ -120,6 +118,7 @@
         <!--Slider-->
         @RenderSection("Slider", false)
         <!--End Slider-->
+
         <div class="container">
             @RenderBody()
         </div>
@@ -201,7 +200,9 @@
                         </div>
                         <!--Grid row-->
                     </section>
-                    <!-- Section: Links -->
+                </section>
+            </section>
+            <!-- Section: Links -->
         </div>
         <!-- Grid container -->
         <!-- Copyright -->
@@ -219,9 +220,12 @@
     <!-- Footer -->
 
 </body>
+</html>
+
 <script src="/Content/js/bootstrap.bundle.min.js"></script>
 <script src="/Content/js/swiped-events.min.js"></script>
 <script src="/Content/js/script.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-</html>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+

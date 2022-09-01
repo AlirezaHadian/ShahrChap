@@ -19,3 +19,10 @@ C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\obj\Debug\Utilities.dll
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\obj\Debug\Utilities.pdb
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\obj\Debug\Utilities.csproj.AssemblyReference.cache
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\bin\Debug\Utilities.dll.config
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\bin\Debug\DataLayer.dll
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\bin\Debug\EntityFramework.dll
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\bin\Debug\DataLayer.pdb
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\bin\Debug\DataLayer.dll.config
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\bin\Debug\EntityFramework.xml
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\Utilities\bin\Debug\Newtonsoft.Json.xml

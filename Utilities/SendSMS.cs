@@ -9,26 +9,26 @@ namespace Utilities
 {
     public class SendSMS
     {
-        public static void Send(string To, string Username, string Code)
+        public static void SendMessage(string To, string body)
         {
             var client = new AmootSMS.AmootSMSWebService2SoapClient("AmootSMSWebService2Soap12");
 
-            //string UserName = "09397673794";
-            //string Password = "1274255325";
-            //DateTime SendDateTime = DateTime.Now;
-            //string SMSMessageText = "به شهر چاپ خوش آمدید! کد فعالسازی:" + Code + " برای فعالسازی حساب خود کد زیر را در قسمت مربوطه وارد نمایید.";
-            //string LineNumber = "public";
-            //string[] Mobiles = new string[]{To};
-            //client = new AmootSMS.AmootSMSWebService2SoapClient("AmootSMSWebService2Soap12");
+            string UserName = "09397673794";
+            string Password = "1274255325";
+            DateTime SendDateTime = DateTime.Now;
+            string SMSMessageText = body;
+            string LineNumber = "public";
+            string[] Mobiles = new string[] { To };
+            client = new AmootSMS.AmootSMSWebService2SoapClient("AmootSMSWebService2Soap12");
 
-            //AmootSMS.SendResult result = client.SendSimple(UserName, Password, SendDateTime, SMSMessageText, LineNumber, Mobiles);
+            AmootSMS.SendResult result = client.SendSimple(UserName, Password, SendDateTime, SMSMessageText, LineNumber, Mobiles);
 
-            //if (result.Status == AmootSMS.Status.Success)
-            //{
-            //    //خروجی
-            //}
+            if (result.Status == AmootSMS.Status.Success)
+            {
+                var res = result;
+            }
 
-            
+
         }
 
         public static void SendOTP(string phone, string Code)

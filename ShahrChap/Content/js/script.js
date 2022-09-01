@@ -115,8 +115,8 @@ $(".otp-input").keyup(function () {
     }
 })
 /*OTP expire countdown*/
-var interval;
 
+var interval;
 function countdown() {
     clearInterval(interval);
     interval = setInterval(function () {
@@ -140,11 +140,17 @@ function countdown() {
 
 function enableButton(id) {
     document.getElementById("resendCode").disabled = true;
-    setTimeout(function () { document.getElementById("resendCode").disabled = false; }, 120000);
+    setTimeout(function () { document.getElementById("resendCode").disabled = false; }, 20000);
 }
 
 window.onload = function () {
-    $('.js-timer').text("2:00");
+    $('.js-timer').html("0:20");
+    countdown();
+    enableButton();
+};
+
+function resendCodeBtn() {
+    $('.js-timer').text("0:20");
     countdown();
     enableButton();
 };

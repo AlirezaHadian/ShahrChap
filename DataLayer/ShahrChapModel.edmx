@@ -4,7 +4,23 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShahrChap_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ShahrChap_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="cityId" />
+          </Key>
+          <Property Name="cityId" Type="int" Nullable="false" />
+          <Property Name="province_id" Type="int" Nullable="false" />
+          <Property Name="county_id" Type="int" Nullable="false" />
+          <Property Name="cityName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="province">
+          <Key>
+            <PropertyRef Name="provinceId" />
+          </Key>
+          <Property Name="provinceId" Type="int" Nullable="false" />
+          <Property Name="provinceName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -12,6 +28,18 @@
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="RoleTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAddress">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ProvinceID" Type="int" Nullable="false" />
+          <Property Name="CityID" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="FullAddress" Type="nvarchar" MaxLength="650" Nullable="false" />
+          <Property Name="PosteCode" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -23,34 +51,83 @@
           <Property Name="Email" Type="nvarchar" MaxLength="150" />
           <Property Name="ActiveCode" Type="varchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="150" />
-          <Property Name="DigitCode" Type="varchar" MaxLength="5" />
           <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="IsEmailActive" Type="bit" Nullable="false" />
           <Property Name="IsPhoneActive" Type="bit" Nullable="false" />
           <Property Name="RegisterDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Users_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+        <Association Name="FK_city_province">
+          <End Role="province" Type="Self.province" Multiplicity="1" />
+          <End Role="city" Type="Self.city" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="RoleID" />
+            <Principal Role="province">
+              <PropertyRef Name="provinceId" />
             </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="RoleID" />
+            <Dependent Role="city">
+              <PropertyRef Name="province_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_city">
+          <End Role="city" Type="Self.city" Multiplicity="1" />
+          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="cityId" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_province">
+          <End Role="province" Type="Self.province" Multiplicity="1" />
+          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="province">
+              <PropertyRef Name="provinceId" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ShahrChap_DBModelStoreContainer">
+          <EntitySet Name="city" EntityType="Self.city" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="province" EntityType="Self.province" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAddress" EntityType="Self.UserAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
-            <End Role="Roles" EntitySet="Roles" />
+          <AssociationSet Name="FK_city_province" Association="Self.FK_city_province">
+            <End Role="province" EntitySet="province" />
+            <End Role="city" EntitySet="city" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_city" Association="Self.FK_UserAddress_city">
+            <End Role="city" EntitySet="city" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_province" Association="Self.FK_UserAddress_province">
+            <End Role="province" EntitySet="province" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_Users" Association="Self.FK_UserAddress_Users">
             <End Role="Users" EntitySet="Users" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShahrChap_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -73,12 +150,12 @@
           <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ActiveCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="DigitCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IsEmailActive" Type="Boolean" Nullable="false" />
           <Property Name="IsPhoneActive" Type="Boolean" Nullable="false" />
           <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="UserAddress" Relationship="ShahrChap_DBModel.FK_UserAddress_Users" FromRole="User" ToRole="UserAddress" />
         </EntityType>
         <Association Name="FK_Users_Roles">
           <End Role="Roles" Type="Self.Role" Multiplicity="1" />
@@ -99,8 +176,110 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="city" EntityType="ShahrChap_DBModel.city" />
+          <EntitySet Name="province" EntityType="ShahrChap_DBModel.province" />
+          <EntitySet Name="UserAddress" EntityType="ShahrChap_DBModel.UserAddress" />
+          <AssociationSet Name="FK_city_province" Association="ShahrChap_DBModel.FK_city_province">
+            <End Role="province" EntitySet="province" />
+            <End Role="city" EntitySet="city" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_city" Association="ShahrChap_DBModel.FK_UserAddress_city">
+            <End Role="city" EntitySet="city" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_province" Association="ShahrChap_DBModel.FK_UserAddress_province">
+            <End Role="province" EntitySet="province" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_Users" Association="ShahrChap_DBModel.FK_UserAddress_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="cityId" />
+          </Key>
+          <Property Name="cityId" Type="Int32" Nullable="false" />
+          <Property Name="province_id" Type="Int32" Nullable="false" />
+          <Property Name="county_id" Type="Int32" Nullable="false" />
+          <Property Name="cityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="province" Relationship="ShahrChap_DBModel.FK_city_province" FromRole="city" ToRole="province" />
+          <NavigationProperty Name="UserAddress" Relationship="ShahrChap_DBModel.FK_UserAddress_city" FromRole="city" ToRole="UserAddress" />
+        </EntityType>
+        <EntityType Name="province">
+          <Key>
+            <PropertyRef Name="provinceId" />
+          </Key>
+          <Property Name="provinceId" Type="Int32" Nullable="false" />
+          <Property Name="provinceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="city" Relationship="ShahrChap_DBModel.FK_city_province" FromRole="province" ToRole="city" />
+          <NavigationProperty Name="UserAddress" Relationship="ShahrChap_DBModel.FK_UserAddress_province" FromRole="province" ToRole="UserAddress" />
+        </EntityType>
+        <EntityType Name="UserAddress">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ProvinceID" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FullAddress" Type="String" Nullable="false" MaxLength="650" FixedLength="false" Unicode="true" />
+          <Property Name="PosteCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="city" Relationship="ShahrChap_DBModel.FK_UserAddress_city" FromRole="UserAddress" ToRole="city" />
+          <NavigationProperty Name="province" Relationship="ShahrChap_DBModel.FK_UserAddress_province" FromRole="UserAddress" ToRole="province" />
+          <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_UserAddress_Users" FromRole="UserAddress" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_city_province">
+          <End Type="ShahrChap_DBModel.province" Role="province" Multiplicity="1" />
+          <End Type="ShahrChap_DBModel.city" Role="city" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="province">
+              <PropertyRef Name="provinceId" />
+            </Principal>
+            <Dependent Role="city">
+              <PropertyRef Name="province_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_city">
+          <End Type="ShahrChap_DBModel.city" Role="city" Multiplicity="1" />
+          <End Type="ShahrChap_DBModel.UserAddress" Role="UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="cityId" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_province">
+          <End Type="ShahrChap_DBModel.province" Role="province" Multiplicity="1" />
+          <End Type="ShahrChap_DBModel.UserAddress" Role="UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="province">
+              <PropertyRef Name="provinceId" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_Users">
+          <End Type="ShahrChap_DBModel.User" Role="User" Multiplicity="1" />
+          <End Type="ShahrChap_DBModel.UserAddress" Role="UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -124,7 +303,6 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ActiveCode" ColumnName="ActiveCode" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="DigitCode" ColumnName="DigitCode" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="IsEmailActive" ColumnName="IsEmailActive" />
                 <ScalarProperty Name="IsPhoneActive" ColumnName="IsPhoneActive" />
@@ -132,7 +310,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="city">
+            <EntityTypeMapping TypeName="ShahrChap_DBModel.city">
+              <MappingFragment StoreEntitySet="city">
+                <ScalarProperty Name="cityName" ColumnName="cityName" />
+                <ScalarProperty Name="county_id" ColumnName="county_id" />
+                <ScalarProperty Name="province_id" ColumnName="province_id" />
+                <ScalarProperty Name="cityId" ColumnName="cityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="province">
+            <EntityTypeMapping TypeName="ShahrChap_DBModel.province">
+              <MappingFragment StoreEntitySet="province">
+                <ScalarProperty Name="provinceName" ColumnName="provinceName" />
+                <ScalarProperty Name="provinceId" ColumnName="provinceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAddress">
+            <EntityTypeMapping TypeName="ShahrChap_DBModel.UserAddress">
+              <MappingFragment StoreEntitySet="UserAddress">
+                <ScalarProperty Name="PosteCode" ColumnName="PosteCode" />
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -146,7 +355,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

@@ -53,14 +53,12 @@ namespace ShahrChap.Controllers
                         string DigitCode = random.Next(10000, 99999).ToString();
                         user.Phone = register.EmailOrPhone;
                         user.IsPhoneActive = false;
-                        user.DigitCode = DigitCode;
-                        //SendSMS.SendWithPattern(register.EmailOrPhone, register.UserName, DigitCode);
+                        SendSMS.SendWithPattern(register.EmailOrPhone, register.UserName, DigitCode);
                         db.UserRepository.Insert(user);
                         db.Save();
-                        TempData["OTP"] = DigitCode;
-                        TempData["ExpireTime"] = DateTime.Now;
-                        Session["PhoneNumber"] = register.EmailOrPhone;
-                        ViewBag.Phone = register.EmailOrPhone;
+                        Session["OTP"] = DigitCode;
+                        Session["ExpireTime"] = DateTime.Now;
+                        Session["PhoneNumber"] = user.Phone;
                         return RedirectToAction("VerifyPhone", "Account");
                     }
                 }
@@ -88,19 +86,20 @@ namespace ShahrChap.Controllers
         }
         public ActionResult VerifyPhone()
         {
-            ViewBag.Phone = "0" + Convert.ToInt64(Session["PhoneNumber"]);
+            ViewBag.Phone = Convert.ToString(Session["PhoneNumber"]);
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult VerifyPhone(OTPViewModel DigitCode)
         {
-            string SessionOTP = TempData["OTP"].ToString();
-            var user = db.UserRepository.Get().SingleOrDefault(u => u.DigitCode == SessionOTP);
-
-            if (DigitCode.OTP == SessionOTP)
+            string OTP = Session["OTP"].ToString();
+            string Phone = Session["PhoneNumber"].ToString();
+            var user = db.UserRepository.Get().SingleOrDefault(u => u.Phone == Phone);
+            ViewBag.Phone = Phone;
+            if (DigitCode.OTP == OTP)
             {
-                if ((DateTime.Now - Convert.ToDateTime(TempData["ExpireTime"])).TotalSeconds < 120)
+                if ((DateTime.Now - Convert.ToDateTime(Session["ExpireTime"])).TotalSeconds < 120)
                 {
                     user.IsPhoneActive = true;
                     db.UserRepository.Update(user);
@@ -110,7 +109,6 @@ namespace ShahrChap.Controllers
                 else
                 {
                     ModelState.AddModelError("OTP", "کد فعالسازی وارد شده منقضی شده است");
-
                 }
             }
             else
@@ -119,7 +117,6 @@ namespace ShahrChap.Controllers
             }
             return View(DigitCode);
         }
-
 
         [Route("Login")]
         public ActionResult Login()
@@ -130,24 +127,165 @@ namespace ShahrChap.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Route("Login")]
-        public ActionResult Login(LoginViewModel login)
+        public ActionResult Login(LoginViewModel login, string returnUrl = "/")
         {
+            if (ModelState.IsValid)
+            {
+                string HashPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(login.Password, "MD5");
+                var user = db.UserRepository.Get().SingleOrDefault(u => u.Email == login.EmailOrPhone || u.Phone == login.EmailOrPhone);
+                if (user != null && user.Password==HashPassword)
+                {
+                    if (user.IsEmailActive || user.IsPhoneActive)
+                    {
+                        FormsAuthentication.SetAuthCookie(user.UserName, login.RemmemberMe);
+                        return Redirect("/");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("EmailOrPhone", "حساب کاربری شما فعال نشده است.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("EmailOrPhone", "کاربری با مشخصات وارد شده یافت نشد.");
+                }
+            }
             return View();
         }
 
-        public ActionResult ResendOTP()
+        public ActionResult ResendOTP(string id = "")
+        {
+            ResendCode();
+            if (id == "")
+            {
+                return RedirectToAction("VerifyPhone", "Account");
+            }
+            else if (id == "ForgotPass")
+            {
+                return RedirectToAction("ForgotPasswordWithPhone", "Account");
+            }
+            return HttpNotFound();
+        }
+        //Enter phone or email to send verification email or sms
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult ForgotPassword(ForgotPasswordViewModel forgotPassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.UserRepository.Get().SingleOrDefault(u => u.Email == forgotPassword.EmailOrPhone || u.Phone == forgotPassword.EmailOrPhone);
+                if (user != null)
+                {
+                    if (user.IsEmailActive || user.IsPhoneActive)
+                    {
+                        if (forgotPassword.EmailOrPhone.Contains("@"))
+                        {
+                            string body = PartialToStringClass.RenderPartialView("ManageEmails", "RecoveryPassword", user);
+                            SendEmail.Send(user.Email, "بازیابی کلمه عبور", body);
+                            return View("SuccessForgotPassword", user);
+                        }
+                        else
+                        {
+                            Random random = new Random();
+                            string DigitCode = random.Next(10000, 99999).ToString();
+                            SendSMS.SendWithPattern(user.Phone, user.UserName, DigitCode);
+                            Session["OTP"] = DigitCode;
+                            Session["ExpireTime"] = DateTime.Now;
+                            Session["PhoneNumber"] = user.Phone;
+                            return RedirectToAction("ForgotPasswordWithPhone", "Account");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("EmailOrPhone", "حساب کاربری شما فعال نشده است.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("EmailOrPhone", "کاربری با مشخصات وارد شده یافت نشد.");
+                }
+            }
+            return View();
+        }
+
+        //Validate phone number to redirect to channge Password
+        public ActionResult ForgotPasswordWithPhone()
+        {
+            ViewBag.Phone = Convert.ToString(Session["PhoneNumber"]);
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ForgotPasswordWithPhone(OTPViewModel validatePhone)
+        {
+            string ValidateCode = Session["OTP"].ToString();
+            string Phone = Session["PhoneNumber"].ToString();
+            var user = db.UserRepository.Get().SingleOrDefault(u => u.Phone == Phone);
+
+            if (validatePhone.OTP == ValidateCode)
+            {
+                if ((DateTime.Now - Convert.ToDateTime(Session["ExpireTime"])).TotalSeconds < 120)
+                {
+                    return RedirectToAction("RecoveryPassword", "Account", new { id = user.UserID });
+                }
+                else
+                {
+                    ModelState.AddModelError("OTP", "کد اعتبارسنجی وارد شده منقضی شده است");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("OTP", "کد اعتبارسنجی وارد شده معتبر نمی باشد");
+            }
+            return View();
+        }
+
+        //After validate user, Change the password
+        public ActionResult RecoveryPassword(string id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RecoveryPassword(RecoveryPasswordViewModel recoveryPassword, string id)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.UserRepository.Get().SingleOrDefault(u => u.ActiveCode == id || u.UserID.ToString() == id);
+                if (user != null)
+                {
+                    if (id == user.ActiveCode)
+                    {
+                        user.ActiveCode = Guid.NewGuid().ToString();
+                    }
+                    user.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(recoveryPassword.Password, "MD5");
+                    db.UserRepository.Update(user);
+                    db.Save();
+                    return Redirect("/Login?recovery=true");
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View();
+        }
+        public ActionResult SignOut()
+        {
+            FormsAuthentication.SignOut();
+            return Redirect("/");
+        }
+        public void ResendCode()
         {
             var phone = Convert.ToString(Session["PhoneNumber"]);
             var user = db.UserRepository.Get().SingleOrDefault(u => u.Phone == phone);
             Random random = new Random();
             string OTP = random.Next(10000, 99999).ToString();
-            user.DigitCode = OTP;
             SendSMS.SendWithPattern(phone, user.UserName, OTP);
-            db.UserRepository.Update(user);
-            db.Save();
-            TempData["OTP"] = OTP;
-            TempData["ExpireTime"] = DateTime.Now;
-            return RedirectToAction("VerifyPhone", "Account");
+            Session["OTP"] = OTP;
+            Session["ExpireTime"] = DateTime.Now;
         }
     }
 }

@@ -1,0 +1,116 @@
+﻿@model ViewModels.AddAddressViewModel
+
+@{
+    ViewBag.Title = "افزودن آدرس";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <section>
+            <div class="container internal-style py-5">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                    <li class="breadcrumb-item"><a href="#">محصولات</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+                </ol>
+                <div class="contact-layer">
+                    <div class="row">
+                        @Html.Partial("UserPanelMenu")
+
+                        <section class="col-md-8 col-sm-12 col-xs-12">
+                            <form class="form-layer-style" action="">
+                                <header>
+                                    <h1>افزودن آدرس</h1>
+                                </header>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="input-layer">
+                                            <label>
+                                                <i class="fas fa-user"></i>
+                                                @Html.LabelFor(Model => Model.FullName)
+                                            </label>
+                                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="input-layer">
+                                            <label>
+                                                <i class="fas fa-map"></i>
+                                                @Html.LabelFor(Model => Model.FullAddress)
+                                            </label>
+                                            @Html.EditorFor(model => model.FullAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.FullAddress, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    @if (ViewBag.ProvinceList != null)
+                                    {
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="input-layer">
+                                                <label>
+                                                    @Html.LabelFor(model => model.Province)
+                                                </label>
+                                                @Html.DropDownListFor(model => model.Province, ViewBag.ProvinceList as SelectList, "استان", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Province, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="input-layer">
+                                            <label>
+                                                @Html.LabelFor(model => model.City)
+                                            </label>
+                                            @Html.DropDownListFor(model => model.City, new SelectList(""), "شهرستان", new { @class = "form-control" })
+
+                                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12">
+                                        <div class="textarea-layer">
+                                            <label>
+                                                <i class="fas fa-mail-bulk"></i>
+                                                @Html.LabelFor(Model => Model.PostCode)
+                                            </label>
+                                            @Html.EditorFor(model => model.PostCode, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.PostCode, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12 pull-left mt-2">
+                                    <input type="submit" value="ذخیره" class="button-st green pull-left" />
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("#Province").change(function () {
+            var provinceId = $(this).val();
+            debugger
+            $.ajax({
+                type: "post",
+                url: "/UserPanel/GetCityList?provinceId=" + provinceId,
+                contentType: "html",
+                success: function (result) {
+                    debugger
+                    $("#City").empty();
+                    $("#City").append(result);
+                }
+            })
+        })
+    })
+</script>

@@ -190,6 +190,14 @@
     <Content Include="Connected Services\AmootSMS\ShahrChap.AmootSMS.Status.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <None Include="Connected Services\AmootSMS\webservice2.disco" />
     <None Include="Connected Services\AmootSMS\configuration91.svcinfo" />
     <None Include="Connected Services\AmootSMS\configuration.svcinfo" />
@@ -206,9 +214,11 @@
     <Content Include="Content\img\2.jpg" />
     <Content Include="Content\img\bg.jpg" />
     <Content Include="Content\img\Buisiness.png" />
+    <Content Include="Content\img\Change Password.png" />
     <Content Include="Content\img\checked.png" />
     <Content Include="Content\img\Clipboard.png" />
     <Content Include="Content\img\controls.png" />
+    <Content Include="Content\img\Forgot Password.png" />
     <Content Include="Content\img\img1.jpg" />
     <Content Include="Content\img\img10.jpg" />
     <Content Include="Content\img\img11.jpg" />
@@ -222,7 +232,9 @@
     <Content Include="Content\img\img8.jfif" />
     <Content Include="Content\img\img8.jpg" />
     <Content Include="Content\img\img9.jpg" />
+    <Content Include="Content\img\Login.png" />
     <Content Include="Content\img\Logo.png" />
+    <Content Include="Content\img\map.png" />
     <Content Include="Content\img\OTP.png" />
     <Content Include="Content\img\p404.png" />
     <Content Include="Content\img\pngkit_business-card-icons-png_1149889.png" />
@@ -259,6 +271,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -269,6 +282,8 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Connected Services\AmootSMS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -277,6 +292,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageEmailsController.cs" />
+    <Compile Include="Controllers\UserPanelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -320,6 +336,26 @@
     <Content Include="Views\Account\ActiveEmail.cshtml" />
     <Content Include="Views\Account\SuccessPhoneRegister.cshtml" />
     <Content Include="Views\Account\VerifyPhone.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\_LoggedInUser.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\ManageEmails\RecoveryPassword.cshtml" />
+    <Content Include="Views\Account\SuccessForgotPassword.cshtml" />
+    <Content Include="Views\Account\RecoveryPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordWithPhone.cshtml" />
+    <Content Include="Views\UserPanel\Index.cshtml" />
+    <Content Include="Views\UserPanel\Address.cshtml" />
+    <Content Include="Views\UserPanel\SuccessEnableEmail.cshtml" />
+    <Content Include="Views\ManageEmails\EnableEmail.cshtml" />
+    <Content Include="Views\UserPanel\ActiveUserPanelEmail.cshtml" />
+    <Content Include="Views\UserPanel\EnablePhone.cshtml" />
+    <Content Include="Views\UserPanel\VerifyUserPanelPhone.cshtml" />
+    <Content Include="Views\UserPanel\SuccessEnablePhone.cshtml" />
+    <Content Include="Views\UserPanel\UserPanelMenu.cshtml" />
+    <Content Include="Views\UserPanel\AddAddress.cshtml" />
+    <Content Include="Views\UserPanel\DisplayCities.cshtml" />
+    <Content Include="Views\UserPanel\EnableEmail.cshtml" />
+    <Content Include="Views\UserPanel\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -329,6 +365,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +392,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />

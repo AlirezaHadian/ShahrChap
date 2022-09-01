@@ -1273,7 +1273,7 @@ form .order-submit input {
     border-radius: 15px;
     padding: 1.5rem;
     position: relative;
-    box-shadow: 0 0 15px #000000;
+    box-shadow: 0 0 5px #000000;
 }
 
 .register-page .input-element input {
@@ -1321,6 +1321,7 @@ form .order-submit input {
         top: 13px;
         color: #d4dee3;
     }
+
 
     .register-form .input-element input {
         width: 100%;
@@ -1480,4 +1481,125 @@ form .order-submit input {
 
 .otp-image {
     margin-top: 20px;
+}
+/*User panel*/
+.headline {
+    padding: 10px;
+    border-bottom: 1px solid #ebecee;
+}
+
+    .headline h1 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+.access-menu {
+    padding: 15px 25px 15px 20px;
+}
+
+    .access-menu ul li a {
+        font-size: 14px;
+        line-height: 24px;
+        margin: 5px 0;
+        padding-right: 12px;
+        position: relative;
+        color: #2d3339;
+        display: block;
+        width: 100%;
+    }
+
+        .access-menu ul li a::before {
+            position: absolute;
+            content: '';
+            width: 5px;
+            height: 5px;
+            background-color: #3af321;
+            border-radius: 50px;
+            right: 0;
+            top: 11px;
+        }
+.user-panel-sidebar {
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.section-style {
+    margin-bottom: 25px;
+}
+
+    .section-style > header {
+        border-bottom: 1px solid #eff2f5;
+        padding: 10px 0;
+        position: relative;
+    }
+
+        .section-style > header h2 {
+            padding: 0 20px;
+            position: relative;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 40px;
+        }
+
+    .section-style .inner {
+        padding: 20px 25px 10px;
+    }
+
+.form-style {
+    padding: 10px 0;
+}
+
+    .form-style .input-layer label, .form-style .select-layer label, .form-style .textarea-layer label {
+        display: block;
+        line-height: 22px;
+        font-size: 14px;
+        word-spacing: -2px;
+        color: #686e71;
+        margin-bottom: 2px;
+    }
+
+.address {
+    font-size: 18px;
+    font-weight: 300;
+    color: #424750;
+}
+
+.address-info {
+    font-size: 14px;
+}
+
+.address-form label {
+    margin-bottom: 12px;
+}
+
+.inner .form-style .input-layer svg, .inner .form-style svg {
+    font-size: 15px;
+    color: #c1cbd1;
+    margin-left: 6px;
+}
+
+.edit-user-info {
+    color: #1ac714;
+    text-decoration: none;
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+    .edit-user-info:hover {
+        color: #059900;
+    }
+
+.address-img {
+    height: 150px;
+    width: 300px;
+    position: absolute;
+    left: 16px;
+    opacity: 0.7;
+}
+/*Input style*/
+    .input-form .input-element svg {
+    position: absolute;
+    right: 17px;
+    top: 13px;
+    color: #d4dee3;
 }

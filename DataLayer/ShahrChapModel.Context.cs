@@ -27,5 +27,8 @@ namespace DataLayer
     
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<city> city { get; set; }
+        public virtual DbSet<province> province { get; set; }
+        public virtual DbSet<UserAddress> UserAddress { get; set; }
     }
 }

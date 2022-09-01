@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace DataLayer
 {
     public class UserMetaData
@@ -17,9 +19,10 @@ namespace DataLayer
         public string Email { get; set; }
         public string ActiveCode { get; set; }
         public string Phone { get; set; }
-        public string DigitCode { get; set; }
         public string Password { get; set; }
         public bool IsEmailActive { get; set; }
         public bool IsPhoneActive { get; set; }
+        [DisplayFormat(DataFormatString ="{0: yyyy/MM/dd}")]
+        public System.DateTime RegisterDate { get; set; }
     }
 }

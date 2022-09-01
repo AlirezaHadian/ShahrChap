@@ -12,6 +12,9 @@ namespace DataLayer.Context
 
         private GenericRepository<User> userRepository;
         private GenericRepository<Role> roleRepository;
+        private GenericRepository<UserAddress> userAddressRepository;
+        private GenericRepository<province> provinceRepository;
+        private GenericRepository<city> cityRepository;
 
         public GenericRepository<User> UserRepository
         {
@@ -39,6 +42,43 @@ namespace DataLayer.Context
             }
         }
 
+        public GenericRepository<UserAddress> UserAddressRepository
+        {
+            get
+            {
+                if (userAddressRepository == null)
+                {
+                    userAddressRepository = new GenericRepository<UserAddress>(db);
+                }
+
+                return userAddressRepository;
+            }
+        }
+        public GenericRepository<province> ProvinceRepository
+        {
+            get
+            {
+                if (provinceRepository == null)
+                {
+                    provinceRepository = new GenericRepository<province>(db);
+                }
+
+                return provinceRepository;
+            }
+        }
+        public GenericRepository<city> CityRepository
+        {
+            get
+            {
+                if (cityRepository == null)
+                {
+                    cityRepository = new GenericRepository<city>(db);
+                }
+
+                return cityRepository;
+            }
+        }
+
         public void Save()
         {
             db.SaveChanges();
@@ -48,5 +88,6 @@ namespace DataLayer.Context
         {
             db.Dispose();
         }
+
     }
 }

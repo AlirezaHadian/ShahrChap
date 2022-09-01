@@ -1,0 +1,16 @@
+﻿@model DataLayer.User
+@using System.Configuration
+<div style="direction:rtl; padding:20px; text-align:center;">
+    <div style="background: #247BA0; padding:30px; color:white;">
+        <h1>شهر چاپ</h1>
+    </div>
+    <div style="font-weight:bold; color:black">
+        <h2>فعالسازی ایمیل</h2>
+    </div>
+    <div style="color:black;">
+        <h2>@Model.UserName عزیز!</h2>
+        <p>برای فعالسازی حساب کاربری خود بر روی لینک زیر کلیک کنید</p>
+    </div>
+    <a href="@ConfigurationManager.AppSettings["Domain"]/UserPanel/ActiveUserPanelEmail/@Model.ActiveCode" style="background: rgb(0, 148, 42); text-decoration: none; color: white; padding: 15px; align-content: center; border-radius: 15px; font-weight:bold; margin-top:10px">فعالسازی</a>
+
+</div>

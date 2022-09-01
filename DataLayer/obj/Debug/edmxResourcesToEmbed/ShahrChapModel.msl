@@ -19,11 +19,41 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="ActiveCode" ColumnName="ActiveCode" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="DigitCode" ColumnName="DigitCode" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="IsEmailActive" ColumnName="IsEmailActive" />
           <ScalarProperty Name="IsPhoneActive" ColumnName="IsPhoneActive" />
           <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="city">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.city">
+        <MappingFragment StoreEntitySet="city">
+          <ScalarProperty Name="cityName" ColumnName="cityName" />
+          <ScalarProperty Name="county_id" ColumnName="county_id" />
+          <ScalarProperty Name="province_id" ColumnName="province_id" />
+          <ScalarProperty Name="cityId" ColumnName="cityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="province">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.province">
+        <MappingFragment StoreEntitySet="province">
+          <ScalarProperty Name="provinceName" ColumnName="provinceName" />
+          <ScalarProperty Name="provinceId" ColumnName="provinceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAddress">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.UserAddress">
+        <MappingFragment StoreEntitySet="UserAddress">
+          <ScalarProperty Name="PosteCode" ColumnName="PosteCode" />
+          <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

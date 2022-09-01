@@ -1,0 +1,28 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <li class="nav-item pe-1 ">
+        <a href="/UserPanel" class="btn btn-success navbar-link register-button btn-sm">
+            @User.Identity.Name <i class="fas fa-user-circle"></i>
+        </a>
+    </li>
+    <li class="nav-item pe-1 ">
+        <a href="/Account/SignOut" class="btn btn-outline-danger navbar-link register-button btn-sm">
+            خروج
+            <i class="fas fa-sign-out-alt"></i>
+        </a> |
+    </li> 
+}
+else
+{
+    <li class="nav-item pe-1 ">
+        <a href="/Register" class="btn btn-success navbar-link register-button btn-sm">
+            ثبت نام <i class="fas fa-user-plus"></i>
+        </a>
+    </li>
+    <li class="nav-item pe-1 ">
+        <a href="/Login" class="btn btn-outline-success navbar-link register-button btn-sm">
+            ورود
+            <i class="fas fa-sign-in-alt"></i>
+        </a> |
+    </li>
+}

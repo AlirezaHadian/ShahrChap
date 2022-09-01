@@ -1,0 +1,80 @@
+﻿@model DataLayer.UserAddress
+@using DataLayer
+@{
+    List<UserAddress> list = ViewBag.Address;
+    int count = list.Count;
+    int id = ViewBag.UserId;
+}
+<section class="section-style box-shadow address-form">
+    <header>
+        <h2>آدرس <span><a href="/UserPanel/AddAddress/@id" class="edit-user-info"><i class="far fa-plus-square"></i></a></span> </h2>
+    </header>
+    <div class="inner">
+        @if (count == 0)
+        {
+            <form action="" method="" class="form-style">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="address">
+                            <a href="/UserPanel/AddAddress/@id" class="btn btn-success">افزودن آدرس <i class="fas fa-plus"></i> </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+        else
+        {
+            <form action="">
+                <div class="row">
+                    @foreach (var item in list)
+                    {
+                        <div id="address_@item.AddressID">
+                            <div class="form-style">
+                                <div class="col-xs-12">
+                                    <div class="address">
+                                        <label><i class="fas fa-map"></i> @item.FullAddress </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="address-info">
+                                        <label><i class="fas fa-city"></i>  @item.province.provinceName </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="address-info">
+                                        <label><i class="fas fa-mail-bulk"></i> @item.PosteCode </label>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="input-layer">
+                                            <label><i class="far fa-user-circle"></i> @item.FullName </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="address">
+                                    <span><a onclick="Delete(@item.AddressID)" class="edit-user-info"><i class="fas fa-trash-alt"></i></a></span>
+                                    @if (!item.Equals(list.Last()))
+                                    {
+                                        <hr />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <img src="/Content/img/map.png" class="img-fluid address-img" />
+                </div>
+            </form>
+        }
+    </div>
+</section>
+
+<script>
+    function Delete(id) {
+        if (confirm("آیا از حذف مطمئن هستید؟")) {
+            $.get("/UserPanel/DeleteAddress/" + id, function () {
+                $("#address_" + id).hide('slow');
+            });
+        }
+    }
+</script>

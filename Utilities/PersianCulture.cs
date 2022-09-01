@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 
-namespace GSD.Globalization
+namespace Utilities
 {
 
     public class PersianCulture : CultureInfo

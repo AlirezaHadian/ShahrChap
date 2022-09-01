@@ -4,11 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="66e87b46f60244b191a63ed0a611dcb7" Name="Diagram1">
+      <Diagram DiagramId="66e87b46f60244b191a63ed0a611dcb7" Name="Diagram1" ZoomLevel="85">
         <EntityTypeShape EntityType="ShahrChap_DBModel.Role" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Users_Roles" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="ShahrChap_DBModel.city" Width="1.5" PointX="7.25" PointY="3" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.province" Width="1.5" PointX="7.25" PointY="1" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.UserAddress" Width="1.5" PointX="5.375" PointY="1.125" />
+        <AssociationConnector Association="ShahrChap_DBModel.FK_city_province" />
+        <AssociationConnector Association="ShahrChap_DBModel.FK_UserAddress_city" />
+        <AssociationConnector Association="ShahrChap_DBModel.FK_UserAddress_province" />
+        <AssociationConnector Association="ShahrChap_DBModel.FK_UserAddress_Users" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

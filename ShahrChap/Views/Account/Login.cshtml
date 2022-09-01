@@ -1,0 +1,88 @@
+﻿@model ViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal internal-style">
+        @if (User.Identity.IsAuthenticated && Request.QueryString["ReturnUrl"] != null)
+        {
+            <div class="alert alert-danger mt-2">
+                <p>شما دسترسی به بخش درخواست شده را ندارید.</p>
+            </div>
+        }
+        @if(Request.QueryString["recovery"]!= null)
+                {
+                    <div class="alert alert-success mt-2">
+                        <p>کلمه عبور شما با موفقیت تغییر یافت. </p>
+                        <p>از طریق فرم زیر میتوانید وارد سایت شوید!</p>
+                    </div>
+                }
+        <div class="register-page">
+            <ol class="breadcrumb my-5">
+                <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                <li class="breadcrumb-item"><a href="#">محصولات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+            </ol>
+
+            <div class="register-form">
+                <div class="register-title text-center pb-2">
+                    <h2 class="">ورود به سایت</h2>
+                    <p>با ورود به حساب کاربری خود ، از مزایای کاربران سایت بهره مند شوید</p>
+                    <img src="~/Content/img/Login.png" class="img-fluid" alt="">
+                </div>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <div class="input-element">
+                        <i class="fas fa-phone"></i>
+                        @Html.EditorFor(model => model.EmailOrPhone, new { htmlAttributes = new { @placeholder = "ایمیل / شماره موبایل", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EmailOrPhone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-element">
+                        <i class="fas fa-unlock-alt"></i>
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder = "کلمه عبور", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox checkbox-remember">
+                        @Html.LabelFor(model => model.RemmemberMe, htmlAttributes: new { @class = "control-label form-check-label" })
+                        @Html.EditorFor(model => model.RemmemberMe, new { htmlAttributes = new { @class = "form-check-input" } })
+                        @Html.ValidationMessageFor(model => model.RemmemberMe, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*Html.HiddenFor(model => model.GoogleCaptchaToken)*@
+
+                <div class="form-group">
+                    <div class="pt-2">
+                        <input type="submit" class="register-btn" value="ورود" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    </div>
+                    <div class="login-btn">
+                        <hr>
+                        <a href="/Register">
+                            <i class="fas fa-user"></i>
+                            حساب جدید
+                        </a>
+                        <a href="/Account/ForgotPassword">
+                            <i class="fas fa-lock"></i>
+                            کلمه عبور خود را فراموش کرده ام!
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
