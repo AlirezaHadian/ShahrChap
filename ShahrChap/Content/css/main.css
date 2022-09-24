@@ -1603,3 +1603,8 @@ form .order-submit input {
     top: 13px;
     color: #d4dee3;
 }
+.inner .form-style .input-layer .edit-user-info svg, .inner .form-style .edit-user-info svg {
+    font-size: 15px;
+    color: #0ada03 !important;
+    margin-left: 6px;
+}

@@ -195,7 +195,7 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Address.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <None Include="Connected Services\AmootSMS\webservice2.disco" />
@@ -205,8 +205,10 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap-rtl.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
-    <Content Include="Content\css\bootstrap.rtl.min.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\owl.carousel.min.css" />
     <Content Include="Content\css\owl.theme.default.min.css" />
@@ -263,6 +265,7 @@
     <Content Include="Content\js\owl.carousel.min.js" />
     <Content Include="Content\js\script.js" />
     <Content Include="Content\js\swiped-events.min.js" />
+    <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -356,6 +359,12 @@
     <Content Include="Views\UserPanel\DisplayCities.cshtml" />
     <Content Include="Views\UserPanel\EnableEmail.cshtml" />
     <Content Include="Views\UserPanel\ChangePassword.cshtml" />
+    <Content Include="Views\ManageEmails\ChangeEmail.cshtml" />
+    <Content Include="Views\UserPanel\SuccessChangeEmail.cshtml" />
+    <Content Include="Views\UserPanel\ChangeEmailSuccess.cshtml" />
+    <Content Include="Views\UserPanel\ChangeEmail.cshtml" />
+    <Content Include="Views\UserPanel\ChangePhone.cshtml" />
+    <Content Include="Views\UserPanel\SuccessChangedPhone.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -20,7 +20,7 @@
                     <div class="left-content">
                         <section class="section-style box-shadow">
                             <header>
-                                <h2>اطلاعات حساب کاربری <span><a href="" class="edit-user-info"><i class="fas fa-user-edit"></i></a></span></h2>
+                                <h2>اطلاعات حساب کاربری </h2>
                             </header>
                             <div class="inner">
                                 <form action="" method="" class="form-style">
@@ -34,7 +34,7 @@
                                         {
                                             <div class="col-md-6 col-sm-12 col-xs-12">
                                                 <div class="input-layer">
-                                                    <label><i class="fas fa-phone"></i> @Model.Phone </label>
+                                                    <label><i class="fas fa-phone"></i> @Model.Phone <span><a onclick="ChangePhone()" class="edit-user-info"><i class="fas fa-edit"></i></a></span></label>
                                                 </div>
                                             </div>
                                         }
@@ -50,7 +50,7 @@
                                         {
                                             <div class="col-md-6 col-sm-12 col-xs-12">
                                                 <div class="input-layer">
-                                                    <label><i class="fas fa-envelope"></i> @Model.Email </label>
+                                                    <label><i class="fas fa-envelope"></i> @Model.Email <span><a onclick="ChangeEmail()" class="edit-user-info"><i class="fas fa-edit"></i></a></span> </label>
                                                 </div>
                                             </div>
                                         }
@@ -98,22 +98,36 @@
 
 <script>
     function EnableEmail() {
-        $.get("/UserPanel/EnableEmail/@Model.UserID", function (result) {
+        $.get("/UserPanel/EnableEmail", function (result) {
             $("#myModal").modal('show');
             $("#myModalLabel").html("فعالسازی ایمیل");
             $("#myModalBody").html(result);
         });
-        }
+    }
 
     function EnablePhone() {
-        $.get("/UserPanel/EnablePhone/@Model.UserID", function (result) {
+        $.get("/UserPanel/EnablePhone", function (result) {
             $("#myModal").modal('show');
             $("#myModalLabel").html("فعالسازی شماره موبایل");
             $("#myModalBody").html(result);
         });
-        }
-        function success() {
-            $("#myModal").modal('hide');
-        }
+    }
+    function ChangeEmail() {
+        $.get("/UserPanel/ChangeEmail", function (result) {
+            $("#myModal").modal('show');
+            $("#myModalLabel").html("تغییر ایمیل");
+            $("#myModalBody").html(result);
+        });
+    }
+    function ChangePhone() {
+        $.get("/UserPanel/ChangePhone", function (result) {
+            $("#myModal").modal('show');
+            $("#myModalLabel").html("تغییر شماره موبایل");
+            $("#myModalBody").html(result);
+        });
+    }
+    function success() {
+        $("#myModal").modal('hide');
+    }
 
 </script>

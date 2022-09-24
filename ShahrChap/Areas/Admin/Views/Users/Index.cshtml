@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DataLayer.User>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "مدیریت کاربران";
 }
 
-<h2>Index</h2>
+<h2>مدیریت کاربران</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-primary" href="@Url.Action("Create")">افزودن کاربر جدید</a>
 </p>
 <table class="table">
     <tr>
@@ -15,19 +15,13 @@
             @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Role.RoleTitle)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ActiveCode)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DigitCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsEmailActive)
@@ -38,50 +32,49 @@
         <th>
             @Html.DisplayNameFor(model => model.RegisterDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role.RoleTitle)
-        </th>
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActiveCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DigitCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsEmailActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsPhoneActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegisterDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Role.RoleTitle)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.RoleTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEmailActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPhoneActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegisterDate)
+            </td>
+
+            <td>
+                <a class="btn btn-warning" href="@Url.Action("Edit", new { id = item.UserID })">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-danger" href="@Url.Action("Delete", new { id = item.UserID })">
+                    <i class="fas fa-trash"></i>
+                </a>
+                <a class="btn btn-info" href="@Url.Action("Address", new { id = item.UserID })">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+            </td>
+        </tr>
+
+    }
 
 </table>
+    

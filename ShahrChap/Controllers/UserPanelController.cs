@@ -34,20 +34,23 @@ namespace ShahrChap.Controllers
             return PartialView();
         }
 
-
-        public ActionResult EnableEmail(int id)
+        public ActionResult EnableEmail()
         {
             return PartialView();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleError]
-        public ActionResult EnableEmail(EnableEmailViewModel enableEmail, int id)
+        public ActionResult EnableEmail(EnableEmailViewModel enableEmail)
         {
+            if (db.UserRepository.Get(u => u.Email == enableEmail.Email).Any())
+            {
+                ModelState.AddModelError("Email", "ایمیل وارد شده تکراری می باشد");
+            }
             if (ModelState.IsValid)
             {
                 ModelState.Clear();
-                var user = db.UserRepository.Get().SingleOrDefault(u => u.UserID == id);
+                var user = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name);
                 if (user != null)
                 {
                     user.Email = enableEmail.Email;
@@ -63,17 +66,21 @@ namespace ShahrChap.Controllers
             }
             return PartialView("EnableEmail", enableEmail);
         }
-        public ActionResult EnablePhone(int id)
+        public ActionResult EnablePhone()
         {
             return PartialView();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EnablePhone(EnablePhoneViewModel enablePhone, int id)
+        public ActionResult EnablePhone(EnablePhoneViewModel enablePhone)
         {
+            if (db.UserRepository.Get(u => u.Phone == enablePhone.Phone).Any())
+            {
+                ModelState.AddModelError("Phone", "شماره موبایل وارد شده تکراری می باشد");
+            }
             if (ModelState.IsValid)
             {
-                var user = db.UserRepository.Get().SingleOrDefault(u => u.UserID == id);
+                var user = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name);
                 if (user != null)
                 {
                     user.Phone = enablePhone.Phone;
@@ -87,7 +94,7 @@ namespace ShahrChap.Controllers
                     Session["OTP"] = DigitCode;
                     Session["ExpireTime"] = DateTime.Now;
                     Session["PhoneNumber"] = user.Phone;
-                    return RedirectToAction("VerifyPhone", "UserPanel");
+                    return RedirectToAction("VerifyUserPanelPhone", "UserPanel");
                 }
                 return HttpNotFound();
             }
@@ -114,7 +121,7 @@ namespace ShahrChap.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult VerifyUserPanelPhone(OTPViewModel DigitCode)
+        public ActionResult VerifyUserPanelPhone(OTPViewModel DigitCode, string changed = "")
         {
             string OTP = Session["OTP"].ToString();
             string Phone = Session["PhoneNumber"].ToString();
@@ -128,6 +135,10 @@ namespace ShahrChap.Controllers
                     ViewBag.UserName = user.UserName;
                     db.UserRepository.Update(user);
                     db.Save();
+                    if (changed == "Changed")
+                    {
+                        return View("SuccessChangedPhone", user);
+                    }
                     return View("SuccessEnablePhone", user);
                 }
                 else
@@ -147,14 +158,14 @@ namespace ShahrChap.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword(ChangePasswordViewModel changePassword,string id)
+        public ActionResult ChangePassword(ChangePasswordViewModel changePassword, string id)
         {
             if (ModelState.IsValid)
             {
                 ModelState.Clear();
                 var user = db.UserRepository.Get().Single(u => u.UserName == User.Identity.Name);
                 string oldPasswordHash = FormsAuthentication.HashPasswordForStoringInConfigFile(changePassword.OldPassword, "MD5");
-                if(user.Password == oldPasswordHash)
+                if (user.Password == oldPasswordHash)
                 {
                     string hashNewPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(changePassword.Password, "MD5");
                     user.Password = hashNewPassword;
@@ -168,10 +179,105 @@ namespace ShahrChap.Controllers
             }
             return View();
         }
+        public ActionResult ChangeEmail()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleError]
+        public ActionResult ChangeEmail(ChangeEmailViewModel changeEmail)
+        {
+            var userName = User.Identity.Name;
+            var user = db.UserRepository.Get().Single(u => u.UserName == userName);
+            if (db.UserRepository.Get(u => u.Email == changeEmail.Email).Any())
+            {
+                ModelState.AddModelError("Email", "ایمیل وارد شده تکراری می باشد");
+            }
+            if (changeEmail.Email == user.Email)
+            {
+                ModelState.AddModelError("Email", "ایمیل وارد شده با ایمیل موجود باید متفاوت باشد");
+            }
+            if (ModelState.IsValid)
+            {
+                ModelState.Clear();
+
+                if (user != null)
+                {
+                    user.Email = changeEmail.Email;
+                    user.ActiveCode = Guid.NewGuid().ToString();
+                    user.IsEmailActive = false;
+                    db.UserRepository.Update(user);
+                    db.Save();
+                    string body = PartialToStringClass.RenderPartialView("ManageEmails", "ChangeEmail", user);
+                    SendEmail.Send(changeEmail.Email, "تغییر ایمیل", body);
+                    return View("SuccessChangeEmail", user);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            return PartialView("ChangeEmail", changeEmail);
+        }
+        public ActionResult ChangeEmailSuccess(string id)
+        {
+            var user = db.UserRepository.Get().SingleOrDefault(u => u.ActiveCode == id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            user.IsEmailActive = true;
+            user.ActiveCode = Guid.NewGuid().ToString();
+            db.UserRepository.Update(user);
+            db.Save();
+            ViewBag.Username = user.UserName;
+            return View();
+        }
+        public ActionResult ChangePhone()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleError]
+        public ActionResult ChangePhone(ChangePhoneViewModel changePhone)
+        {
+            var user = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name);
+
+            if (db.UserRepository.Get(u => u.Phone == changePhone.Phone).Any())
+            {
+                ModelState.AddModelError("Phone", "شماره موبایل وارد شده تکراری می باشد");
+            }
+            if (changePhone.Phone == user.Phone)
+            {
+                ModelState.AddModelError("Phone", "شماره موبایل وارد شده با شماره موبایل موجود باید متفاوت باشد");
+            }
+            if (ModelState.IsValid)
+            {
+                if (user != null)
+                {
+                    user.Phone = changePhone.Phone;
+                    user.IsPhoneActive = false;
+                    Random random = new Random();
+                    string DigitCode = random.Next(10000, 99999).ToString();
+                    user.Phone = changePhone.Phone;
+                    SendSMS.SendWithPattern(changePhone.Phone, user.UserName, DigitCode);
+                    db.UserRepository.Update(user);
+                    db.Save();
+                    Session["OTP"] = DigitCode;
+                    Session["ExpireTime"] = DateTime.Now;
+                    Session["PhoneNumber"] = user.Phone;
+                    return RedirectToAction("VerifyUserPanelPhone", "UserPanel", new { changed = "Changed" });
+                }
+                return HttpNotFound();
+            }
+            return PartialView("ChangePhone", changePhone);
+        }
         public ActionResult ResendOTP()
         {
             ResendCode();
-            return RedirectToAction("VerifyPhone", "Account");
+            return RedirectToAction("VerifyUserPanelPhone", "Account");
         }
 
         //Address

@@ -166,7 +166,7 @@ namespace ShahrChap.Controllers
             }
             return HttpNotFound();
         }
-        //Enter phone or email to send verification email or sms
+        //این اکشن با دریافت شماره موبایل یا ایمیل کاربر یا کد اعتبارسنجی ارسال میکند یا لینک فعالسازی 
         public ActionResult ForgotPassword()
         {
             return View();
@@ -212,7 +212,7 @@ namespace ShahrChap.Controllers
             return View();
         }
 
-        //Validate phone number to redirect to channge Password
+        //این اکشن با وارد کردن شماره تلفن و اعتبارسنجی به کاربر امکان تغییر رمز عبور فراموش شده را میدهد
         public ActionResult ForgotPasswordWithPhone()
         {
             ViewBag.Phone = Convert.ToString(Session["PhoneNumber"]);
@@ -243,7 +243,7 @@ namespace ShahrChap.Controllers
             return View();
         }
 
-        //After validate user, Change the password
+        //این اکشن بعد از اعتبارسنجی ایمیل یا شماره موبایل، کاربر میتواند رمز فراموش شده خود را تغییر دهد
         public ActionResult RecoveryPassword(string id)
         {
             return View();

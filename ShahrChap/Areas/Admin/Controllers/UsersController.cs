@@ -6,41 +6,44 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DataLayer;
+using DataLayer.Context;
 
 namespace ShahrChap.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class UsersController : Controller
     {
-        private ShahrChap_DBEntities db = new ShahrChap_DBEntities();
+        //private ShahrChap_DBEntities db = new ShahrChap_DBEntities();
+        UnitOfWork db = new UnitOfWork();
 
         // GET: Admin/Users
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.Role);
+            var users = db.UserRepository.Get();
             return View(users.ToList());
         }
 
         // GET: Admin/Users/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Address(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            List<UserAddress> userAddress = db.UserAddressRepository.Get().Where(u=> u.Users.UserID == id).ToList();
+            ViewBag.Name = db.UserRepository.GetById(id).UserName;
+            if (userAddress == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(userAddress);
         }
 
         // GET: Admin/Users/Create
         public ActionResult Create()
         {
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleTitle");
+            ViewBag.RoleID = new SelectList(db.RoleRepository.Get(), "RoleID", "RoleTitle");
             return View();
         }
 
@@ -49,16 +52,32 @@ namespace ShahrChap.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,RoleID,UserName,Email,ActiveCode,Phone,DigitCode,Password,IsEmailActive,IsPhoneActive,RegisterDate")] User user)
+        public ActionResult Create([Bind(Include = "UserID,RoleID,UserName,Email,ActiveCode,Phone,Password,IsEmailActive,IsPhoneActive,RegisterDate")] User user)
         {
+            if (user.Email == null && user.Phone == null)
+            {
+                ModelState.AddModelError("Phone", "وارد کردن ایمیل یا شماره موبایل اجباری است.");
+            }
+            if (db.UserRepository.Get(u => u.Email == user.Email && u.Email != null).Any())
+            {
+                ModelState.AddModelError("Email", "ایمیل وارد شده تکراری میباشد");
+            }
+            if (db.UserRepository.Get(u => u.Phone == user.Phone && u.Phone != null).Any())
+            {
+                ModelState.AddModelError("Phone", "شماره موبایل وارد شده تکراری میباشد");
+            }
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
+                ModelState.Clear();
+                user.RegisterDate = DateTime.Now;
+                user.ActiveCode = Guid.NewGuid().ToString();
+                user.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(user.Password, "MD5");
+                db.UserRepository.Insert(user);
+                db.Save();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleTitle", user.RoleID);
+            ViewBag.RoleID = new SelectList(db.RoleRepository.Get(), "RoleID", "RoleTitle", user.RoleID);
             return View(user);
         }
 
@@ -69,12 +88,12 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = db.UserRepository.GetById(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleTitle", user.RoleID);
+            ViewBag.RoleID = new SelectList(db.RoleRepository.Get(), "RoleID", "RoleTitle", user.RoleID);
             return View(user);
         }
 
@@ -83,15 +102,19 @@ namespace ShahrChap.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,RoleID,UserName,Email,ActiveCode,Phone,DigitCode,Password,IsEmailActive,IsPhoneActive,RegisterDate")] User user)
+        public ActionResult Edit([Bind(Include = "UserID,RoleID,UserName,Email,ActiveCode,Phone,Password,IsEmailActive,IsPhoneActive,RegisterDate")] User user)
         {
+            if(user.Email == null && user.Phone == null)
+            {
+                ModelState.AddModelError("Phone", "وارد کردن ایمیل یا شماره موبایل اجباری است.");
+            }
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                db.UserRepository.Update(user);
+                db.Save();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleTitle", user.RoleID);
+            ViewBag.RoleID = new SelectList(db.RoleRepository.Get(), "RoleID", "RoleTitle", user.RoleID);
             return View(user);
         }
 
@@ -102,7 +125,7 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = db.UserRepository.GetById(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -115,9 +138,14 @@ namespace ShahrChap.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            User user = db.UserRepository.GetById(id);
+            if (user.UserAddress.Any())
+            {
+                var userAddress = db.UserAddressRepository.Get().Where(u => u.UserID == id);
+                db.UserAddressRepository.Delete(userAddress);
+            }
+            db.UserRepository.Delete(user);
+            db.Save();
             return RedirectToAction("Index");
         }
 

@@ -22,5 +22,9 @@ namespace ShahrChap.Controllers
         {
             return PartialView();
         }
+        public ActionResult ChangeEmail()
+        {
+            return PartialView();
+        }
     }
 }

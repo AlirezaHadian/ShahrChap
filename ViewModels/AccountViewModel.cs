@@ -48,7 +48,6 @@ namespace ViewModels
         [MinLength(5, ErrorMessage = "حداقل 5 کاراکتر مجاز به ورود هستید")]
         public string OTP { get; set; }
     }
-
     public class ForgotPasswordViewModel
     {
         [Display(Name = "ایمیل / شماره موبایل")]
@@ -67,12 +66,5 @@ namespace ViewModels
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "کلمه های عبور هم خوانی ندارند")]
         public string ConfirmPassword { get; set; }
-    }
-    public class EnablePhoneViewModel
-    {
-        [Display(Name = "شماره موبایل")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [RegularExpression(@"09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$", ErrorMessage = "{0} معتبر نمی باشد!")]
-        public string Phone { get; set; }
     }
 }

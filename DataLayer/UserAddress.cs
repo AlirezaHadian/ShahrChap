@@ -16,6 +16,7 @@ namespace DataLayer
     [MetadataType(typeof(UserAddressMetaData))]
     public partial class UserAddress
     {
+
         public int AddressID { get; set; }
         public int UserID { get; set; }
         public int ProvinceID { get; set; }

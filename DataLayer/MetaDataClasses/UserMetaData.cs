@@ -15,14 +15,26 @@ namespace DataLayer
     {
         public int UserID { get; set; }
         public int RoleID { get; set; }
+        [Display(Name = "نام کاربری")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string UserName { get; set; }
+        [Display(Name = "ایمیل")]
+        [EmailAddress(ErrorMessage = "پست الکترونیک وارد شده معتبر نمی باشد")]
         public string Email { get; set; }
+        [Display(Name = "کد فعالسازی")]
         public string ActiveCode { get; set; }
+        [Display(Name = "شماره موبایل")]
+        [RegularExpression(@"09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$", ErrorMessage = "{0} معتبر نمی باشد!")]
         public string Phone { get; set; }
+        [Display(Name = "کلمه عبور")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string Password { get; set; }
+        [Display(Name = "وضعیت ایمیل")]
         public bool IsEmailActive { get; set; }
+        [Display(Name = "وضعیت شماره موبایل")]
         public bool IsPhoneActive { get; set; }
-        [DisplayFormat(DataFormatString ="{0: yyyy/MM/dd}")]
+        [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
+        [Display(Name = "تاریخ ثبت نام")]
         public System.DateTime RegisterDate { get; set; }
     }
 }

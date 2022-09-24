@@ -14,6 +14,27 @@ namespace ViewModels
         [EmailAddress(ErrorMessage = "پست الکترونیک وارد شده معتبر نمی باشد")]
         public string Email { get; set; }
     }
+    public class ChangeEmailViewModel
+    {
+        [Display(Name = "ایمیل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [EmailAddress(ErrorMessage = "پست الکترونیک وارد شده معتبر نمی باشد")]
+        public string Email { get; set; }
+    }
+    public class EnablePhoneViewModel
+    {
+        [Display(Name = "شماره موبایل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [RegularExpression(@"09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$", ErrorMessage = "{0} معتبر نمی باشد!")]
+        public string Phone { get; set; }
+    }
+    public class ChangePhoneViewModel
+    {
+        [Display(Name = "شماره موبایل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [RegularExpression(@"09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$", ErrorMessage = "{0} معتبر نمی باشد!")]
+        public string Phone { get; set; }
+    }
     public class AddAddressViewModel
     {
         [Display(Name ="نام و نام خانوادگی")][Required(ErrorMessage = "لطفا {0} را وارد کنید")]

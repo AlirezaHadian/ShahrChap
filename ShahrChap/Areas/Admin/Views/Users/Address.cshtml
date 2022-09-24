@@ -1,0 +1,55 @@
+﻿@model IEnumerable<DataLayer.UserAddress>
+
+@{
+    ViewBag.Title = "آدرس کاربر";
+}
+
+<h2>آدرس های @ViewBag.Name</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.province.provinceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.city.cityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PosteCode)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.province.provinceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.city.cityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PosteCode)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+<p>
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</p>
