@@ -20,7 +20,7 @@ namespace DataLayer
         public province()
         {
             this.city = new HashSet<city>();
-            this.UserAddress = new HashSet<UserAddress>();
+            this.User_Address = new HashSet<User_Address>();
         }
     
         public int provinceId { get; set; }
@@ -28,7 +28,9 @@ namespace DataLayer
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<city> city { get; set; }
+        public virtual province province1 { get; set; }
+        public virtual province province2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAddress> UserAddress { get; set; }
+        public virtual ICollection<User_Address> User_Address { get; set; }
     }
 }

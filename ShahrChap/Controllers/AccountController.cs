@@ -1,8 +1,11 @@
 ﻿using DataLayer;
 using DataLayer.Context;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -15,6 +18,7 @@ namespace ShahrChap.Controllers
     {
         UnitOfWork db = new UnitOfWork();
         // GET: Account
+
         [Route("Register")]
         public ActionResult Register()
         {
@@ -23,48 +27,57 @@ namespace ShahrChap.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Register")]
-        public ActionResult Register(RegisterViewModel register)
+        public async Task<ActionResult> Register(RegisterViewModel register)
         {
             if (ModelState.IsValid)
             {
-                if (!db.UserRepository.Get().Any(u => u.Email == register.EmailOrPhone.Trim().ToLower() || u.Phone == register.EmailOrPhone.Trim()))
+                var isCaptchaValid = await IsCaptchaValid(register.GoogleCaptchaToken, "register");
+                if (isCaptchaValid)
                 {
-                    User user = new User()
+
+                    if (!db.UserRepository.Get().Any(u => u.Email == register.EmailOrPhone.Trim().ToLower() || u.Phone == register.EmailOrPhone.Trim()))
                     {
-                        UserName = register.UserName,
-                        RoleID = 1,
-                        Password = FormsAuthentication.HashPasswordForStoringInConfigFile(register.Password, "MD5"),
-                        RegisterDate = DateTime.Now,
-                    };
-                    if (register.EmailOrPhone.Contains("@"))
-                    {
-                        user.Email = register.EmailOrPhone;
-                        user.ActiveCode = Guid.NewGuid().ToString();
-                        user.IsEmailActive = false;
-                        db.UserRepository.Insert(user);
-                        db.Save();
-                        string body = PartialToStringClass.RenderPartialView("ManageEmails", "ActivationEmail", user);
-                        SendEmail.Send(user.Email, "فعالسازی حساب کاربری", body);
-                        return View("SuccessEmailRegister", user);
+                        User user = new User()
+                        {
+                            UserName = register.UserName,
+                            RoleID = 1,
+                            Password = FormsAuthentication.HashPasswordForStoringInConfigFile(register.Password, "MD5"),
+                            RegisterDate = DateTime.Now,
+                        };
+                        if (register.EmailOrPhone.Contains("@"))
+                        {
+                            user.Email = register.EmailOrPhone;
+                            user.ActiveCode = Guid.NewGuid().ToString();
+                            user.IsEmailActive = false;
+                            db.UserRepository.Insert(user);
+                            db.Save();
+                            string body = PartialToStringClass.RenderPartialView("ManageEmails", "ActivationEmail", user);
+                            SendEmail.Send(user.Email, "فعالسازی حساب کاربری", body);
+                            return View("SuccessEmailRegister", user);
+                        }
+                        else
+                        {
+                            Random random = new Random();
+                            string DigitCode = random.Next(10000, 99999).ToString();
+                            user.Phone = register.EmailOrPhone;
+                            user.IsPhoneActive = false;
+                            SendSMS.SendWithPattern(register.EmailOrPhone, register.UserName, DigitCode);
+                            db.UserRepository.Insert(user);
+                            db.Save();
+                            Session["OTP"] = DigitCode;
+                            Session["ExpireTime"] = DateTime.Now;
+                            Session["PhoneNumber"] = user.Phone;
+                            return RedirectToAction("VerifyPhone", "Account");
+                        }
                     }
                     else
                     {
-                        Random random = new Random();
-                        string DigitCode = random.Next(10000, 99999).ToString();
-                        user.Phone = register.EmailOrPhone;
-                        user.IsPhoneActive = false;
-                        SendSMS.SendWithPattern(register.EmailOrPhone, register.UserName, DigitCode);
-                        db.UserRepository.Insert(user);
-                        db.Save();
-                        Session["OTP"] = DigitCode;
-                        Session["ExpireTime"] = DateTime.Now;
-                        Session["PhoneNumber"] = user.Phone;
-                        return RedirectToAction("VerifyPhone", "Account");
+                        ModelState.AddModelError("EmailOrPhone", "کاربری با این مشخصات در سایت وجود دارد!");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("EmailOrPhone", "کاربری با این مشخصات در سایت وجود دارد!");
+                    ModelState.AddModelError("EmailOrPhone", "کپچا نامعتبر می باشد");
                 }
             }
             return View(register);
@@ -127,29 +140,38 @@ namespace ShahrChap.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Route("Login")]
-        public ActionResult Login(LoginViewModel login, string returnUrl = "/")
+        public async Task<ActionResult> Login(LoginViewModel login, string returnUrl = "/")
         {
             if (ModelState.IsValid)
             {
-                string HashPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(login.Password, "MD5");
-                var user = db.UserRepository.Get().SingleOrDefault(u => u.Email == login.EmailOrPhone || u.Phone == login.EmailOrPhone);
-                if (user != null && user.Password==HashPassword)
+                var isCaptchaValid = await IsCaptchaValid(login.GoogleCaptchaToken, "login");
+                if (isCaptchaValid == true)
                 {
-                    if (user.IsEmailActive || user.IsPhoneActive)
+                    string HashPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(login.Password, "MD5");
+                    var user = db.UserRepository.Get().SingleOrDefault(u => u.Email == login.EmailOrPhone || u.Phone == login.EmailOrPhone);
+                    if (user != null && user.Password == HashPassword)
                     {
-                        FormsAuthentication.SetAuthCookie(user.UserName, login.RemmemberMe);
-                        return Redirect("/");
+                        if (user.IsEmailActive || user.IsPhoneActive)
+                        {
+                            FormsAuthentication.SetAuthCookie(user.UserName, login.RemmemberMe);
+                            return Redirect("/");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("EmailOrPhone", "حساب کاربری شما فعال نشده است.");
+                        }
                     }
                     else
                     {
-                        ModelState.AddModelError("EmailOrPhone", "حساب کاربری شما فعال نشده است.");
+                        ModelState.AddModelError("EmailOrPhone", "کاربری با مشخصات وارد شده یافت نشد.");
                     }
                 }
-                else
+                else if (isCaptchaValid == false)
                 {
-                    ModelState.AddModelError("EmailOrPhone", "کاربری با مشخصات وارد شده یافت نشد.");
+                    ModelState.AddModelError("EmailOrPhone", "کپچا نامعتبر می باشد");
                 }
             }
+            
             return View();
         }
 
@@ -286,6 +308,35 @@ namespace ShahrChap.Controllers
             SendSMS.SendWithPattern(phone, user.UserName, OTP);
             Session["OTP"] = OTP;
             Session["ExpireTime"] = DateTime.Now;
+        }
+        private async Task<bool> IsCaptchaValid(string response, string action)
+        {
+            try
+            {
+                var secret = "6LedXs0eAAAAAM1ch6BbS09NM9JZqupvgNIAtmoQ";
+                using (var client = new HttpClient())
+                {
+                    var values = new Dictionary<string, string>
+                    {
+                        {"secret", secret},
+                        {"response", response},
+                        {"remoteip", Request.UserHostAddress}
+                    };
+
+                    var content = new FormUrlEncodedContent(values);
+                    var verify = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                    var captchaResponseJson = await verify.Content.ReadAsStringAsync();
+                    var captchaResult = JsonConvert.DeserializeObject<CaptchaResponseViewModel>(captchaResponseJson);
+                    return captchaResult.Success
+                           && captchaResult.Action == action
+                           && captchaResult.Score > 0.5;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
         }
     }
 }

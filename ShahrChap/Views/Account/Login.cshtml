@@ -15,13 +15,13 @@
                 <p>شما دسترسی به بخش درخواست شده را ندارید.</p>
             </div>
         }
-        @if(Request.QueryString["recovery"]!= null)
-                {
-                    <div class="alert alert-success mt-2">
-                        <p>کلمه عبور شما با موفقیت تغییر یافت. </p>
-                        <p>از طریق فرم زیر میتوانید وارد سایت شوید!</p>
-                    </div>
-                }
+        @if (Request.QueryString["recovery"] != null)
+        {
+            <div class="alert alert-success mt-2">
+                <p>کلمه عبور شما با موفقیت تغییر یافت. </p>
+                <p>از طریق فرم زیر میتوانید وارد سایت شوید!</p>
+            </div>
+        }
         <div class="register-page">
             <ol class="breadcrumb my-5">
                 <li class="breadcrumb-item"><a href="#">خانه</a></li>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                @*Html.HiddenFor(model => model.GoogleCaptchaToken)*@
+                @Html.HiddenFor(model => model.GoogleCaptchaToken)
 
                 <div class="form-group">
                     <div class="pt-2">
@@ -84,5 +84,11 @@
     </div>
 }
 
-
-
+<script src="https://www.google.com/recaptcha/api.js?render=6LedXs0eAAAAAN6rVW0uf6UXN6cn6E-Z4sIYq6YQ"></script>
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute('6LedXs0eAAAAAN6rVW0uf6UXN6cn6E-Z4sIYq6YQ', { action: 'login' }).then(function (token) {
+            $("#GoogleCaptchaToken").val(token);
+        });
+    });
+</script>

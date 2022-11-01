@@ -44,9 +44,110 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserAddress">
-      <EntityTypeMapping TypeName="ShahrChap_DBModel.UserAddress">
-        <MappingFragment StoreEntitySet="UserAddress">
+    <EntitySetMapping Name="Product_Galleries">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Product_Galleries">
+        <MappingFragment StoreEntitySet="Product_Galleries">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="GalleryID" ColumnName="GalleryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Tags">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="TagID" ColumnName="TagID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Products">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="IsExist" ColumnName="IsExist" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Features">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Features">
+        <MappingFragment StoreEntitySet="Features">
+          <ScalarProperty Name="FeatureTitle" ColumnName="FeatureTitle" />
+          <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product_Features">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Product_Features">
+        <MappingFragment StoreEntitySet="Product_Features">
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="PF_ID" ColumnName="PF_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Factors">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Factors">
+        <MappingFragment StoreEntitySet="Factors">
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="IsFinally" ColumnName="IsFinally" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FactorID" ColumnName="FactorID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Slider">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Slider">
+        <MappingFragment StoreEntitySet="Slider">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="SlideID" ColumnName="SlideID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Factor_Details">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Factor_Details">
+        <MappingFragment StoreEntitySet="Factor_Details">
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="FactorID" ColumnName="FactorID" />
+          <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Groups">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Order_Groups">
+        <MappingFragment StoreEntitySet="Order_Groups">
+          <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
+          <ScalarProperty Name="Order_GroupID" ColumnName="Order_GroupID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="School_Tools_Groups">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.School_Tools_Groups">
+        <MappingFragment StoreEntitySet="School_Tools_Groups">
+          <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
+          <ScalarProperty Name="ST_GroupID" ColumnName="ST_GroupID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Address">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.User_Address">
+        <MappingFragment StoreEntitySet="User_Address">
           <ScalarProperty Name="PosteCode" ColumnName="PosteCode" />
           <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
           <ScalarProperty Name="FullName" ColumnName="FullName" />
@@ -54,6 +155,40 @@
           <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product_Groups">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Product_Groups">
+        <MappingFragment StoreEntitySet="Product_Groups">
+          <ScalarProperty Name="Order_GroupID" ColumnName="Order_GroupID" />
+          <ScalarProperty Name="ST_GroupID" ColumnName="ST_GroupID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="PG_ID" ColumnName="PG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Details">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Order_Details">
+        <MappingFragment StoreEntitySet="Order_Details">
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="SocialNumber" ColumnName="SocialNumber" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="IsDesigned" ColumnName="IsDesigned" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="BackText" ColumnName="BackText" />
+          <ScalarProperty Name="FrontText" ColumnName="FrontText" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="OT_ID" ColumnName="OT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_Files">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Order_Files">
+        <MappingFragment StoreEntitySet="Order_Files">
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="OT_ID" ColumnName="OT_ID" />
+          <ScalarProperty Name="OF_ID" ColumnName="OF_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<DataLayer.Products>
+@{
+    ViewBag.Title = "آرشیو محصولات";
+}
+<section>
+    <div class="container mt-4 internal-style">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                <li class="breadcrumb-item"><a href="#">محصولات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+            </ol>
+            <div class="col-md-3 col-sm-4 my-3">
+                <section class="border-radius right-side-content">
+                    <header><h3> فیلتر ها  </h3></header>
+                    <article class="filter">
+                        <form action="/Archive" id="filterForm">
+                            <input type="hidden" value="@ViewBag.pageId" id="pageId" name="pageId" />
+                            <p>عنوان</p>
+                            <p>
+                                <input type="text" name="title" class="form-control" value="@ViewBag.productTitle" />
+                            </p>
+                            <p>
+                                <label for="minPriceRange">قیمت از:</label>
+                                <input type="range" onchange="showMinPrice(this.value)"  class="form-range" name="minPrice" min="0.00" max="1000000" step="500" value="@ViewBag.minPrice">
+                                <span class="rangeValues" id="min-price-range">@ViewBag.minPrice</span>
+                            </p>
+                            <p>
+                                <label for="maxPriceRange">تا قیمت:</label>
+                                <input type="range" onchange="showMaxPrice(this.value)" class="form-range" name="maxPrice" min="0.00" max="1000000" step="500" value="@ViewBag.maxPrice">
+                                <span class="rangeValues" id="max-price-range">@ViewBag.maxPrice</span>
+                            </p>
+
+                            @{
+                                List<DataLayer.School_Tools_Groups> list = ViewBag.Groups;
+                                List<int> selected = ViewBag.selectGroup ?? new List<int>();
+                            }
+                            <p>گروه ها</p>
+                            <ul>
+                                @foreach (var group in list)
+                                {
+                                    <li>
+                                        <input type="checkbox" name="selectedGroups" @((selected.Any(s => s == group.ST_GroupID)) ? "checked" : "") value="@group.ST_GroupID" />
+                                        <span>@group.GroupTitle</span>
+                                    </li>
+                                }
+                            </ul>
+                            <input type="submit" class="btn btn-block btn-submit btn-success mt-2" value="اعمال" />
+                        </form>
+                    </article>
+                </section>
+            </div>
+
+            <section class="last-products col-md-9 col-sm-8 left-side-content">
+
+                <header><h3> آرشیو محصولات </h3></header>
+                <article>
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-4 col-sm-6 col-10">
+                                    @Html.Partial("_product", item)
+                                </div>
+                            }
+                        </div>
+                        @if (ViewBag.PageCount > 1)
+                        {
+                            <div class="pagination-layer">
+                                <ul class="pagination">
+                                    @for (int i = 1; i <= (ViewBag.PageCount); i++)
+                                    {
+                                        <li class="page-item @(((int)ViewBag.pageId==i)?"active":"")">
+                                            <a onclick="changePage(@i)" class="page-link">@i</a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
+</article>
+            </section>
+            
+        </div>
+    </div>
+</section>
+<script>
+    function changePage(pageId) {
+        $("#pageId").val(pageId);
+        $("#filterForm").submit();
+    }
+
+    function separate(Number) {
+        Number += '';
+        Number = Number.replace(',', '');
+        x = Number.split('.');
+        y = x[0];
+        z = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(y))
+            y = y.replace(rgx, '$1' + ',' + '$2');
+        return y + z;
+    }
+
+    function showMinPrice(val) {
+        document.getElementById("min-price-range").innerHTML = separate(val);
+    }
+    function showMaxPrice(val) {
+        document.getElementById("max-price-range").innerHTML = separate(val);
+    }
+</script>

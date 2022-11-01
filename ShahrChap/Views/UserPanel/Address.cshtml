@@ -1,7 +1,7 @@
-﻿@model DataLayer.UserAddress
+﻿@model DataLayer.User_Address
 @using DataLayer
 @{
-    List<UserAddress> list = ViewBag.Address;
+    List<User_Address> list = ViewBag.Address;
     int count = list.Count;
     int id = ViewBag.UserId;
 }
@@ -12,7 +12,7 @@
     <div class="inner">
         @if (count == 0)
         {
-            <form action="" method="" class="form-style">
+            <form action="" method="get" class="form-style">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="address">
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="address-info">
-                                        <label><i class="fas fa-city"></i>  @item.province.provinceName </label>
+                                        <label><i class="fas fa-city"></i>  @item.province.provinceName</label>
                                     </div>
                                 </div>
                                 <div class="col-xs-12">

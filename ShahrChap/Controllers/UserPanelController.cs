@@ -29,7 +29,7 @@ namespace ShahrChap.Controllers
         }
         public ActionResult Address(int id)
         {
-            ViewBag.Address = db.UserAddressRepository.Get().Where(u => u.UserID == id).ToList();
+            ViewBag.Address = db.User_AddressRepository.Get().Where(u => u.UserID == id).ToList();
             ViewBag.UserId = id;
             return PartialView();
         }
@@ -288,13 +288,18 @@ namespace ShahrChap.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddAddress(AddAddressViewModel address)
+        public ActionResult AddAddress(AddAddressViewModel address, string Confirm ="")
         {
+            if(Confirm != null && Confirm == "NeedAddress")
+            {
+                ViewBag.NeedAddress = true;
+            }
+
             var username = User.Identity.Name;
             var user = db.UserRepository.Get().SingleOrDefault(u => u.UserName == username);
             if (ModelState.IsValid)
             {
-                UserAddress userAddress = new UserAddress()
+                User_Address userAddress = new User_Address()
                 {
                     FullName = address.FullName,
                     FullAddress = address.FullAddress,
@@ -303,7 +308,7 @@ namespace ShahrChap.Controllers
                     CityID = address.City,
                     UserID = user.UserID
                 };
-                db.UserAddressRepository.Insert(userAddress);
+                db.User_AddressRepository.Insert(userAddress);
                 db.Save();
                 return RedirectToAction("Index");
             }
@@ -311,8 +316,8 @@ namespace ShahrChap.Controllers
         }
         public void DeleteAddress(int id)
         {
-            var address = db.UserAddressRepository.GetById(id);
-            db.UserAddressRepository.Delete(address);
+            var address = db.User_AddressRepository.GetById(id);
+            db.User_AddressRepository.Delete(address);
             db.Save();
         }
         public void ResendCode()
@@ -330,6 +335,14 @@ namespace ShahrChap.Controllers
             List<city> cities = db.CityRepository.Get().Where(c => c.province_id == provinceId).ToList();
             ViewBag.CityList = new SelectList(cities, "cityId", "cityName");
             return PartialView("DisplayCities");
+        }
+        
+        //Factors
+        public ActionResult GetFactors()
+        {
+            var username = User.Identity.Name;
+            List<Factors> factors = db.FactorsRepository.Get().Where(f => f.Users.UserName == username).ToList();
+            return View();
         }
     }
 }

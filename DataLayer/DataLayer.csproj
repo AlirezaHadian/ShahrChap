@@ -80,8 +80,48 @@
     <Compile Include="city.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\UserAddressMetaData.cs" />
+    <Compile Include="Factor_Details.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\FactorsMetaData.cs" />
+    <Compile Include="MetaDataClasses\Factor_DetailsMetaData.cs" />
+    <Compile Include="Factors.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Features.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\FeaturesMetaData.cs" />
+    <Compile Include="MetaDataClasses\User_AddressMetaData.cs" />
     <Compile Include="MetaDataClasses\cityMetaData.cs" />
+    <Compile Include="MetaDataClasses\Order_DetailsMetaData.cs" />
+    <Compile Include="Order_Details.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\Order_FilesMetaData.cs" />
+    <Compile Include="Order_Files.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Order_Groups.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\Order_GroupsMetaData.cs" />
+    <Compile Include="Products.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\ProductsMetaData.cs" />
+    <Compile Include="Product_Features.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\Product_FeaturesMetaData.cs" />
+    <Compile Include="Product_Galleries.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\Product_GalleriesMetaData.cs" />
+    <Compile Include="Product_Groups.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\Product_GroupsMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MetaDataClasses\provinceMetaData.cs" />
     <Compile Include="province.cs">
@@ -91,6 +131,10 @@
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="MetaDataClasses\RoleMetaData.cs" />
     <Compile Include="Role.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\School_Tools_GroupsMetaData.cs" />
+    <Compile Include="School_Tools_Groups.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ShahrChapModel.Context.cs">
@@ -109,10 +153,18 @@
       <DependentUpon>ShahrChapModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="MetaDataClasses\UserMetaData.cs" />
+    <Compile Include="MetaDataClasses\SliderMetaData.cs" />
+    <Compile Include="Slider.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tags.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\TagsMetaData.cs" />
     <Compile Include="User.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserAddress.cs">
+    <Compile Include="User_Address.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

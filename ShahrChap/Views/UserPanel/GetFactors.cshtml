@@ -1,0 +1,132 @@
+﻿@model DataLayer.User
+@using Utilities
+@{
+    ViewBag.Title = "فاکتور ها";
+}
+
+<section>
+    <div class="container internal-style py-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item"><a href="#">محصولات</a></li>
+            <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+        </ol>
+        <div class="Account-panel">
+            <div class="row">
+
+                @Html.Partial("UserPanelMenu")
+
+                <div class="col-md-9 col-sm-12 col-xs-12">
+                    <div class="left-content">
+                        <section class="section-style box-shadow">
+                            <header>
+                                <h2>فاکتور ها </h2>
+                            </header>
+                            <div class="inner">
+                                <form action="" method="" class="form-style">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                            <div class="input-layer">
+                                                <label><i class="fas fa-user"></i> @Model.UserName </label>
+                                            </div>
+                                        </div>
+                                        @if (Model.Phone != null)
+                                        {
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                                <div class="input-layer">
+                                                    <label><i class="fas fa-phone"></i> @Model.Phone <span><a onclick="ChangePhone()" class="edit-user-info"><i class="fas fa-edit"></i></a></span></label>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                                <div class="input-layer">
+                                                    <a onclick="EnablePhone()" class="btn btn-outline-success btn-sm"> فعالسازی موبایل </a>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (Model.Email != null)
+                                        {
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                                <div class="input-layer">
+                                                    <label><i class="fas fa-envelope"></i> @Model.Email <span><a onclick="ChangeEmail()" class="edit-user-info"><i class="fas fa-edit"></i></a></span> </label>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                                <div class="input-layer">
+                                                    <a onclick="EnableEmail()" class="btn btn-outline-success btn-sm"> فعالسازی ایمیل </a>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                            <div class="input-layer">
+                                                <label><i class="fas fa-calendar-alt"></i> @Model.RegisterDate.ToString("dddd, dd MMMM yyyy") </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Modal Header</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+                ...
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    //function EnableEmail() {
+    //    $.get("/UserPanel/EnableEmail", function (result) {
+    //        $("#myModal").modal('show');
+    //        $("#myModalLabel").html("فعالسازی ایمیل");
+    //        $("#myModalBody").html(result);
+    //    });
+    //}
+
+    //function EnablePhone() {
+    //    $.get("/UserPanel/EnablePhone", function (result) {
+    //        $("#myModal").modal('show');
+    //        $("#myModalLabel").html("فعالسازی شماره موبایل");
+    //        $("#myModalBody").html(result);
+    //    });
+    //}
+    //function ChangeEmail() {
+    //    $.get("/UserPanel/ChangeEmail", function (result) {
+    //        $("#myModal").modal('show');
+    //        $("#myModalLabel").html("تغییر ایمیل");
+    //        $("#myModalBody").html(result);
+    //    });
+    //}
+    //function ChangePhone() {
+    //    $.get("/UserPanel/ChangePhone", function (result) {
+    //        $("#myModal").modal('show');
+    //        $("#myModalLabel").html("تغییر شماره موبایل");
+    //        $("#myModalBody").html(result);
+    //    });
+    //}
+    //function success() {
+    //    $("#myModal").modal('hide');
+    //}
+
+</script>

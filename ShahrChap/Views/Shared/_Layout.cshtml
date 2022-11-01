@@ -19,14 +19,15 @@
     <!--Owl carousel Js-->
     <script src="/Content/js/owl.carousel.min.js"></script>
 
+
     <title>شهر چاپ</title>
 </head>
 
 <body>
     <!--PreLoader-->
     @*<div class="preloader d-flex justify-content-center align-items-center">
-        <img src="/Content/img/preloader.gif" alt="preloader">
-    </div>*@
+            <img src="/Content/img/preloader.gif" alt="preloader">
+        </div>*@
     <!--PreLoader-->
     <!--Header-->
     <header class="main-navigation">
@@ -53,8 +54,7 @@
                     <li class="nav-item">
                         <a href="/ShopCart" class="btn btn-primary navbar-link register-button position-relative btn-sm">
                             سبد خرید <i class="fas fa-shopping-cart"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                +1
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="countShopCart">
                                 <span class="visually-hidden">محصول سبد خرید</span>
                             </span>
                         </a>
@@ -67,45 +67,36 @@
         <div class="nav-overlay d-flex d-lg-none"></div>
         <!--End Nav Overlay-->
         <!--Nav element-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <div class="order-lg-2 bg-light d-lg-flex w-100 pb-3 pb-lg-0 sidebar" id="navbarSupportedContent">
                     <ul class="navbar-nav me-lg-auto mb-2 mb-lg-0">
-                        <li class="nav-item ">
-                            <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="#"> صفحه اصلی</a>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 px-lg-2 active" aria-current="page" href="/"> صفحه اصلی</a>
+                        </li>
+                        @*@Html.Action("ShowGroups", "SchoolTools")*@
+                        <li class="nav-item">
+                            <a class="nav-link px-3 px-lg-2" href="/Archive">لوازم تحریر</a>
                         </li>
                         <li class="nav-item dropdown product-menu">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                محصولات
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">گروه مصحولات 1</a></li>
-                                <li><a class="dropdown-item" href="#">گروه مصحولات 2</a></li>
-                                <li><a class="dropdown-item" href="#">گروه مصحولات 3</a></li>
-                            </ul>
+                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="/Order">سفارش محصول</a>
                         </li>
 
                         <li class="nav-item dropdown product-menu">
-                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="#">سفارش محصول</a>
-                        </li>
-
-                        <li class="nav-item dropdown product-menu">
-                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="#">سفارش پرینت</a>
+                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="/Print">سفارش پرینت</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-3 px-lg-2" href="#">درباره ما</a>
                         </li>
 
-
                     </ul>
 
-                    <div class="search-box">
-                        <input type="text" class="input" placeholder="جستجو در محصولات ...">
-                        <button class="search-button">
+                    <form action="/Search" method="get" class="search-box">
+                        <input type="text" class="input" name="q" placeholder="جستجو در محصولات ...">
+                        <button type="submit" class="search-button">
                             <i class="fas fa-search"></i>
                         </button>
-                    </div>
+                    </form>
                 </div>
 
             </div>
@@ -212,7 +203,7 @@
                 غیرقانونی محسوب خواهد شد
             </div>
             <div class="text-center pb-2">
-                برنامه نویس و طراح سایت: <a href="#" style="color: white;">علیرضا هادیان</a>
+                توسعه دهنده: <a href="#" style="color: white;">علیرضا هادیان</a>
             </div>
         </div>
         <!-- Copyright -->
@@ -228,4 +219,22 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+    $(function () {
+        countShopCart();
+    });
 
+    function countShopCart() {
+        $.get("/Api/Shop", function (res) {
+            if (res == 0) {
+                $("#countShopCart").removeClass("badge rounded-pill bg-danger");
+            }
+            $("#countShopCart").html(res);
+        });
+    }
+    function AddToCart(id) {
+        $.get("/Api/Shop/" + id, function (res) {
+            $("#countShopCart").html(res);
+        });
+    }
+</script>

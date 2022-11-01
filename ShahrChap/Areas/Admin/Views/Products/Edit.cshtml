@@ -1,0 +1,155 @@
+﻿@using DataLayer
+@model DataLayer.Products
+
+@{
+    ViewBag.Title = "ویرایش محصول";
+    List<Product_Groups> selectedGroup = ViewBag.SelectedGroups;
+}
+
+<h2>ویرایش محصول @Model.Title</h2>
+<div class="row">
+    @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(m => m.ProductID)
+        @Html.HiddenFor(m => m.ImageName)
+        @Html.HiddenFor(m => m.CreateDate)
+
+        <div class="col-md-8">
+            @Html.AntiForgeryToken()
+            @if (ViewBag.ErrorSelectedGroup == true)
+            {
+                <div class="alert alert-danger">
+                    لطفا گروه محصول را انتخاب کنید
+                </div>
+            }
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" name="PricePishPardakht" class="form-control" value="@Model.Price.ToString("#,0")" onkeyup="javascript: this.value = ToRial(this.value);" />
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span class="control-label col-md-2">کلمات کلیدی</span>
+                    <div class="col-md-10">
+                        <input type="text" name="tags" value="@ViewBag.Tags" class="form-control" placeholder="کلمات کلیدی را با , جدا کنید" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsExist, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.RadioButtonFor(model => model.IsExist, true@*, new { @checked = "checked" }*@) موجود
+                            @Html.RadioButtonFor(model => model.IsExist, false) ناموجود
+                            @Html.ValidationMessageFor(model => model.IsExist, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="ویرایش محصول" class="btn btn-warning" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">تصویر محصول</div>
+                <div class="panel-body">
+                    <img id="imgPreviewProduct" style="margin: 8px auto" class="thumbnail" src="/Images/ProductImages/@Model.ImageName" />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="file" id="imageProduct" name="imageProduct" />
+                            @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">انتخاب گروه</div>
+                <div class="panel-body">
+                    @{
+                        List<School_Tools_Groups> groups = ViewBag.Groups;
+
+                        <ul>
+                            @foreach (var group in groups)
+                            {
+                                <li>
+                                    <input type="checkbox" @((selectedGroup.Any(g => g.ST_GroupID == group.ST_GroupID)) ? "checked" : "") name="selectedGroups" value="@group.ST_GroupID" /> <span>@group.GroupTitle</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    @Html.ActionLink("بازگشت به لیست محصولات", "Index")
+</div>
+
+@section Scripts
+{
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgPreviewProduct').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imageProduct").change(function () {
+            readURL(this);
+        });
+
+        function ToRial(str) {
+
+            str = str.replace(/\,/g, '');
+            var objRegex = new RegExp('(-?[0-9]+)([0-9]{3})');
+
+            while (objRegex.test(str)) {
+                str = str.replace(objRegex, '$1,$2');
+            }
+
+            return str;
+        }
+    </script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function () {
+            $('#Text').ckeditor();
+        });
+    </script>
+}
+
+

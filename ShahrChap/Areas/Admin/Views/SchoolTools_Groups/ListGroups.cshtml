@@ -1,0 +1,28 @@
+﻿@model IEnumerable<DataLayer.School_Tools_Groups>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GroupTitle)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="group_@item.ST_GroupID">
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupTitle)
+            </td>
+            <td>
+                <a class="btn btn-warning btn-sm" onclick="Edit(@item.ST_GroupID)">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-danger btn-sm" onclick="Delete(@item.ST_GroupID)">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>

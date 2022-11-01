@@ -5,12 +5,22 @@
             @User.Identity.Name <i class="fas fa-user-circle"></i>
         </a>
     </li>
+    if (User.IsInRole("admin"))
+    {
+        <li class="nav-item pe-1 ">
+            <a href="/Admin" class="btn btn-primary navbar-link register-button btn-sm">
+                پنل ادمین
+                <i class="fas fa-user-cog"></i>
+            </a>
+        </li>
+    }
     <li class="nav-item pe-1 ">
         <a href="/Account/SignOut" class="btn btn-outline-danger navbar-link register-button btn-sm">
             خروج
             <i class="fas fa-sign-out-alt"></i>
         </a> |
-    </li> 
+    </li>
+
 }
 else
 {

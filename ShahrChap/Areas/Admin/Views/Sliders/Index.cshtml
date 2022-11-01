@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DataLayer.Slider>
+
+@{
+    ViewBag.Title = "اسلایدر";
+}
+
+<h2>لیست اسلاید ها</h2>
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Create")">افزودن اسلاید</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="slide_@(item.SlideID)">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <img class="thumbnail" style="max-width:200px; max-height:170px;" src="~/Images/Slider/@item.ImageName" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                <a class="btn btn-warning btn-xs" href="@Url.Action("Edit",new {id=item.SlideID})">ویرایش</a>
+                <a class="btn btn-danger btn-xs" onclick="DeleteSlide(@item.SlideID)">حذف</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function DeleteSlide(id) {
+        if (confirm('آیا از حذف این محصول مطمئن هستید؟')) {
+            $.get("/Admin/Sliders/Delete/" + id, function () {
+                $("#slide_" + id).hide('slow');
+            });
+        }
+    }
+</script>

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<DataLayer.School_Tools_Groups>
+
+<li class="nav-item dropdown product-menu">
+    <a class="nav-link dropdown-toggle" href="/Archive" id="navbarDarkDropdownMenuLink" role="button"
+       data-bs-toggle="dropdown" aria-expanded="true">
+        لوازم تحریر
+    </a>
+    <ul class="dropdown-menu dropdown-menu-light text-center" aria-labelledby="navbarDarkDropdownMenuLink">
+        @foreach (var item in Model)
+        {
+            <li><a class="dropdown-item" href="#">@item.GroupTitle</a></li>
+        }
+    </ul>
+</li>

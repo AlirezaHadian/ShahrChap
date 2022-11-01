@@ -91,3 +91,4 @@ C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ShahrChap\bin\Utilities.pdb
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ShahrChap\bin\ViewModels.pdb
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ShahrChap\bin\Utilities.dll.config
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ShahrChap\bin\ViewModels.dll.config
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ShahrChap\bin\ICSharpCode.SharpZipLib.dll

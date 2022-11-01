@@ -1,0 +1,100 @@
+﻿@model DataLayer.Products
+@using ViewModels
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<section>
+    <div class="single-product">
+        <div class="container internal-style py-5">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                <li class="breadcrumb-item"><a href="#">محصولات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+            </ol>
+            <div class="card-wrapper">
+                <div class="card-single-product row">
+                    <!-- card left -->
+                    <div class="product-imgs col-md-4 col-sm-12 col-xs-12 pull-right">
+                        <div class="img-display">
+                            <div class="img-showcase">
+                                <img src="/Images/ProductImages/@Model.ImageName">
+                            </div>
+                        </div>
+                        @if (Model.Product_Galleries.Any())
+                        {
+                    <div class="img-select">
+                        <div class="img-item">
+                            <img src="~/Images/ProductImages/@Model.ImageName" alt="تصویر اصلی">
+                        </div>
+                        @foreach (var item in Model.Product_Galleries)
+                        {
+                            <div class="img-item">
+                                <img src="~/Images/ProductImages/@item.ImageName" alt="@item.Title">
+                            </div>
+                        }
+                    </div>
+                        }
+                    </div>
+
+                    <!-- card right -->
+                    <div class="product-content col-md-8 col-sm-12 col-xs-12">
+                        <div class="product-price pull-left">
+                            @if (Model.IsExist == true)
+                            {
+                                <p class="new-price">قیمت: <span>@Model.Price.ToString("#,0") تومان</span></p>
+                            }
+                            else
+                            {
+                                <a href="#" class="Price Unavailable">ناموجود</a>
+                            }
+                        </div>
+                        <h3 class="single-product-title">@Model.Title</h3>
+
+
+                        <div class="product-detail">
+                            @if (Model.Text != null)
+                            {
+                                <h2>درباره محصول:</h2>
+                                <div>
+                                    @Html.Raw(Model.Text)
+                                </div>
+                            }
+                            @if (ViewBag.ProductFeatures != null)
+                            {
+                                List<ShowProductFeaturesViewModel> list = ViewBag.ProductFeatures;
+                                <ul>
+                                    @foreach (var item in list)
+                                    {
+                                        <li> @item.FeatureTitle : <span>@string.Join(" , ", item.Values)</span></li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                        <div class="purchase-info">
+                            <input type="number" min="0" value="1">
+                            <a onclick="AddToCart(@Model.ProductID)" class="btn">
+                                افزودن به سبد خرید <i class="fas fa-shopping-cart"></i>
+                            </a>
+                            @*<a type="button" class="btn">مقایسه</a>*@
+                        </div>
+                        <section class="border-radius tags-layer">
+                            @foreach (var item in Model.Tags)
+                            {
+                                <a href="/Search?q=@item.Tag">@item.Tag</a>
+                            }
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $('.img-select img').click(function () {
+        var src = $(this).attr('src');
+        $('.img-showcase img').attr('src', src).fadeOut('fast').fadeIn('fast');
+    });
+</script>

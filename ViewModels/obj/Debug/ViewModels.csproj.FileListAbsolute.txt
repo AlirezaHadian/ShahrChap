@@ -19,3 +19,5 @@ C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ViewModels\bin\Debug\System.Web.Web
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ViewModels\obj\Debug\ViewModels.csproj.CopyComplete
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ViewModels\obj\Debug\ViewModels.csproj.AssemblyReference.cache
 C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ViewModels\bin\Debug\ViewModels.dll.config
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ViewModels\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Alireza\Desktop\ShahrChap\ShahrChap\ViewModels\bin\Debug\Newtonsoft.Json.xml

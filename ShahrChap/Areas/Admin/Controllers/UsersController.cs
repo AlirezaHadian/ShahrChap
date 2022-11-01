@@ -31,7 +31,7 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List<UserAddress> userAddress = db.UserAddressRepository.Get().Where(u=> u.Users.UserID == id).ToList();
+            List<User_Address> userAddress = db.User_AddressRepository.Get().Where(u=> u.Users.UserID == id).ToList();
             ViewBag.Name = db.UserRepository.GetById(id).UserName;
             if (userAddress == null)
             {
@@ -139,10 +139,12 @@ namespace ShahrChap.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.UserRepository.GetById(id);
-            if (user.UserAddress.Any())
+            if (user.User_Address.Any())
             {
-                var userAddress = db.UserAddressRepository.Get().Where(u => u.UserID == id);
-                db.UserAddressRepository.Delete(userAddress);
+                foreach(var userAddress in user.User_Address.Where(u=> u.UserID == user.UserID))
+                {
+                    db.User_AddressRepository.Delete(userAddress);
+                }
             }
             db.UserRepository.Delete(user);
             db.Save();

@@ -25,8 +25,8 @@ namespace ViewModels
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "کلمه های عبور هم خوانی ندارند")]
         public string ConfirmPassword { get; set; }
+        public string GoogleCaptchaToken { get; set; }
     }
-
     public class LoginViewModel
     {
         [Display(Name = "ایمیل / شماره موبایل")]
@@ -39,6 +39,7 @@ namespace ViewModels
         public string Password { get; set; }
         [Display(Name = "مرا بخاطر بسپار!")]
         public bool RemmemberMe { get; set; }
+        public string GoogleCaptchaToken { get; set; }
     }
     public class OTPViewModel
     {
