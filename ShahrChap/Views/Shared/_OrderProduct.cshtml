@@ -1,0 +1,28 @@
+﻿@model DataLayer.Products
+
+<div class="item">
+    <div class="box">
+        <div class="slide-img">
+            <img src="/Images/ProductImages/@Model.ImageName">
+            <div class="overlay">
+                <a href="/ShowOrderProduct/@Model.ProductID" class="buy-btn">سفارش</a>
+            </div>
+        </div>
+        <div class="product-footer">
+            <div class="detail-box ">
+                @if (Model.IsExist == true)
+                {
+                    <a href="/ShowOrderProduct/@Model.ProductID" class="Price">@Model.Price.ToString("#,0") تومان</a>
+                }
+                else
+                {
+                    <a href="#" class="Price">ناموجود</a>
+                }
+            </div>
+            <div class="product-name">
+                <a href="/ShowOrderProduct/@Model.ProductID" class="Price">@Model.Title</a>
+            </div>
+
+        </div>
+    </div>
+</div>

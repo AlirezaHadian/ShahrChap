@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -35,5 +36,7 @@ namespace DataLayer
         public System.DateTime CreateDate { get; set; }
         [Display(Name = "وضعیت محصول")]
         public bool IsExist { get; set; }
+        [Display(Name ="کارت ویزیت و تراکت")]
+        public bool IsOrder { get; set; }
     }
 }

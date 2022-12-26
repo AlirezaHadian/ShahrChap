@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DataLayer.AboutUs>
+
+@{
+    ViewBag.Title = "درباره ما";
+}
+
+<h2>درباره ما</h2>
+
+<p>
+    <a class="btn btn-success" href="@Url.Action("Create")">افزودن</a>
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Text)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="aboutUs_@(item.AboutUsID)">
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                <a class="btn btn-info btn-sm" href="@Url.Action("Edit", new { id = item.AboutUsID })">
+                    <i class="fas fa-info"></i>
+                </a>
+                <a class="btn btn-danger btn-sm" href=@Url.Action("Delete", new {id = @item.AboutUsID})>
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+    <hr />
+    <h2>ارتباط با ما</h2>
+    @Html.Action("ContactUsInfo")
+

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<DataLayer.Factor_Details>
+
+@{
+    ViewBag.Title = "فاکتور ها";
+}
+
+<h2>فاکتور ها</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            کاربر
+        </th>
+        <th>
+            محصول
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            وضعیت
+        </th>
+        <th>
+            تاریخ خرید
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        bool isFinally = item.Factors.IsFinally;
+        var className = isFinally ? "class=table-success" : "class=table-warning";
+        <tr @className>
+            <td>
+                @Html.DisplayFor(modelItem => item.Factors.Users)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Products.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @if (item.Factors.IsFinally == true)
+                {
+                    <p>پرداخت شده</p>
+                }
+                else
+                {
+                    <p>در انتظار پرداخت</p>
+                }
+            </td>
+            <td>
+                @item.Factors.Date.ToString("dddd, dd MMMM yyyy")
+            </td>
+            <td>
+                @if (item.Factors.AddressID != null)
+                {
+                    <a class="btn btn-info btn-sm" href="@Url.Action("FactorDetail" , new { id = item.DetailID })">
+                        آدرس کاربر
+                    </a>
+                }
+                <a class="btn btn-primary btn-sm" href="@Url.Action("" , new { id = item.DetailID })">
+                    وضعیت سفارش
+                </a>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.DetailID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.DetailID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.DetailID })*@
+            </td>
+        </tr>
+    }
+
+</table>

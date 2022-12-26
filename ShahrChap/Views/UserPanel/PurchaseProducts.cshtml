@@ -1,0 +1,103 @@
+﻿@model IEnumerable<DataLayer.Factor_Details>
+@using Utilities
+@{
+    ViewBag.Title = "محصولات خریداری شده";
+}
+
+<section>
+    <div class="container internal-style py-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item"><a href="#">محصولات</a></li>
+            <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+        </ol>
+        <div class="Account-panel">
+            <div class="row">
+
+                @Html.Partial("UserPanelMenu")
+
+                <div class="col-md-9 col-sm-12 col-xs-12">
+                    <div class="left-content">
+                        <section class="section-style box-shadow">
+                            <header>
+                                <h2>فاکتور ها </h2>
+                            </header>
+                            <div class="inner">
+                                <form action="" class="form-style">
+                                    <div class="row">
+                                        @if (Model.Count() > 0)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                @Html.Partial("_Product", item)
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="alert alert-warning">
+                                                محصولی تابحال خریداری نشده است
+                                            </div>
+                                        }
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Modal Header</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+                ...
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    //function EnableEmail() {
+    //    $.get("/UserPanel/EnableEmail", function (result) {
+    //        $("#myModal").modal('show');
+    //        $("#myModalLabel").html("فعالسازی ایمیل");
+    //        $("#myModalBody").html(result);
+    //    });
+    //}
+
+    //function EnablePhone() {
+    //    $.get("/UserPanel/EnablePhone", function (result) {
+    //        $("#myModal").modal('show');
+    //        $("#myModalLabel").html("فعالسازی شماره موبایل");
+    //        $("#myModalBody").html(result);
+    //    });
+    //}
+    //function ChangeEmail() {
+    //    $.get("/UserPanel/ChangeEmail", function (result) {
+    //        $("#myModal").modal('show');
+    //        $("#myModalLabel").html("تغییر ایمیل");
+    //        $("#myModalBody").html(result);
+    //    });
+    //}
+    //function ChangePhone() {
+    //    $.get("/UserPanel/ChangePhone", function (result) {
+    //        $("#myModal").modal('show');
+    //        $("#myModalLabel").html("تغییر شماره موبایل");
+    //        $("#myModalBody").html(result);
+    //    });
+    //}
+    //function success() {
+    //    $("#myModal").modal('hide');
+    //}
+
+</script>

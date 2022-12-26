@@ -1,4 +1,4 @@
-﻿@model DataLayer.User
+﻿@model DataLayer.Users
 
 @{
     ViewBag.Title = "حذف کاربر";
@@ -20,11 +20,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Role.RoleTitle)
+            @Html.DisplayNameFor(model => model.Roles.RoleTitle)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Role.RoleTitle)
+            @Html.DisplayFor(model => model.Roles.RoleTitle)
         </dd>
 
         <dt>

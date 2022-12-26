@@ -18,8 +18,8 @@ namespace ShahrChap.Areas.Admin.Controllers
         // GET: Admin/Products
         public ActionResult Index()
         {
-            List<Products> products = db.Product_GroupsRepository.Get().Where(p => p.Order_GroupID != null && p.ST_GroupID == null).Select(p => p.Products).ToList();
-            return View(products);
+            var products = db.ProductsRepository.Get(p=> p.IsOrder==true);
+            return View(products.ToList());
         }
 
         // GET: Admin/Products/Details/5
@@ -40,7 +40,7 @@ namespace ShahrChap.Areas.Admin.Controllers
         // GET: Admin/Products/Create
         public ActionResult Create()
         {
-            ViewBag.Groups = db.Order_GroupsRepository.Get();
+            ViewBag.Groups = db.Product_GroupsRepository.Get(g=>g.IsOrder==true);
             return View();
         }
 
@@ -49,14 +49,14 @@ namespace ShahrChap.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,Title,Text,Price,ImageName,CreateDate,IsExist")] Products products, List<int> selectedGroups, HttpPostedFileBase imageProduct, string tags)
+        public ActionResult Create([Bind(Include = "ProductID,Title,Text,Price,ImageName,CreateDate,IsExist")] Products products, List<int> selectedGroups, HttpPostedFileBase imageProduct, string tags, int Count, bool IsTwoFace)
         {
             if (ModelState.IsValid)
             {
                 if (selectedGroups == null)
                 {
                     ViewBag.ErrorSelectedGroup = true;
-                    ViewBag.Groups = db.Order_GroupsRepository.Get();
+                    ViewBag.Groups = db.Product_GroupsRepository.Get(g=>g.IsOrder==true);
                     return View(products);
                 }
                 products.ImageName = "images.jpg";
@@ -69,14 +69,22 @@ namespace ShahrChap.Areas.Admin.Controllers
                         Server.MapPath("/Images/ProductImages/Thumb/" + products.ImageName));
                 }
                 products.CreateDate = DateTime.Now;
+                products.IsOrder = true;
                 db.ProductsRepository.Insert(products);
+
+                db.Product_AttributeRepository.Insert(new Product_Attribute()
+                {
+                    ProductID = products.ProductID,
+                    Count = Count,
+                    IsTwoFace = IsTwoFace
+                });
 
                 foreach (int selectedGroup in selectedGroups)
                 {
-                    db.Product_GroupsRepository.Insert(new Product_Groups()
+                    db.Product_Selected_GroupsRepository.Insert(new Product_Selected_Groups()
                     {
                         ProductID = products.ProductID,
-                        Order_GroupID = selectedGroup
+                        GroupID = selectedGroup
                     });
                 }
 
@@ -95,7 +103,7 @@ namespace ShahrChap.Areas.Admin.Controllers
                 db.Save();
                 return RedirectToAction("Index");
             }
-            ViewBag.Groups = db.Order_GroupsRepository.Get();
+            ViewBag.Groups = db.Product_GroupsRepository.Get(g=>g.IsOrder==true);
             return View(products);
         }
 
@@ -112,10 +120,10 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SelectedGroups = products.Product_Groups.ToList();
-            ViewBag.Groups = db.Order_GroupsRepository.Get().ToList();
-            ViewBag.Tags = string.Join(",", products.Tags.Select(t => t.Tag).ToList());
 
+            ViewBag.SelectedOrderGroups = products.Product_Selected_Groups.ToList();
+            ViewBag.Groups = db.Product_GroupsRepository.Get(g=> g.IsOrder==true);
+            ViewBag.Tags = string.Join(",", products.Tags.Select(t => t.Tag).ToList());
             return View(products);
         }
 
@@ -124,7 +132,7 @@ namespace ShahrChap.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,Title,Text,Price,ImageName,CreateDate,IsExist")] Products products, List<int> selectedGroups, HttpPostedFileBase imageProduct, string tags)
+        public ActionResult Edit([Bind(Include = "ProductID,Title,Text,Price,ImageName,CreateDate,IsExist,IsOrder")] Products products, List<int> selectedGroups, HttpPostedFileBase imageProduct, string tags, int Count, bool IsTwoFace)
         {
             if (ModelState.IsValid)
             {
@@ -144,8 +152,14 @@ namespace ShahrChap.Areas.Admin.Controllers
                 }
                 db.ProductsRepository.Update(products);
 
+                db.Product_AttributeRepository.Update(new Product_Attribute()
+                {
+                    ProductID = products.ProductID,
+                    Count = Count,
+                    IsTwoFace = IsTwoFace
+                });
 
-                db.TagsRepository.Get().Where(t => t.ProductID == products.ProductID).ToList().ForEach(t => db.TagsRepository.Delete(t));
+                db.TagsRepository.Get().Where(t => t.ProductID== products.ProductID).ToList().ForEach(t => db.TagsRepository.Delete(t));
                 if (!string.IsNullOrEmpty(tags))
                 {
                     string[] tag = tags.Split(',');
@@ -159,15 +173,15 @@ namespace ShahrChap.Areas.Admin.Controllers
                     }
                 }
 
-                db.Product_GroupsRepository.Get().Where(g => g.ProductID == products.ProductID).ToList().ForEach(g => db.Product_GroupsRepository.Delete(g));
+                db.Product_Selected_GroupsRepository.Get().Where(g => g.ProductID == products.ProductID).ToList().ForEach(g => db.Product_Selected_GroupsRepository.Delete(g));
                 if (selectedGroups != null && selectedGroups.Any())
                 {
-                    foreach (int selectedGroup in selectedGroups)
-                    {
-                        db.Product_GroupsRepository.Insert(new Product_Groups()
+                    foreach (int selectedGroup in selectedGroups) 
+                    { 
+                        db.Product_Selected_GroupsRepository.Insert(new Product_Selected_Groups()
                         {
                             ProductID = products.ProductID,
-                            Order_GroupID = selectedGroup
+                            GroupID = selectedGroup
                         });
                     }
                 }
@@ -176,8 +190,8 @@ namespace ShahrChap.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SelectedGroups = selectedGroups;
-            ViewBag.Groups = db.Order_GroupsRepository.Get();
+            ViewBag.SelectedOrderGroups = selectedGroups;
+            ViewBag.Groups = db.Product_GroupsRepository.Get(g=>g.IsOrder==true);
             ViewBag.Tags = tags;
             return View(products);
         }
@@ -188,11 +202,11 @@ namespace ShahrChap.Areas.Admin.Controllers
         public void DeleteProduct(int id)
         {
             Products products = db.ProductsRepository.GetById(id);
-            if (products.Product_Groups.Any())
+            if (products.Product_Selected_Groups.Any())
             {
-                foreach (var group in products.Product_Groups.Where(p => p.ProductID == products.ProductID).ToList())
+                foreach (var group in products.Product_Selected_Groups.Where(p => p.ProductID == products.ProductID).ToList())
                 {
-                    db.Product_GroupsRepository.Delete(group);
+                    db.Product_Selected_GroupsRepository.Delete(group);
                 }
 
             }
@@ -215,6 +229,28 @@ namespace ShahrChap.Areas.Admin.Controllers
                 foreach (var gallery in products.Product_Galleries.Where(p => p.ProductID == products.ProductID).ToList())
                 {
                     db.Product_GalleriesRepository.Delete(gallery);
+                }
+            }
+            if(products.Product_Attribute.ProductID == products.ProductID)
+            {
+                db.Product_AttributeRepository.Delete(products.ProductID);
+            }
+            if (products.Order_Details.Any())
+            {
+                foreach(var detail in products.Order_Details.Where(o=> o.ProductID == products.ProductID))
+                {
+                    foreach(var files in detail.Order_Files.Where(o=> o.OT_ID == detail.OT_ID))
+                    {
+                        db.Order_FilesRepository.Delete(files);
+                    }
+                    db.Order_DetailsRepository.Delete(detail);                        
+                }
+            }
+            if (products.Factor_Details.Any())
+            {
+                foreach(var factor_detail in products.Factor_Details.Where(d=> d.ProductID == products.ProductID))
+                {
+                    db.Factor_DetailsRepository.Delete(factor_detail);
                 }
             }
             System.IO.File.Delete(Server.MapPath("/Images/ProductImages/" + products.ImageName));
@@ -266,7 +302,7 @@ namespace ShahrChap.Areas.Admin.Controllers
 
         #endregion
         #region Feature
-        public ActionResult ProductFeaturs(int id)
+        public ActionResult OrderFeaturs(int id)
         {
 
             ViewBag.Features = db.Product_FeaturesRepository.Get().Where(f => f.ProductID == id).ToList();
@@ -278,7 +314,7 @@ namespace ShahrChap.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProductFeaturs(Product_Features feature)
+        public ActionResult OrderFeaturs(Product_Features feature)
         {
             if (ModelState.IsValid)
             {
@@ -286,10 +322,10 @@ namespace ShahrChap.Areas.Admin.Controllers
                 db.Save();
             }
 
-            return RedirectToAction("ProductFeaturs", new { id = feature.ProductID });
+            return RedirectToAction("OrderFeaturs", new { id = feature.ProductID });
         }
 
-        public void DeleteFeature(int id)
+        public void DeleteOrderFeature(int id)
         {
             var feature = db.Product_FeaturesRepository.GetById(id);
             db.Product_FeaturesRepository.Delete(feature);

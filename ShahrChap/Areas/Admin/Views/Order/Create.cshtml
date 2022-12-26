@@ -19,58 +19,73 @@
                     لطفا گروه محصول را انتخاب کنید
                 </div>
             }
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                    </div>
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                 </div>
+            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
                 </div>
+            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <input type="text" name="PricePishPardakht" class="form-control" onkeyup="javascript: this.value = ToRial(this.value);" />
-                        @*@Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })*@
-                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @onkeyup = "ToRial(this.value)" } })
+                        <span id="priceToShamsi"></span>
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.IsExist, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @Html.RadioButtonFor(model => model.IsExist, true, new { @checked = "checked" }) موجود
-                            @Html.RadioButtonFor(model => model.IsExist, false) ناموجود
-                            @Html.ValidationMessageFor(model => model.IsExist, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+            </div>
+            <div class="form-group">
+                <span class="control-label col-md-2">تعداد سری</span>
+                <div class="col-md-10">
+                    <input type="number" name="Count" class="form-control" />
                 </div>
-
-                <div class="form-group">
-                    <span class="control-label col-md-2">کلمات کلیدی</span>
-                    <div class="col-md-10">
-                        <input type="text" name="tags" class="form-control" placeholder="کلمات کلیدی را با , جدا کنید" />
-                    </div>
-                </div>
-
-
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="ثبت محصول" class="btn btn-success" />
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsExist, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.RadioButtonFor(model => model.IsExist, true, new { @checked = "checked" }) موجود
+                        @Html.RadioButtonFor(model => model.IsExist, false) ناموجود
+                        @Html.ValidationMessageFor(model => model.IsExist, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <span class="control-label col-md-2"></span>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <input type="radio" name="IsTwoFace" value="false" checked /><span> یک رو</span>
+                        <input type="radio" name="IsTwoFace" value="true" /><span> دو رو (پشت و رو)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="control-label col-md-2">کلمات کلیدی</span>
+                <div class="col-md-10">
+                    <input type="text" name="tags" class="form-control" placeholder="کلمات کلیدی را با , جدا کنید" />
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ثبت محصول" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
@@ -90,13 +105,13 @@
                 <div class="panel-heading">انتخاب گروه</div>
                 <div class="panel-body">
                     @{
-                        List<Order_Groups> order_Groups = ViewBag.Groups;
+                        List<Product_Groups> order_Groups = ViewBag.Groups;
 
                         <ul>
-                            @foreach (var group in order_Groups.ToList())
+                            @foreach (var group in order_Groups)
                             {
                                 <li>
-                                    <input type="checkbox" name="selectedGroups" value="@group.Order_GroupID" /> <span>@group.GroupTitle</span>
+                                    <input type="checkbox" name="selectedGroups" value="@group.GroupID" /> <span>@group.GroupTitle</span>
                                 </li>
                             }
                         </ul>
@@ -106,9 +121,9 @@
         </div>
     }
 </div>
-<div>
-    @Html.ActionLink("بازگشت به لیست محصولات", "Index")
-</div>
+<a class="btn btn-danger" href="@Url.Action("Index")">
+    بازگشت
+</a>
 
 @section Scripts
 {
@@ -141,7 +156,7 @@
                 str = str.replace(objRegex, '$1,$2');
             }
 
-            return str;
+            $("#priceToShamsi").html(str + " تومان");
         }
     </script>
 

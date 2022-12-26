@@ -30,10 +30,10 @@ namespace DataLayer
         public string FullAddress { get; set; }
         public string PosteCode { get; set; }
     
+        public virtual city city { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Factors> Factors { get; set; }
-        public virtual User Users { get; set; }
-        public virtual city city { get; set; }
         public virtual province province { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

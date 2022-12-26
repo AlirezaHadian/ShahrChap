@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="~/Content/img/Logo.png">
     <!--Bootsrap css-->
     <link rel="stylesheet" href="/Content/css/bootstrap.rtl.min.css">
     <!--Main css-->
@@ -79,14 +80,13 @@
                             <a class="nav-link px-3 px-lg-2" href="/Archive">لوازم تحریر</a>
                         </li>
                         <li class="nav-item dropdown product-menu">
-                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="/Order">سفارش محصول</a>
+                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="/ArchiveOrder">سفارش محصول</a>
                         </li>
-
-                        <li class="nav-item dropdown product-menu">
+                        @*<li class="nav-item dropdown product-menu">
                             <a class="nav-link px-3 px-lg-2" aria-current="page" href="/Print">سفارش پرینت</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
-                            <a class="nav-link px-3 px-lg-2" href="#">درباره ما</a>
+                            <a class="nav-link px-3 px-lg-2" href="/AboutUs">درباره ما</a>
                         </li>
 
                     </ul>
@@ -232,8 +232,8 @@
             $("#countShopCart").html(res);
         });
     }
-    function AddToCart(id) {
-        $.get("/Api/Shop/" + id, function (res) {
+    function AddToCart(id, count) {
+        $.get("/Api/Shop/" + id + "?count=" + count, function (res) {
             $("#countShopCart").html(res);
         });
     }

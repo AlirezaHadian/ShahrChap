@@ -34,45 +34,59 @@ namespace ShahrChap.Controllers
                 var isCaptchaValid = await IsCaptchaValid(register.GoogleCaptchaToken, "register");
                 if (isCaptchaValid)
                 {
-
-                    if (!db.UserRepository.Get().Any(u => u.Email == register.EmailOrPhone.Trim().ToLower() || u.Phone == register.EmailOrPhone.Trim()))
+                    if (!db.UserRepository.Get().Any(u => u.UserName == register.UserName.Trim().ToLower()))
                     {
-                        User user = new User()
+                        if (!db.UserRepository.Get().Any(u => u.Email == register.EmailOrPhone.Trim().ToLower() || u.Phone == register.EmailOrPhone.Trim()))
                         {
-                            UserName = register.UserName,
-                            RoleID = 1,
-                            Password = FormsAuthentication.HashPasswordForStoringInConfigFile(register.Password, "MD5"),
-                            RegisterDate = DateTime.Now,
-                        };
-                        if (register.EmailOrPhone.Contains("@"))
-                        {
-                            user.Email = register.EmailOrPhone;
-                            user.ActiveCode = Guid.NewGuid().ToString();
-                            user.IsEmailActive = false;
-                            db.UserRepository.Insert(user);
-                            db.Save();
-                            string body = PartialToStringClass.RenderPartialView("ManageEmails", "ActivationEmail", user);
-                            SendEmail.Send(user.Email, "فعالسازی حساب کاربری", body);
-                            return View("SuccessEmailRegister", user);
+                            if (register.EmailOrPhone.Contains("@"))
+                            {
+                                Users user = new Users()
+                                {
+                                    UserName = register.UserName,
+                                    RoleID = 1,
+                                    Password = FormsAuthentication.HashPasswordForStoringInConfigFile(register.Password, "MD5"),
+                                    RegisterDate = DateTime.Now,
+                                    Email = register.EmailOrPhone,
+                                    IsPhoneActive = false,
+                                    IsEmailActive = false
+                                };
+                                db.UserRepository.Insert(user);
+                                db.Save();
+                                string body = PartialToStringClass.RenderPartialView("ManageEmails", "ActivationEmail", user);
+                                SendEmail.Send(user.Email, "فعالسازی حساب کاربری", body);
+                                return View("SuccessEmailRegister", user);
+                            }
+                            else
+                            {
+                                Users user = new Users()
+                                {
+                                    UserName = register.UserName,
+                                    RoleID = 1,
+                                    Password = FormsAuthentication.HashPasswordForStoringInConfigFile(register.Password, "MD5"),
+                                    RegisterDate = DateTime.Now,
+                                    Phone = register.EmailOrPhone,
+                                    IsPhoneActive = false,
+                                    IsEmailActive = false
+                                };
+                            Random random = new Random();
+                                string DigitCode = random.Next(10000, 99999).ToString();
+                                SendSMS.SendWithPattern(register.EmailOrPhone, register.UserName, DigitCode);
+                                db.UserRepository.Insert(user);
+                                db.Save();
+                                Session["OTP"] = DigitCode;
+                                Session["ExpireTime"] = DateTime.Now;
+                                Session["PhoneNumber"] = user.Phone;
+                                return RedirectToAction("VerifyPhone", "Account");
+                            }
                         }
                         else
                         {
-                            Random random = new Random();
-                            string DigitCode = random.Next(10000, 99999).ToString();
-                            user.Phone = register.EmailOrPhone;
-                            user.IsPhoneActive = false;
-                            SendSMS.SendWithPattern(register.EmailOrPhone, register.UserName, DigitCode);
-                            db.UserRepository.Insert(user);
-                            db.Save();
-                            Session["OTP"] = DigitCode;
-                            Session["ExpireTime"] = DateTime.Now;
-                            Session["PhoneNumber"] = user.Phone;
-                            return RedirectToAction("VerifyPhone", "Account");
+                            ModelState.AddModelError("EmailOrPhone", "کاربری با این مشخصات در سایت وجود دارد!");
                         }
                     }
                     else
                     {
-                        ModelState.AddModelError("EmailOrPhone", "کاربری با این مشخصات در سایت وجود دارد!");
+                        ModelState.AddModelError("UserName", "کاربری با این مشخصات در سایت وجود دارد!");
                     }
                 }
                 else
@@ -171,7 +185,7 @@ namespace ShahrChap.Controllers
                     ModelState.AddModelError("EmailOrPhone", "کپچا نامعتبر می باشد");
                 }
             }
-            
+
             return View();
         }
 

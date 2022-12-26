@@ -7,9 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace DataLayer
 {
-    internal class Product_GroupsMetaData
+    public class Product_GroupsMetaData
     {
+        [Key]
+        public int GroupID { get; set; }
+        [Display(Name ="عنوان محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public string GroupTitle { get; set; }
+        [Display(Name = "کارت ویزیت و تراکت")]
+        public Nullable<bool> IsOrder { get; set; }
+        [Display(Name = "تصویر")]
+        public string ImageName { get; set; }
     }
 }

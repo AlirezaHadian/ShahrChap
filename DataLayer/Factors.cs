@@ -24,13 +24,14 @@ namespace DataLayer
     
         public int FactorID { get; set; }
         public int UserID { get; set; }
+        public Nullable<int> AddressID { get; set; }
         public System.DateTime Date { get; set; }
         public bool IsFinally { get; set; }
-        public int AddressID { get; set; }
+        public int TotalPrice { get; set; }
     
-        public virtual User Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Factor_Details> Factor_Details { get; set; }
         public virtual User_Address User_Address { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

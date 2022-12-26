@@ -24,7 +24,7 @@ namespace ShahrChap.Controllers
         }
 
         // GET: api/Shop/5
-        public int Get(int id)
+        public int Get(int id, int count)
         {                                          
             List<ViewModels.ShopCartItem> list = new List<ViewModels.ShopCartItem>();
             var sessions = HttpContext.Current.Session;
@@ -35,14 +35,14 @@ namespace ShahrChap.Controllers
             if(list.Any(p=> p.ProductID == id))
             {
                 int index = list.FindIndex(p => p.ProductID == id);
-                list[index].Count += 1;
+                list[index].Count += count;
             }
             else
             {
                 list.Add(new ViewModels.ShopCartItem()
                 {
                     ProductID = id,
-                    Count = 1
+                    Count = count
                 });
             }
             sessions["ShopCart"] = list;

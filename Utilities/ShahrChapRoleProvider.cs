@@ -42,7 +42,7 @@ namespace Utilities
         {
             using (UnitOfWork db=new UnitOfWork())
             {
-                return db.UserRepository.Get().Where(u => u.UserName == username).Select(u => u.Role.RoleName).ToArray();
+                return db.UserRepository.Get().Where(u => u.UserName == username).Select(u => u.Roles.RoleName).ToArray();
             }
         }
 

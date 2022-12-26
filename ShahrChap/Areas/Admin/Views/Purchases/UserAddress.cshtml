@@ -1,0 +1,54 @@
+﻿@model DataLayer.User_Address
+
+@{
+    ViewBag.Title = "آدرس کاربر";
+}
+
+<h2>آدرس کاربر @Model.Users.UserName</h2>
+
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.province.provinceName)
+            </th>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.city.cityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PosteCode)
+            </th>
+        </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.province.provinceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.city.cityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.FullAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.PosteCode)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <a class="btn btn-danger" href="@Url.Action("Orders")">
+        بازگشت
+    </a>

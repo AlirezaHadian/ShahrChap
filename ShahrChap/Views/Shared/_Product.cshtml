@@ -5,14 +5,7 @@
         <div class="slide-img">
             <img src="/Images/ProductImages/@Model.ImageName">
             <div class="overlay">
-                @if (Model.IsExist == true)
-                {
-                    <a href="/ShowProduct/@Model.ProductID" class="buy-btn">سفارش</a>
-                }
-                else
-                {
-                    <a class="buy-btn disabled">سفارش</a>
-                }
+                <a href="/ShowProduct/@Model.ProductID" class="buy-btn">سفارش</a>
             </div>
         </div>
         <div class="product-footer">
@@ -27,7 +20,7 @@
                 }
             </div>
             <div class="product-name">
-                <h1><a href="/ShowProduct/@Model.ProductID">@Model.Title</a></h1>
+                <a href="/ShowProduct/@Model.ProductID" class="Price">@Model.Title</a>
             </div>
 
         </div>

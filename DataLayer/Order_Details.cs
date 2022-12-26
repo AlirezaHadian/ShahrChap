@@ -23,16 +23,18 @@ namespace DataLayer
         }
     
         public int OT_ID { get; set; }
-        public int OrderID { get; set; }
+        public int ProductID { get; set; }
+        public int UserID { get; set; }
         public string FrontText { get; set; }
         public string BackText { get; set; }
         public string Description { get; set; }
-        public Nullable<bool> IsDesigned { get; set; }
+        public bool IsDesigned { get; set; }
         public int Count { get; set; }
         public string SocialNumber { get; set; }
         public System.DateTime OrderDate { get; set; }
     
         public virtual Products Products { get; set; }
+        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Files> Order_Files { get; set; }
     }

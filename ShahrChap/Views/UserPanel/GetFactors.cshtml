@@ -1,4 +1,4 @@
-﻿@model DataLayer.User
+﻿@model IEnumerable<DataLayer.Factor_Details>
 @using Utilities
 @{
     ViewBag.Title = "فاکتور ها";
@@ -23,50 +23,68 @@
                                 <h2>فاکتور ها </h2>
                             </header>
                             <div class="inner">
-                                <form action="" method="" class="form-style">
+                                <form action="" class="form-style">
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-12 col-xs-12">
-                                            <div class="input-layer">
-                                                <label><i class="fas fa-user"></i> @Model.UserName </label>
-                                            </div>
-                                        </div>
-                                        @if (Model.Phone != null)
+                                        @if (Model.Count() > 0)
                                         {
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <div class="input-layer">
-                                                    <label><i class="fas fa-phone"></i> @Model.Phone <span><a onclick="ChangePhone()" class="edit-user-info"><i class="fas fa-edit"></i></a></span></label>
-                                                </div>
-                                            </div>
+                                            <table class="table">
+                                                <tr>
+                                                    <th>
+                                                        محصول
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Count)
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => model.Price)
+                                                    </th>
+                                                    <th>
+                                                        وضعیت
+                                                    </th>
+                                                    <th>
+                                                        تاریخ خرید
+                                                    </th>
+                                                    <th></th>
+                                                </tr>
+
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Products.Title)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Count)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Price)
+                                                        </td>
+                                                        <td>
+                                                            @if (item.Factors.IsFinally == true)
+                                                            {
+                                                                <p>پرداخت شده</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p>در انتظار پرداخت</p>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            @item.Factors.Date.ToString("dddd, dd MMMM yyyy")
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </table>
                                         }
                                         else
                                         {
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <div class="input-layer">
-                                                    <a onclick="EnablePhone()" class="btn btn-outline-success btn-sm"> فعالسازی موبایل </a>
-                                                </div>
+                                            <div class="alert alert-warning">
+                                                سفارشی تابحال ثبت نشده است
                                             </div>
                                         }
-                                        @if (Model.Email != null)
-                                        {
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <div class="input-layer">
-                                                    <label><i class="fas fa-envelope"></i> @Model.Email <span><a onclick="ChangeEmail()" class="edit-user-info"><i class="fas fa-edit"></i></a></span> </label>
-                                                </div>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <div class="input-layer">
-                                                    <a onclick="EnableEmail()" class="btn btn-outline-success btn-sm"> فعالسازی ایمیل </a>
-                                                </div>
-                                            </div>
-                                        }
-                                        <div class="col-md-6 col-sm-12 col-xs-12">
-                                            <div class="input-layer">
-                                                <label><i class="fas fa-calendar-alt"></i> @Model.RegisterDate.ToString("dddd, dd MMMM yyyy") </label>
-                                            </div>
-                                        </div>
                                     </div>
                                 </form>
                             </div>

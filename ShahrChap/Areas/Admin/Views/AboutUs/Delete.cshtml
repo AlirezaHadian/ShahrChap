@@ -1,0 +1,33 @@
+﻿@model DataLayer.AboutUs
+
+@{
+    ViewBag.Title = "حذف درباره ما";
+}
+
+
+<h3>آیا از حذف درباره ما مطمئن هستید؟</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-warning" /> |
+            <a class="btn btn-danger" href="@Url.Action("Index")">
+                بازگشت
+            </a>
+
+        </div>
+    }
+</div>

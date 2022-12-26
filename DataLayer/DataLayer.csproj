@@ -77,51 +77,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutUs.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="city.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactUs.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactUsInfo.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Factors.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Factor_Details.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\FactorsMetaData.cs" />
-    <Compile Include="MetaDataClasses\Factor_DetailsMetaData.cs" />
-    <Compile Include="Factors.cs">
-      <DependentUpon>ShahrChapModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Features.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MetaDataClasses\AboutUsMetaData.cs" />
+    <Compile Include="MetaDataClasses\ContactUsInfoMetaData.cs" />
+    <Compile Include="MetaDataClasses\ContactUsMetaData.cs" />
+    <Compile Include="MetaDataClasses\FactorsMetaData.cs" />
+    <Compile Include="MetaDataClasses\Factor_DetailsMetaData.cs" />
     <Compile Include="MetaDataClasses\FeaturesMetaData.cs" />
     <Compile Include="MetaDataClasses\User_AddressMetaData.cs" />
     <Compile Include="MetaDataClasses\cityMetaData.cs" />
     <Compile Include="MetaDataClasses\Order_DetailsMetaData.cs" />
+    <Compile Include="MetaDataClasses\Order_FilesMetaData.cs" />
+    <Compile Include="MetaDataClasses\ProductsMetaData.cs" />
+    <Compile Include="MetaDataClasses\Product_AttributeMetaData.cs" />
+    <Compile Include="MetaDataClasses\Product_FeaturesMetaData.cs" />
+    <Compile Include="MetaDataClasses\Product_GalleriesMetaData.cs" />
+    <Compile Include="MetaDataClasses\Product_Selected_GroupsMetaData.cs" />
+    <Compile Include="MetaDataClasses\Product_GroupsMetaData.cs" />
     <Compile Include="Order_Details.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\Order_FilesMetaData.cs" />
     <Compile Include="Order_Files.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Order_Groups.cs">
-      <DependentUpon>ShahrChapModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MetaDataClasses\Order_GroupsMetaData.cs" />
     <Compile Include="Products.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\ProductsMetaData.cs" />
+    <Compile Include="Product_Attribute.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product_Features.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\Product_FeaturesMetaData.cs" />
     <Compile Include="Product_Galleries.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\Product_GalleriesMetaData.cs" />
     <Compile Include="Product_Groups.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\Product_GroupsMetaData.cs" />
+    <Compile Include="Product_Selected_Groups.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MetaDataClasses\provinceMetaData.cs" />
     <Compile Include="province.cs">
@@ -129,12 +145,11 @@
     </Compile>
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
-    <Compile Include="MetaDataClasses\RoleMetaData.cs" />
-    <Compile Include="Role.cs">
-      <DependentUpon>ShahrChapModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MetaDataClasses\School_Tools_GroupsMetaData.cs" />
-    <Compile Include="School_Tools_Groups.cs">
+    <Compile Include="MetaDataClasses\RolesMetaData.cs" />
+    <Compile Include="MetaDataClasses\UsersMetaData.cs" />
+    <Compile Include="MetaDataClasses\SliderMetaData.cs" />
+    <Compile Include="MetaDataClasses\TagsMetaData.cs" />
+    <Compile Include="Roles.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ShahrChapModel.Context.cs">
@@ -152,16 +167,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ShahrChapModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\UserMetaData.cs" />
-    <Compile Include="MetaDataClasses\SliderMetaData.cs" />
     <Compile Include="Slider.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Tags.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MetaDataClasses\TagsMetaData.cs" />
-    <Compile Include="User.cs">
+    <Compile Include="Users.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User_Address.cs">
@@ -169,14 +181,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
     <EntityDeploy Include="ShahrChapModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ShahrChapModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="packages.config" />
     <None Include="ShahrChapModel.edmx.diagram">
       <DependentUpon>ShahrChapModel.edmx</DependentUpon>
     </None>
@@ -190,8 +200,8 @@
     <Content Include="Client Scripts\MvcFoolproofValidation.min.js" />
     <Content Include="ShahrChapModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ShahrChapModel.Context.cs</LastGenOutput>
       <DependentUpon>ShahrChapModel.edmx</DependentUpon>
+      <LastGenOutput>ShahrChapModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="ShahrChapModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

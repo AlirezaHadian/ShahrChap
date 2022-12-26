@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "وضعیت پرداخت";
+}
+
+<h2>وضعیت پرداخت</h2>
+
+@if (ViewBag.IsSuccess = true)
+{
+    <div class="alert alert-success">
+        <h3>تراکنش شما با موفقیت انجام شد</h3>
+        <hr />
+        <p>کد پیگیری شما : @ViewBag.RefId</p>
+    </div>
+}
+else
+{
+    <div class="alert alert-success">
+        <h3>تراکنش شما با شکست مواجه شد</h3>
+    </div>
+}

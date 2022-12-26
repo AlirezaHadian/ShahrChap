@@ -19,7 +19,7 @@ namespace DataLayer
         public int OT_ID { get; set; }
         [Display(Name = "تصویر")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.psd|.pdd|.jpg|.jpeg|.png|.tiff|.tif|.pdf)$", ErrorMessage = "فایل انتخاب شده معتبر نمی باشد")]
+        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.psd|.pdd|.jpg|.jpeg|.png|.tiff|.tif|.pdf|.zip)$", ErrorMessage = "فایل انتخاب شده معتبر نمی باشد")]
         public string FileName { get; set; }
     }
 }

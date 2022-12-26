@@ -14,7 +14,7 @@
                 <section class="border-radius right-side-content">
                     <header><h3> فیلتر ها  </h3></header>
                     <article class="filter">
-                        <form action="/Archive" id="filterForm">
+                        <form action="/ArchiveOrder" id="filterForm">
                             <input type="hidden" value="@ViewBag.pageId" id="pageId" name="pageId" />
                             <p>عنوان</p>
                             <p>
@@ -22,7 +22,7 @@
                             </p>
                             <p>
                                 <label for="minPriceRange">قیمت از:</label>
-                                <input type="range" onchange="showMinPrice(this.value)"  class="form-range" name="minPrice" min="0.00" max="1000000" step="500" value="@ViewBag.minPrice">
+                                <input type="range" onchange="showMinPrice(this.value)" class="form-range" name="minPrice" min="0.00" max="1000000" step="500" value="@ViewBag.minPrice">
                                 <span class="rangeValues" id="min-price-range">@ViewBag.minPrice</span>
                             </p>
                             <p>
@@ -32,7 +32,7 @@
                             </p>
 
                             @{
-                                List<DataLayer.School_Tools_Groups> list = ViewBag.Groups;
+                                List<DataLayer.Product_Groups> list = ViewBag.Groups;
                                 List<int> selected = ViewBag.selectGroup ?? new List<int>();
                             }
                             <p>گروه ها</p>
@@ -40,7 +40,7 @@
                                 @foreach (var group in list)
                                 {
                                     <li>
-                                        <input type="checkbox" name="selectedGroups" @((selected.Any(s => s == group.ST_GroupID)) ? "checked" : "") value="@group.ST_GroupID" />
+                                        <input type="checkbox" name="selectedGroups" @((selected.Any(s => s == group.GroupID)) ? "checked" : "") value="@group.GroupID" />
                                         <span>@group.GroupTitle</span>
                                     </li>
                                 }
@@ -55,32 +55,32 @@
 
                 <header><h3> آرشیو محصولات </h3></header>
                 <article>
-                        <div class="row">
-                            @foreach (var item in Model)
-                            {
-                                <div class="col-md-4 col-sm-6 col-10">
-                                    @Html.Partial("_product", item)
-                                </div>
-                            }
-                        </div>
-                        @if (ViewBag.PageCount > 1)
+                    <div class="row">
+                        @foreach (var item in Model)
                         {
-                            <div class="pagination-layer">
-                                <ul class="pagination">
-                                    @for (int i = 1; i <= (ViewBag.PageCount); i++)
-                                    {
-                                        <li class="page-item @(((int)ViewBag.pageId==i)?"active":"")">
-                                            <a onclick="changePage(@i)" class="page-link">@i</a>
-                                        </li>
-                                    }
-
-                                </ul>
+                            <div class="col-md-4 col-sm-6 col-10">
+                                @Html.Partial("_OrderProduct", item)
                             </div>
                         }
-                        <div class="clearfix"></div>
-</article>
+                    </div>
+                    @if (ViewBag.PageCount > 1)
+                    {
+                        <div class="pagination-layer">
+                            <ul class="pagination">
+                                @for (int i = 1; i <= (ViewBag.PageCount); i++)
+                                {
+                                    <li class="page-item @(((int)ViewBag.pageId==i)?"active":"")">
+                                        <a onclick="changePage(@i)" class="page-link">@i</a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    }
+                    <div class="clearfix"></div>
+                </article>
             </section>
-            
+
         </div>
     </div>
 </section>

@@ -30,54 +30,7 @@ $(".owl-carousel").owlCarousel({
     },
   },
 });
-/* Order */
-const prevBtns = document.querySelectorAll(".btn-prev");
-const nextBtns = document.querySelectorAll(".btn-next");
-const progress = document.getElementById("progress");
-const formSteps = document.querySelectorAll(".form-step");
-const progressSteps = document.querySelectorAll(".progress-step");
 
-let formStepsNum = 0;
-
-nextBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    formStepsNum++;
-    updateFormSteps();
-    updateProgressbar();
-  });
-});
-
-prevBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    formStepsNum--;
-    updateFormSteps();
-    updateProgressbar();
-  });
-});
-
-function updateFormSteps() {
-  formSteps.forEach((formStep) => {
-    formStep.classList.contains("form-step-active") &&
-      formStep.classList.remove("form-step-active");
-  });
-
-  formSteps[formStepsNum].classList.add("form-step-active");
-}
-
-function updateProgressbar() {
-  progressSteps.forEach((progressStep, idx) => {
-    if (idx < formStepsNum + 1) {
-      progressStep.classList.add("progress-step-active");
-    } else {
-      progressStep.classList.remove("progress-step-active");
-    }
-  });
-
-  const progressActive = document.querySelectorAll(".progress-step-active");
-
-  progress.style.width =
-    ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
-}
 /* Preloader */
 window.addEventListener('load', ()=> document.querySelector('.preloader').classList.add('hide-preloader'));
 
@@ -122,17 +75,17 @@ function countdown() {
 
 function enableButton(id) {
     document.getElementById("resendCode").disabled = true;
-    setTimeout(function () { document.getElementById("resendCode").disabled = false; }, 20000);
+    setTimeout(function () { document.getElementById("resendCode").disabled = false; }, 50000);
 }
 
 window.onload = function () {
-    $('.js-timer').html("0:20");
+    $('.js-timer').html("0:50");
     countdown();
     enableButton();
 };
 
 function resendCodeBtn() {
-    $('.js-timer').text("0:20");
+    $('.js-timer').text("0:50");
     countdown();
     enableButton();
 };

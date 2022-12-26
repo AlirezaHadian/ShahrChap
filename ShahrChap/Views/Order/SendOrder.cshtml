@@ -1,0 +1,123 @@
+﻿@model DataLayer.Order_Details
+@{
+    ViewBag.Title = "سفارش محصول ";
+}
+
+
+@using (Html.BeginForm("SendOrder", "Order", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <section>
+        <div class="container internal-style py-5">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                <li class="breadcrumb-item"><a href="#">محصولات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+            </ol>
+            <div class="form-horizontal form-layer-style box-shadow p-4 m-5">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ProductID)
+                @if (ViewBag.OrderSuccess == true)
+                {
+                    <div class="alert alert-success">
+                        سفارش شما با موفقیت ثبت شد!
+                        برای نهایی کردن خرید خود به 
+                        <a href="/ShopCart">سبد خرید</a>
+                        مراجعه نموده و سفارش خود را کامل کنید
+                    </div>
+                }
+                <header>
+                    <h2>سفارش طراحی محصول</h2>
+                </header>
+                <div class=" mt-1 p-2">
+                    <div class="form-group input-box">
+                        <div class="checkbox">
+                            <span class="details">آیا طرح آماده دارید؟</span>
+
+                            <input type="checkbox" id="desinged_check" name="IsDesigned" value="true" onchange="changeTheForm()" />
+                            @*@Html.CheckBoxFor(model => model.IsDesigned)*@
+                            @Html.ValidationMessageFor(model => model.IsDesigned, "", new { @class = "text-danger" })
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="row" id="design_form">
+                        <div class="input-box col-lg-6 col-md-6 col-sm-6 col-12">
+                            <span class="details">قسمت رو : </span>
+                            <textarea class="form-control" name="FrontText" rows="3" placeholder="اطلاعات قسمت روی محصول خود را وارد کنید"></textarea>
+                            @Html.ValidationMessageFor(model => model.FrontText, "", new { @class = "text-danger" })
+                        </div>
+                        @*@if (Model.Products.Product_Attribute.IsTwoFace == true)*@
+                        @if (ViewBag.IsTwoFace == true)
+                        {
+                            <div class="input-box col-lg-6 col-md-6 col-sm-6 col-12">
+                                <span class="details">قسمت پشت :</span>
+                                <textarea class="form-control" name="BackText" rows="3" placeholder="اطلاعات قسمت پشت محصول خود را وارد کنید"></textarea>
+                                @Html.ValidationMessageFor(model => model.BackText, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                        <hr class="mt-4" />
+                    </div>
+                    <div class="row">
+                        <div class="input-box col-lg-6 col-md-6 col-sm-6 col-12">
+                            <span class="details">توضیحات: </span>
+                            <textarea class="form-control" name="Description" rows="3" placeholder="توضیحات محصول خود را وارد کنید"></textarea>
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="input-box col-lg-6 col-md-6 col-sm-6 col-12">
+                            <span class="details">شماره موبایل: (ارتباط با طراح )</span>
+                            <input type="text" name="SocialNumber" class="form-control" placeholder="شماره موبایل" />
+                            @Html.ValidationMessageFor(model => model.SocialNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="alert alert-warning mt-2">
+                        برای چاپ بهتر فایل های خود را با کیفیت قابل قبول آپلود نمایید
+                    </div>
+                    <div class="row mt-2">
+                        <span class="details mb-1">فایل ها یا لوگو خود را با بیشترین کیفیت برای چاپ آپلود کنید</span>
+                        <input type="file" name="files" multiple />
+                        <p class="text-success">@ViewBag.UploadStatus</p>
+                        @if (ViewBag.filevalidation == true)
+                        {
+                            <p class="text-danger">آپلود فایل های طراحی اجباری می باشد</p>
+                        }
+                    </div>
+                    <hr class="mt-4" />
+                    <div class="mt-2 p-2">
+                        <span>تعداد: (سری)</span>
+                        <input type="number" class="" name="Count" min="1" value="1">
+                        @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
+                        <input type="submit" class="col-2 btn btn-success mt-2 pull-left" value="ثبت سفارش" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+
+<script>
+    $(document).ready(function () {
+            //$('input[type="checkbox"]').attr('unchecked', true);
+                $('input[type="checkbox"]').click(function () {
+                    $("#design_form").toggle(300);
+                });
+        //    if ('input[type="checkbox"]:checked') {
+        //    $('input[type="checkbox"]:checked').click(function () {
+        //        $("#design_form").toggle(300);
+        //    });
+        //    }
+    });
+
+    //if ($('input[type="checkbox"]:checked')) {
+    //    $("#design_form").hide(300);
+    //}
+    //$(document).ready(function () {
+    //    $('input[type:"submit"]').click(function () {
+    //        $('input[type="checkbox"]').each(function () {
+    //            $(this).prop('checked', false);
+    //        });
+    //    });
+    //})
+</script>

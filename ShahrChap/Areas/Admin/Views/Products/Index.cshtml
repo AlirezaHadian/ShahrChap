@@ -43,13 +43,13 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @if (item.Product_Groups.Any())
+                @if (item.Product_Selected_Groups.Any())
                 {
                     <ol>
-                        @foreach (var group in item.Product_Groups)
+                        @foreach (var group in item.Product_Selected_Groups)
                         {
                             <li>
-                                @group.School_Tools_Groups.GroupTitle
+                                @group.Product_Groups.GroupTitle
                             </li>
                         }
                     </ol>

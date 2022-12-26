@@ -32,7 +32,7 @@
                             </p>
 
                             @{
-                                List<DataLayer.School_Tools_Groups> list = ViewBag.Groups;
+                                List<DataLayer.Product_Groups> list = ViewBag.Groups;
                                 List<int> selected = ViewBag.selectGroup ?? new List<int>();
                             }
                             <p>گروه ها</p>
@@ -40,7 +40,7 @@
                                 @foreach (var group in list)
                                 {
                                     <li>
-                                        <input type="checkbox" name="selectedGroups" @((selected.Any(s => s == group.ST_GroupID)) ? "checked" : "") value="@group.ST_GroupID" />
+                                        <input type="checkbox" name="selectedGroups" @((selected.Any(s => s == group.GroupID)) ? "checked" : "") value="@group.GroupID" />
                                         <span>@group.GroupTitle</span>
                                     </li>
                                 }

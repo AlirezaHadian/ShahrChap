@@ -23,17 +23,17 @@
                         </div>
                         @if (Model.Product_Galleries.Any())
                         {
-                    <div class="img-select">
-                        <div class="img-item">
-                            <img src="~/Images/ProductImages/@Model.ImageName" alt="تصویر اصلی">
-                        </div>
-                        @foreach (var item in Model.Product_Galleries)
-                        {
-                            <div class="img-item">
-                                <img src="~/Images/ProductImages/@item.ImageName" alt="@item.Title">
+                            <div class="img-select">
+                                <div class="img-item">
+                                    <img src="~/Images/ProductImages/@Model.ImageName" alt="تصویر اصلی">
+                                </div>
+                                @foreach (var item in Model.Product_Galleries)
+                                {
+                                    <div class="img-item">
+                                        <img src="~/Images/ProductImages/@item.ImageName" alt="@item.Title">
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
                         }
                     </div>
 
@@ -72,11 +72,19 @@
                             }
                         </div>
                         <div class="purchase-info">
-                            <input type="number" min="0" value="1">
-                            <a onclick="AddToCart(@Model.ProductID)" class="btn">
-                                افزودن به سبد خرید <i class="fas fa-shopping-cart"></i>
-                            </a>
-                            @*<a type="button" class="btn">مقایسه</a>*@
+                            <input type="number" id="countinput" min="1" value="1">
+                            @if (Model.IsExist == true)
+                            {
+                                <a onclick="AddToCart(@Model.ProductID, $('#countinput').val())" class="btn">
+                                    افزودن به سبد خرید <i class="fas fa-shopping-cart"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn disabled">
+                                    ناموجود <i class="fas fa-ban"></i>
+                                </a>
+                            }
                         </div>
                         <section class="border-radius tags-layer">
                             @foreach (var item in Model.Tags)

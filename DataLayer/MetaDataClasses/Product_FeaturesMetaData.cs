@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataLayer
@@ -16,7 +17,6 @@ namespace DataLayer
         [Key]
         public int PF_ID { get; set; }
         [Display(Name = "محصول")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int ProductID { get; set; }
         [Display(Name = "ویژگی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

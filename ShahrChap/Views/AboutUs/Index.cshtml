@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DataLayer.AboutUs>
+
+@{
+    ViewBag.Title = "درباره ما";
+}
+
+<section>
+    <div class="container internal-style py-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item"><a href="#">محصولات</a></li>
+            <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+        </ol>
+        <div class="contact-layer">
+            <div class="row">
+                <div class="col-md-5 col-sm-12 col-xs-12">
+                    <div class="contact-info-layer">
+                        <div class="row">
+                            <div class="col-xs-12 contact-info-col">
+                                <section class="box-shadow">
+                                    <h2>
+                                        <i class="fas fa-phone"></i>
+                                        ارتباط با ما
+                                    </h2>
+                                    <ul >
+                                        @foreach (var aboutus in Model)
+                                        {
+                                            foreach (var item in aboutus.ContactUsInfo)
+                                            {
+                                                <li>@item.Title</li>
+                                                <li class="mx-3 mb-2">@item.Info</li>
+
+                                            }
+                                        }
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <section class="col-md-7 col-sm-12 col-xs-12">
+                    @Html.Action("ContactUs")
+                </section>
+            </div>
+        </div>
+        <div class="aboutUs-title">
+            <h4>درباره ما</h4>
+        </div>
+        <div class="underline-aboutUs my-4"></div>
+        <div class="aboutUs">
+            @foreach (var item in Model)
+            {
+                @item.Text
+            }
+        </div>
+    </div>
+</section>

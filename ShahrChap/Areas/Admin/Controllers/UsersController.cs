@@ -52,7 +52,7 @@ namespace ShahrChap.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,RoleID,UserName,Email,ActiveCode,Phone,Password,IsEmailActive,IsPhoneActive,RegisterDate")] User user)
+        public ActionResult Create([Bind(Include = "UserID,RoleID,UserName,Email,ActiveCode,Phone,Password,IsEmailActive,IsPhoneActive,RegisterDate")] Users user)
         {
             if (user.Email == null && user.Phone == null)
             {
@@ -88,7 +88,7 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.UserRepository.GetById(id);
+            Users user = db.UserRepository.GetById(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -102,7 +102,7 @@ namespace ShahrChap.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,RoleID,UserName,Email,ActiveCode,Phone,Password,IsEmailActive,IsPhoneActive,RegisterDate")] User user)
+        public ActionResult Edit([Bind(Include = "UserID,RoleID,UserName,Email,ActiveCode,Phone,Password,IsEmailActive,IsPhoneActive,RegisterDate")] Users user)
         {
             if(user.Email == null && user.Phone == null)
             {
@@ -125,7 +125,7 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.UserRepository.GetById(id);
+            Users user = db.UserRepository.GetById(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -138,12 +138,19 @@ namespace ShahrChap.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.UserRepository.GetById(id);
+            Users user = db.UserRepository.GetById(id);
             if (user.User_Address.Any())
             {
                 foreach(var userAddress in user.User_Address.Where(u=> u.UserID == user.UserID))
                 {
                     db.User_AddressRepository.Delete(userAddress);
+                }
+            }
+            if (user.Factors.Any())
+            {
+                foreach(var factor in user.Factors.Where(u=> u.UserID==user.UserID))
+                {
+                    db.FactorsRepository.Delete(factor);
                 }
             }
             db.UserRepository.Delete(user);

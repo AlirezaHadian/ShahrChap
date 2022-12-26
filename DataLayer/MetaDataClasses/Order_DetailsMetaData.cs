@@ -17,7 +17,10 @@ namespace DataLayer
         [Key]
         public int OT_ID { get; set; }
         [Display(Name ="محصول")][Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public int OrderID { get; set; }
+        public int ProductID { get; set; }
+        [Display(Name="کاربر")]
+        public int UserID { get; set; }
+
         [Display(Name ="متن رو")]
         public string FrontText { get; set; }
         [Display(Name ="متن پشت")]
@@ -25,10 +28,11 @@ namespace DataLayer
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
         [Display(Name ="طرح آماده")]
-        public Nullable<bool> IsDesigned { get; set; }
+        public bool IsDesigned { get; set; }
         [Display(Name ="تعداد")]
         public int Count { get; set; }
         [Display(Name ="شماره موبایل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string SocialNumber { get; set; }
         [Display(Name ="تاریخ سفارش")]
         public System.DateTime OrderDate { get; set; }

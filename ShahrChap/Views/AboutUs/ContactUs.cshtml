@@ -1,0 +1,68 @@
+﻿@model DataLayer.ContactUs
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal form-layer-style">
+        <header>
+            <h1>فرم تماس با ما</h1>
+        </header>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="input-layer">
+                    <label>
+                        <i class="fas fa-user"></i>
+                        نام و نام خانوادگی
+                    </label>
+                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="input-layer">
+                    <label>
+                        <i class="fas fa-mobile-alt"></i>
+                        شماره تماس
+                    </label>
+                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="input-layer">
+                    <label>
+                        <i class="fas fa-envelope"></i>
+                        پست الکترونیک
+                    </label>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="input-layer">
+                    <label>
+                        <i class="fas fa-bookmark"></i>
+                        عنوان
+                    </label>
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="textarea-layer">
+                    <label>
+                        <i class="fas fa-file-alt"></i>
+                        توضیحات
+                    </label>
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @cols = 3, @rows = 3 } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12 pull-left">
+            <input type="submit" value="ارسال پیام" class="btn button-st green pull-left" />
+        </div>
+    </div>
+}

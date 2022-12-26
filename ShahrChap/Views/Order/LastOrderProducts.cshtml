@@ -3,14 +3,14 @@
 <div class="bestsellers">
     <div class="title">
         <h4>آخرین کارت ویزیت ها و تراکت ها</h4>
-        <a href="/Archive" class="View-more">نمایش همه</a>
+        <a href="/ArchiveOrder" class="View-more">نمایش همه</a>
     </div>
     <div class="underline-bestsellers"></div>
     <div class="owl-carousel owl-theme">
 
         @foreach (var item in Model)
         {
-            @Html.Partial("_ShowOrderProduct", item)
+            @Html.Partial("_OrderProduct", item)
         }
 
     </div>

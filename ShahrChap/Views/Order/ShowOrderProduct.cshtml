@@ -24,8 +24,8 @@
                         @if (Model.Product_Galleries.Any())
                         {
                             <div class="img-select">
-                                <div class="img-item">
-                                    <img src="~/Images/ProductImages/@Model.ImageName" alt="تصویر اصلی">
+                                <div class="img-item img-thumbnail">
+                                    <img src="~/Images/ProductImages/@Model.ImageName" class="" alt="تصویر اصلی">
                                 </div>
                                 @foreach (var item in Model.Product_Galleries)
                                 {
@@ -49,20 +49,35 @@
                                 <a href="#" class="Price Unavailable">ناموجود</a>
                             }
                         </div>
-                        <h3 class="single-product-title">@Model.Title</h3>
+                        <h2 class="single-product-title">@Model.Title</h2>
 
 
-                        <div class="product-detail">
+                        <div class="product-detail mt-3">
                             @if (Model.Text != null)
                             {
-                                <h2>درباره محصول:</h2>
-                                <div>
+                                <h4>درباره محصول:</h4>
+                                <h4>
                                     @Html.Raw(Model.Text)
-                                </div>
+                                </h4>
                             }
-                            @if (ViewBag.ProductFeatures != null)
+                            @if (Model.Product_Attribute.IsTwoFace == true)
                             {
-                                List<ShowProductFeaturesViewModel> list = ViewBag.ProductFeatures;
+                                <h6>
+                                    پشت و رو
+                                </h6>
+                            }
+                            else
+                            {
+                                <h6>
+                                    یک رو
+                                </h6>
+                            }
+                            <h6>
+                                تعداد یک سری: @Model.Product_Attribute.Count
+                            </h6>
+                            @if (ViewBag.OrderProductFeatures != null)
+                            {
+                                List<ShowProductFeaturesViewModel> list = ViewBag.OrderProductFeatures;
                                 <ul>
                                     @foreach (var item in list)
                                     {
@@ -71,7 +86,21 @@
                                 </ul>
                             }
                         </div>
-                        <section class="border-radius tags-layer">
+                        <div class="purchase-info">
+                            @if (Model.IsExist == true)
+                            {
+                                <a href="/SendOrder/@Model.ProductID" class="btn">
+                                    سفارش طراحی <i class="fas fa-paint-brush"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn disabled">
+                                    ناموجود <i class="fas fa-ban"></i>
+                                </a>
+                            }
+                        </div>
+                        <section class="border-radius tags-layer mt-4">
                             @foreach (var item in Model.Tags)
                             {
                                 <a href="/Search?q=@item.Tag">@item.Tag</a>
@@ -79,55 +108,6 @@
                         </section>
                     </div>
                 </div>
-
-                @* Order product form *@
-                <section>
-                    @using (Html.BeginForm("SendOrder","Order", FormMethod.Post, new {enctype = "multipart/form-data" })) {
-                        <input type="hidden" value="@Model.ProductID" name="productId"/>
-                    <div class="form-layer-style box-shadow p-4" action="">
-                        <header>
-                            <h2>فرم سفارش طراحی محصول</h2>
-                        </header>
-                        <div class=" mt-1 p-2">
-                            <div class="input-box">
-                                <span class="details">آیا طرح آماده دارید؟</span>
-                                <input type="checkbox" id="desinged_check" name="desinged_check" onchange="changeTheForm()" />
-                                <hr />
-                            </div>
-                            <div class="row" id="design_form">
-                                <div class="input-box col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <span class="details">قسمت رو : </span>
-                                    <textarea class="form-control" name="fronttext" rows="3" placeholder="اطلاعات قسمت روی محصول خود را وارد کنید"></textarea>
-
-                                </div>
-                                <div class="input-box col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <span class="details">قسمت پشت : (اگر محصول شما یک رو میباشد، این قسمت را خالی بگذارید)</span>
-                                    <textarea class="form-control" name="backtext" rows="3" placeholder="اطلاعات قسمت روی محصول خود را وارد کنید"></textarea>
-                                </div>
-                                <div class="input-box col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <span class="details">توضیحات: </span>
-                                    <textarea class="form-control" name="description" rows="3" placeholder="توضیحات محصول خود را وارد کنید"></textarea>
-                                </div>
-                                <div class="input-box col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <span class="details">شماره موبایل: (ارتباط با طراح )</span>
-                                    <input type="text" name="phonenumber" class="form-control" placeholder="شماره موبایل" />
-                                </div>
-                                <hr class="mt-4"/>
-                            </div>
-                            <div class="row mt-2">
-                                <span class="details mb-1">فایل ها یا لوگو خود را با بیشترین کیفیت برای چاپ آپلود کنید</span>
-                                <input type="file" name="uploadfile" multiple/>
-                            </div>
-                            <div class="mt-2 p-2">
-                                <span>تعداد: (سری)</span>
-                                <input type="number" name="count" min="0" value="1">
-                            </div>
-                            <input type="submit" class="col-2 btn btn-success mt-2" value="ثبت سفارش" />
-
-                        </div>
-                    </div>
-                    }
-                </section>
             </div>
         </div>
     </div>
@@ -137,13 +117,6 @@
     $('.img-select img').click(function () {
         var src = $(this).attr('src');
         $('.img-showcase img').attr('src', src).fadeOut('fast').fadeIn('fast');
-    });
-
-
-    $(document).ready(function () {
-        $('input[type="checkbox"]').click(function () {
-            $("#design_form").toggle();
-        });
     });
 
 </script>

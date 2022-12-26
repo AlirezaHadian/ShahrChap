@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ViewModels;
+using static System.Net.WebRequestMethods;
 
 namespace ShahrChap.Controllers
 {
@@ -15,17 +16,17 @@ namespace ShahrChap.Controllers
         UnitOfWork db = new UnitOfWork();
         public ActionResult LastOrderProducts()
         {
-            return PartialView(db.Product_GroupsRepository.Get().Where(p => p.Order_GroupID != null && p.ST_GroupID == null).Select(p => p.Products).OrderByDescending(p => p.CreateDate).Take(12));
+            return PartialView(db.ProductsRepository.Get().Where(p => p.IsOrder == true).OrderByDescending(p => p.CreateDate).Take(12));
         }
 
         [Route("ShowOrderProduct/{id}")]
         public ActionResult ShowOrderProduct(int id)
         {
             var product = db.ProductsRepository.GetById(id);
-            ViewBag.ProductFeatures = product.Product_Features.DistinctBy(f => f.FeatureID).Select(f => new ShowProductFeaturesViewModel()
+            ViewBag.OrderProductFeatures = product.Product_Features.DistinctBy(f => f.FeatureID).Select(f => new ShowProductFeaturesViewModel()
             {
                 FeatureTitle = f.Features.FeatureTitle,
-                Values = db.Product_FeaturesRepository.Get().Where(fe => fe.FeatureID == f.FeatureID).Select(fe => fe.Value).ToList()
+                Values = db.Product_FeaturesRepository.Get().Where(fe => fe.FeatureID == f.FeatureID && fe.ProductID == id).Select(fe => fe.Value).ToList()
             }).ToList();
             if (product == null)
             {
@@ -33,65 +34,152 @@ namespace ShahrChap.Controllers
             }
             return View(product);
         }
+        [Route("SendOrder/{id}")]
+        [Authorize]
+        public ActionResult SendOrder(int id)
+        {
+            var product = db.ProductsRepository.GetById(id);
+            ViewBag.IsTwoFace = db.Product_AttributeRepository.Get().Single(p => p.ProductID == id).IsTwoFace;
+            return View(new Order_Details()
+            {
+                ProductID = id,
+                Products = product
+            });
+        }
 
         [HttpPost]
-        public ActionResult SendOrder(int productId, bool desinged_check=false, string fronttext, string backtext, string description, string phonenumber, int count, HttpPostedFileBase[] files) 
+        [Route("SendOrder/{id}")]
+        [Authorize]
+        public ActionResult SendOrder(int id, Order_Details sendOrder, HttpPostedFileBase[] files)
         {
-            if(desinged_check == false)
+            var product = db.ProductsRepository.GetById(id);
+            ViewBag.IsTwoFace = db.Product_AttributeRepository.Get().Single(p => p.ProductID == id).IsTwoFace;
+            if (sendOrder.IsDesigned == false)
             {
-                if(fronttext== null)
+                if (sendOrder.FrontText == null)
                 {
-                    ModelState.AddModelError("fronttext","متن روی محصول خود را وارد کنید");
+                    ModelState.AddModelError("FrontText", "وارد کردن قسمت روی اجباری می باشد");
                 }
-                if (phonenumber == null)
+                if (product.Product_Attribute.IsTwoFace == true)
                 {
-                    ModelState.AddModelError("phonenumber", "شماره موبایل برای ارتباط با طراح را وارد کنید");
+                    if (sendOrder.BackText == null)
+                    {
+                        ModelState.AddModelError("BackText", "وارد کردن قسمت پشت اجباری می باشد");
+                    }
+                }
+                if (sendOrder.SocialNumber == null)
+                {
+                    ModelState.AddModelError("SocialNumber", "وارد کردن شماره موبایل اجباری می باشد");
+                }
+                if (ModelState.IsValid)
+                {
+                    Order_Details order = new Order_Details()
+                    {
+                        IsDesigned = false,
+                        ProductID = id,
+                        BackText = sendOrder.BackText,
+                        FrontText = sendOrder.FrontText,
+                        Description = sendOrder.Description,
+                        Count = sendOrder.Count,
+                        SocialNumber = sendOrder.SocialNumber,
+                        OrderDate = DateTime.Now
+                    };
+                    order.UserID = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name).UserID;
+                    db.Order_DetailsRepository.Insert(order);
+                        foreach (HttpPostedFileBase file in files)
+                        {
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                var FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                                var ServerSavePath = Path.Combine(Server.MapPath("/Images/OrderFiles/") + FileName);
+                                //Save file to server folder  
+                                file.SaveAs(ServerSavePath);
+                                //assigning file uploaded status to ViewBag for showing message to user.  
+                                ViewBag.UploadStatus = files.Count().ToString() + " فایل با موفقیت آپلود شد.";
+
+                                Order_Files orderFiles = new Order_Files()
+                                {
+                                    OT_ID = order.OT_ID,
+                                    FileName = FileName
+                                };
+                                db.Order_FilesRepository.Insert(orderFiles);
+                            }
+                        }
+                    db.Save();
+                    ViewBag.OrderSuccess = true;
+                    ShopController shop = new ShopController();
+                    shop.Get(id,order.Count);
+                    return View(new Order_Details()
+                    {
+                        ProductID = id,
+                        Products = product,
+                    });
                 }
             }
-            Order_Details order = new Order_Details()
+            else
             {
-                IsDesigned = desinged_check,
-                OrderID = productId,
-                BackText = backtext,
-                FrontText = fronttext,
-                Description = description,
-                Count = count,
-                SocialNumber = phonenumber,
-                OrderDate = DateTime.Now
-            };
-
-            foreach (HttpPostedFileBase file in files)
-            {
-                //Checking file is available to save.  
-                if (file != null)
+                //if (files == null)
+                //{
+                //    //ModelState.AddModelError("files", "آپلود فایل های طراحی اجباری می باشد");
+                //    ViewBag.filevalidation = true;
+                //}
+                if (files != null)
                 {
-                    var FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    var ServerSavePath = Path.Combine(Server.MapPath("/Images/OrderFiles/") + FileName);
-                    //Save file to server folder  
-                    file.SaveAs(ServerSavePath);
-                    //assigning file uploaded status to ViewBag for showing message to user.  
-                    ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
-                }
+                    foreach (HttpPostedFileBase file in files)
+                    {
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            var FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                            var ServerSavePath = Path.Combine(Server.MapPath("/Images/OrderFiles/") + FileName);
+                            //Save file to server folder  
+                            file.SaveAs(ServerSavePath);
+                            //assigning file uploaded status to ViewBag for showing message to user.  
+                            ViewBag.UploadStatus = files.Count().ToString() + " فایل با موفقیت آپلود شد.";
 
+                            Order_Details order = new Order_Details()
+                            {
+                                IsDesigned = true,
+                                ProductID = id,
+                                Count = sendOrder.Count,
+                                OrderDate = DateTime.Now,
+                                Description = sendOrder.Description,
+                                SocialNumber = sendOrder.SocialNumber,
+                                UserID = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name).UserID
+                            };
+                            db.Order_DetailsRepository.Insert(order);
+                            Order_Files orderFiles = new Order_Files()
+                            {
+                                OT_ID = order.OT_ID,
+                                FileName = FileName
+                            };
+                            db.Order_FilesRepository.Insert(orderFiles);
+                            db.Save();
+                            ViewBag.OrderSuccess = true;
+
+                            ShopController shop = new ShopController();
+                            shop.Get(id, order.Count);
+
+                            return View(new Order_Details()
+                            {
+                                ProductID = id,
+                                Products = product,
+                            });
+                        }
+                        else
+                        {
+                            ViewBag.filevalidation = true;
+                        }
+                    }
+                }
             }
-            //var product = db.ProductsRepository.GetById(id);
-            //ViewBag.ProductFeatures = product.Product_Features.DistinctBy(f => f.FeatureID).Select(f => new ShowProductFeaturesViewModel()
-            //{
-            //    FeatureTitle = f.Features.FeatureTitle,
-            //    Values = db.Product_FeaturesRepository.Get().Where(fe => fe.FeatureID == f.FeatureID).Select(fe => fe.Value).ToList()
-            //}).ToList();
-            //if (product == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            return View();
+            return View(sendOrder);
         }
 
         [Route("ArchiveOrder")]
         public ActionResult ArchiveProduct(int pageId = 1, string title = "", int minPrice = 0, int maxPrice = 1000000, List<int> selectedGroups = null)
         {
-            List<Products> products = db.Product_GroupsRepository.Get().Where(p => p.Order_GroupID != null && p.ST_GroupID == null).Select(p => p.Products).ToList();
-            ViewBag.Groups = db.School_Tools_GroupsRepository.Get();
+            List<Products> orderProducts = db.ProductsRepository.Get().Where(p => p.IsOrder == true).ToList();
+            ViewBag.Groups = db.Product_GroupsRepository.Get(g => g.IsOrder == true);
             ViewBag.productTitle = title;
             ViewBag.minPrice = minPrice;
             ViewBag.maxPrice = maxPrice;
@@ -102,13 +190,13 @@ namespace ShahrChap.Controllers
             {
                 foreach (int group in selectedGroups)
                 {
-                    list.AddRange(db.Product_GroupsRepository.Get().Where(g => g.Order_GroupID == group && g.Order_GroupID != null && g.ST_GroupID == null).Select(g => g.Products).ToList());
+                    list.AddRange(db.Product_Selected_GroupsRepository.Get().Where(g => g.GroupID == group).Select(g => g.Products).ToList());
                 }
                 list = list.Distinct().ToList();
             }
             else
             {
-                list.AddRange(products);
+                list.AddRange(orderProducts);
             }
 
             if (title != "")
@@ -117,11 +205,11 @@ namespace ShahrChap.Controllers
             }
             if (minPrice > 0)
             {
-                list = list.Where(p => p.Price >= minPrice && p.IsExist != false).ToList();
+                list = list.Where(p => p.Price >= minPrice && p.IsExist == true).ToList();
             }
-            if (maxPrice > 0)
+            if (maxPrice < 1000000)
             {
-                list = list.Where(p => p.Price <= maxPrice && p.IsExist != false).ToList();
+                list = list.Where(p => p.Price <= maxPrice && p.IsExist == true).ToList();
             }
 
             //Pagging
@@ -142,5 +230,6 @@ namespace ShahrChap.Controllers
             }
             return View(list.OrderByDescending(p => p.CreateDate).Skip(skip).Take(take).ToList());
         }
+
     }
 }

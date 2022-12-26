@@ -16,13 +16,18 @@ namespace DataLayer
     [MetadataType(typeof(Product_GroupsMetaData))]
     public partial class Product_Groups
     {
-        public int PG_ID { get; set; }
-        public int ProductID { get; set; }
-        public Nullable<int> ST_GroupID { get; set; }
-        public Nullable<int> Order_GroupID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product_Groups()
+        {
+            this.Product_Selected_Groups = new HashSet<Product_Selected_Groups>();
+        }
     
-        public virtual Order_Groups Order_Groups { get; set; }
-        public virtual Products Products { get; set; }
-        public virtual School_Tools_Groups School_Tools_Groups { get; set; }
+        public int GroupID { get; set; }
+        public string GroupTitle { get; set; }
+        public Nullable<bool> IsOrder { get; set; }
+        public string ImageName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product_Selected_Groups> Product_Selected_Groups { get; set; }
     }
 }

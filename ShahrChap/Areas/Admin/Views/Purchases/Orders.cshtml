@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DataLayer.Order_Details>
+
+@{
+    ViewBag.Title = "سفارش چاپ";
+}
+
+<h2>سفارش چاپ</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Products.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDesigned)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SocialNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Products.Title)
+            </td>
+            @if (item.IsDesigned == false)
+            {
+                <td>
+                    <h5 class="text text-danger fw-bold">طرح آماده ندارد</h5>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <h5 class="text text-success fw-bold">طرح آماده دارد</h5>
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SocialNumber)
+            </td>
+            <td>
+                @item.OrderDate.ToString("dddd, dd MMMM yyyy")
+            </td>
+            <td>
+                <a class="btn btn-info btn-sm" href="@Url.Action("OrderDetail" , new { id = item.OT_ID })">
+                    جزئیات سفارش
+                </a>
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.OT_ID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.OT_ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.OT_ID })*@
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataLayer.User>
+﻿@model IEnumerable<DataLayer.Users>
 
 @{
     ViewBag.Title = "مدیریت کاربران";
@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Role.RoleTitle)
+            @Html.DisplayNameFor(model => model.Roles.RoleTitle)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role.RoleTitle)
+                @Html.DisplayFor(modelItem => item.Roles.RoleTitle)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)

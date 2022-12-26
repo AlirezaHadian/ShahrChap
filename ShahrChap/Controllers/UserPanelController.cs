@@ -80,6 +80,7 @@ namespace ShahrChap.Controllers
             }
             if (ModelState.IsValid)
             {
+                ModelState.Clear();
                 var user = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name);
                 if (user != null)
                 {
@@ -341,8 +342,14 @@ namespace ShahrChap.Controllers
         public ActionResult GetFactors()
         {
             var username = User.Identity.Name;
-            List<Factors> factors = db.FactorsRepository.Get().Where(f => f.Users.UserName == username).ToList();
-            return View();
+            List<Factor_Details> factorDetail = db.Factor_DetailsRepository.Get().Where(f => f.Factors.Users.UserName == username).ToList();
+            return View(factorDetail);
+        }
+        public ActionResult PurchaseProducts()
+        {
+            var username = User.Identity.Name;
+            List<Factor_Details> list = db.Factor_DetailsRepository.Get().Where(f => f.Factors.Users.UserName == username && f.Factors.IsFinally==true).ToList();
+            return View(list);
         }
     }
 }

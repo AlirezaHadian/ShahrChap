@@ -890,12 +890,18 @@ form .order-submit input:hover {
         opacity: 0.8;
     }
 
+.img-select .img-item > img {
+    border: 1px solid #dfdfdf;
+    padding: 2px;
+    display: block;
+    width: 100px;
+}
 .product-content {
     padding: 2rem 1rem;
 }
 
 .single-product-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-transform: capitalize;
     font-weight: 700;
     position: relative;

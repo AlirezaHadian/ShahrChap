@@ -23,7 +23,7 @@ namespace ShahrChap.Areas.Admin.Controllers
 
         public ActionResult ListGroups()
         {
-            return PartialView(db.School_Tools_GroupsRepository.Get());
+            return PartialView(db.Product_GroupsRepository.Get(g=> g.IsOrder==false));
         }
 
        
@@ -38,13 +38,14 @@ namespace ShahrChap.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ST_GroupID,GroupTitle")] School_Tools_Groups school_Tools_Groups)
+        public ActionResult Create([Bind(Include = "GroupID,GroupTitle")] Product_Groups school_Tools_Groups)
         {
             if (ModelState.IsValid)
             {
-                db.School_Tools_GroupsRepository.Insert(school_Tools_Groups);
+                school_Tools_Groups.IsOrder = false;
+                db.Product_GroupsRepository.Insert(school_Tools_Groups);
                 db.Save();
-                return PartialView("ListGroups", db.School_Tools_GroupsRepository.Get());
+                return PartialView("ListGroups", db.Product_GroupsRepository.Get(g => g.IsOrder == false));
             }
 
             return PartialView(school_Tools_Groups);
@@ -57,7 +58,7 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            School_Tools_Groups schoolTools_Groups = db.School_Tools_GroupsRepository.GetById(id);
+            Product_Groups schoolTools_Groups = db.Product_GroupsRepository.GetById(id);
             if (schoolTools_Groups == null)
             {
                 return HttpNotFound();
@@ -70,13 +71,14 @@ namespace ShahrChap.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ST_GroupID,GroupTitle")] School_Tools_Groups school_Tools_Groups)
+        public ActionResult Edit([Bind(Include = "GroupID,GroupTitle")] Product_Groups school_Tools_Groups)
         {
             if (ModelState.IsValid)
             {
-                db.School_Tools_GroupsRepository.Update(school_Tools_Groups);
+                school_Tools_Groups.IsOrder = false;
+                db.Product_GroupsRepository.Update(school_Tools_Groups);
                 db.Save();
-                return PartialView("ListGroups", db.School_Tools_GroupsRepository.Get());
+                return PartialView("ListGroups", db.Product_GroupsRepository.Get(g => g.IsOrder == false));
             }
             return View(school_Tools_Groups);
         }
@@ -84,8 +86,8 @@ namespace ShahrChap.Areas.Admin.Controllers
         // GET: Admin/SchoolTools_Groups/Delete/5
         public void Delete(int? id)
         {
-            var group = db.School_Tools_GroupsRepository.GetById(id);
-            db.School_Tools_GroupsRepository.Delete(group);
+            var group = db.Product_GroupsRepository.GetById(id);
+            db.Product_GroupsRepository.Delete(group);
             db.Save();
         }
 

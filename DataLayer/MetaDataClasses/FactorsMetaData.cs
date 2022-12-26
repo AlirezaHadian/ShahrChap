@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataLayer
@@ -19,12 +20,15 @@ namespace DataLayer
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int UserID { get; set; }
         [Display(Name = "آدرس")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int AddressID { get; set; }
         [Display(Name = "تاریخ ثبت")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public System.DateTime Date { get; set; }
         [Display(Name = "وضعیت")]
         public bool IsFinally { get; set; }
+        [Display(Name = "قیمت کل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int TotalPrice { get; set; }
+
     }
 }

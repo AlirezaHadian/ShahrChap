@@ -1,0 +1,95 @@
+﻿@model DataLayer.Order_Details
+
+@{
+    ViewBag.Title = "جزئیات سفارش";
+}
+
+<h2>جزئیات سفارش</h2>
+
+<div class="col-md-8 col-lg-8">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Products.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Products.Title)
+        </dd>
+        @if (Model.IsDesigned == true)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.IsDesigned)
+            </dt>
+            <dd>
+                <h4 class="text-success">دارد</h4>
+            </dd>
+        }
+        @if (Model.IsDesigned == false)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.IsDesigned)
+            </dt>
+            <dd>
+                <h4 class="text-danger">ندارد</h4>
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FrontText)
+            </dt>
+
+            <dd>
+                <h4>@Html.DisplayFor(model => model.FrontText)</h4>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BackText)
+            </dt>
+
+            <dd>
+                <h4>@Html.DisplayFor(model => model.BackText)</h4>
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            <h4>@Html.DisplayFor(model => model.Description)</h4>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SocialNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SocialNumber)
+        </dd>
+
+    </dl>
+</div>
+<div class="col-md-4 col-lg-4">
+    @{
+        List<DataLayer.Order_Files> files = ViewBag.OrderFiles;
+
+        <table class="table table-bordered">
+            <tr>
+                <th>تصویر</th>
+                <th></th>
+            </tr>
+            @foreach (var item in files)
+            {
+                <tr>
+                    <td style="max-height:50px; max-width: 80px;">
+                        <img src="~/Images/OrderFiles/@item.FileName" class="thumbnail" />
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="@Url.Action("DownloadFile" , new {id = item.OF_ID})">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+<a class="btn btn-danger" href="@Url.Action("Orders")">
+    بازگشت
+</a>

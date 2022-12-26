@@ -25,23 +25,26 @@ namespace DataLayer
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<AboutUs> AboutUs { get; set; }
         public virtual DbSet<city> city { get; set; }
-        public virtual DbSet<province> province { get; set; }
-        public virtual DbSet<Product_Galleries> Product_Galleries { get; set; }
-        public virtual DbSet<Tags> Tags { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
-        public virtual DbSet<Features> Features { get; set; }
-        public virtual DbSet<Product_Features> Product_Features { get; set; }
-        public virtual DbSet<Factors> Factors { get; set; }
-        public virtual DbSet<Slider> Slider { get; set; }
+        public virtual DbSet<ContactUs> ContactUs { get; set; }
+        public virtual DbSet<ContactUsInfo> ContactUsInfo { get; set; }
         public virtual DbSet<Factor_Details> Factor_Details { get; set; }
-        public virtual DbSet<Order_Groups> Order_Groups { get; set; }
-        public virtual DbSet<School_Tools_Groups> School_Tools_Groups { get; set; }
-        public virtual DbSet<User_Address> User_Address { get; set; }
-        public virtual DbSet<Product_Groups> Product_Groups { get; set; }
+        public virtual DbSet<Factors> Factors { get; set; }
+        public virtual DbSet<Features> Features { get; set; }
         public virtual DbSet<Order_Details> Order_Details { get; set; }
         public virtual DbSet<Order_Files> Order_Files { get; set; }
+        public virtual DbSet<Product_Attribute> Product_Attribute { get; set; }
+        public virtual DbSet<Product_Features> Product_Features { get; set; }
+        public virtual DbSet<Product_Galleries> Product_Galleries { get; set; }
+        public virtual DbSet<Product_Groups> Product_Groups { get; set; }
+        public virtual DbSet<Product_Selected_Groups> Product_Selected_Groups { get; set; }
+        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<province> province { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<Slider> Slider { get; set; }
+        public virtual DbSet<Tags> Tags { get; set; }
+        public virtual DbSet<User_Address> User_Address { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }

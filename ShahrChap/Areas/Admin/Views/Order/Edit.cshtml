@@ -3,17 +3,17 @@
 
 @{
     ViewBag.Title = "ویرایش محصول";
-    List<Product_Groups> selectedGroup = ViewBag.SelectedGroups;
 }
-
+<link rel="stylesheet" href="css/samples.css">
+<link rel="stylesheet" href="toolbarconfigurator/lib/codemirror/neo.css">
 <h2>ویرایش محصول @Model.Title</h2>
 <div class="row">
     @using (Html.BeginForm("Edit", "Order", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        @Html.HiddenFor(m => m.ProductID)
-        @Html.HiddenFor(m => m.ImageName)
-        @Html.HiddenFor(m => m.CreateDate)
-
+        @Html.HiddenFor(o => o.ProductID)
+        @Html.HiddenFor(o => o.CreateDate)
+        @Html.HiddenFor(o => o.ImageName)
+        @Html.HiddenFor(o => o.IsOrder)
         <div class="col-md-8">
             @Html.AntiForgeryToken()
             @if (ViewBag.ErrorSelectedGroup == true)
@@ -35,7 +35,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -43,10 +43,34 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <input type="text" name="PricePishPardakht" class="form-control" value="@Model.Price.ToString("#,0")" onkeyup="javascript: this.value = ToRial(this.value);" />
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @onkeyup = "ToRial(this.value)" } })
+                        <span id="priceToShamsi"></span>
                         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group">
+                    <span class="control-label col-md-2">تعداد سری</span>
+                    <div class="col-md-10">
+                        <input type="number" name="Count" class="form-control"  value="@Model.Product_Attribute.Count"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                <span class="control-label col-md-2"></span>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <input type="radio" name="IsTwoFace" value="false" @((Model.Product_Attribute.IsTwoFace == false) ? "checked":"") /><span> یک رو</span>
+                        <input type="radio" name="IsTwoFace" value="true"  @((Model.Product_Attribute.IsTwoFace == true) ? "checked":"")/><span> دو رو (پشت و رو)</span>
+                    </div>
+                </div>
+            </div>
+                @*<div class="form-group">
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            <input type="checkbox" name="IsTwoFace" value="false" @((Model.Product_Attribute.IsTwoFace == false) ? "checked":"")/><span>یک رو</span>
+                            <input type="checkbox" name="IsTwoFace" value="true" @((Model.Product_Attribute.IsTwoFace == true) ? "checked":"")/><span>دو رو (پشت و رو)</span>
+                        </div>
+                    </div>
+                </div>*@
 
                 <div class="form-group">
                     <span class="control-label col-md-2">کلمات کلیدی</span>
@@ -54,16 +78,8 @@
                         <input type="text" name="tags" value="@ViewBag.Tags" class="form-control" placeholder="کلمات کلیدی را با , جدا کنید" />
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.IsExist, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @Html.RadioButtonFor(model => model.IsExist, true@*, new { @checked = "checked" }*@) موجود
-                            @Html.RadioButtonFor(model => model.IsExist, false) ناموجود
-                            @Html.ValidationMessageFor(model => model.IsExist, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
+
+
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
@@ -76,7 +92,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">تصویر محصول</div>
                 <div class="panel-body">
-                    <img id="imgPreviewProduct" style="margin: 8px auto" class="thumbnail" src="/Images/ProductImages/@Model.ImageName" />
+                    <img id="imgPreviewProduct" style="margin: 8px auto; max-height:300px" class="thumbnail" src="/Images/ProductImages/@Model.ImageName" />
                     <div class="form-group">
                         @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -90,13 +106,14 @@
                 <div class="panel-heading">انتخاب گروه</div>
                 <div class="panel-body">
                     @{
-                        List<Order_Groups> groups = ViewBag.Groups;
+                        List<Product_Groups> order_Groups = ViewBag.Groups;
+                        List<Product_Selected_Groups> list = ViewBag.SelectedOrderGroups;
 
                         <ul>
-                            @foreach (var group in groups)
+                            @foreach (var group in order_Groups)
                             {
                                 <li>
-                                    <input type="checkbox" @((selectedGroup.Any(g => g.Order_GroupID == group.Order_GroupID)) ? "checked" : "") name="selectedGroups" value="@group.Order_GroupID" /> <span>@group.GroupTitle</span>
+                                    <input type="checkbox" @((list.Any(g => g.GroupID == group.GroupID)) ? "checked" : "") name="selectedGroups" value="@group.GroupID" /> <span>@group.GroupTitle</span>
                                 </li>
                             }
                         </ul>
@@ -106,13 +123,14 @@
         </div>
     }
 </div>
-<div>
-    @Html.ActionLink("بازگشت به لیست محصولات", "Index")
-</div>
+<a class="btn btn-danger" href="@Url.Action("Index")">
+    بازگشت
+</a>
 
 @section Scripts
 {
     <script>
+
         function readURL(input) {
 
             if (input.files && input.files[0]) {
@@ -130,6 +148,7 @@
             readURL(this);
         });
 
+
         function ToRial(str) {
 
             str = str.replace(/\,/g, '');
@@ -139,9 +158,10 @@
                 str = str.replace(objRegex, '$1,$2');
             }
 
-            return str;
+            $("#priceToShamsi").html(str + " تومان");
         }
     </script>
+
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/ckeditor/ckeditor.js"></script>
     <script src="/ckeditor/adapters/jquery.js"></script>
@@ -151,5 +171,3 @@
         });
     </script>
 }
-
-

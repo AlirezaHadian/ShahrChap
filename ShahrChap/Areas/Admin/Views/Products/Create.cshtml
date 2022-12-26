@@ -40,8 +40,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <input type="text" name="PricePishPardakht" class="form-control" onkeyup="javascript: this.value = ToRial(this.value);" />
-                        @*@Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @onkeyup = "ToRial(this.value)" } })
+                        <span id="priceToShamsi"></span>
                         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -90,13 +90,13 @@
                 <div class="panel-heading">انتخاب گروه</div>
                 <div class="panel-body">
                     @{
-                        List<School_Tools_Groups> st_group = ViewBag.Groups;
+                        List<Product_Groups> groups = ViewBag.Groups;
 
                         <ul>
-                            @foreach (var group in st_group.ToList())
+                            @foreach (var group in groups)
                             {
                                 <li>
-                                    <input type="checkbox" name="selectedGroups" value="@group.ST_GroupID" /> <span>@group.GroupTitle</span>
+                                    <input type="checkbox" name="selectedGroups" value="@group.GroupID" /> <span>@group.GroupTitle</span>
                                 </li>
                             }
                         </ul>
@@ -106,9 +106,9 @@
         </div>
     }
 </div>
-<div>
-    @Html.ActionLink("بازگشت به لیست محصولات", "Index")
-</div>
+<a class="btn btn-danger" href="@Url.Action("Index")">
+    بازگشت
+</a>
 
 @section Scripts
 {
@@ -141,7 +141,7 @@
                 str = str.replace(objRegex, '$1,$2');
             }
 
-            return str;
+            $("#priceToShamsi").html(str + " تومان");
         }
     </script>
 

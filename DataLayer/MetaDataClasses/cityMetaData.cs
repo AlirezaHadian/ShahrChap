@@ -19,5 +19,5 @@ namespace DataLayer
         public int county_id { get; set; }
         [Display(Name="شهر")]
         public string cityName { get; set; }
-    }
+    }    
 }

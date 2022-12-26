@@ -1,142 +1,111 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ShahrChap_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="Role">
-    <Key>
-      <PropertyRef Name="RoleID" />
-    </Key>
-    <Property Name="RoleID" Type="Int32" Nullable="false" />
-    <Property Name="RoleTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="RoleName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
-  </EntityType>
-  <EntityType Name="User">
-    <Key>
-      <PropertyRef Name="UserID" />
-    </Key>
-    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="RoleID" Type="Int32" Nullable="false" />
-    <Property Name="UserName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="ActiveCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Phone" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="IsEmailActive" Type="Boolean" Nullable="false" />
-    <Property Name="IsPhoneActive" Type="Boolean" Nullable="false" />
-    <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
-    <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_Factors_Users" FromRole="User" ToRole="Factors" />
-    <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_User_Address_Users" FromRole="User" ToRole="User_Address" />
-    <NavigationProperty Name="Users1" Relationship="ShahrChap_DBModel.FK_Users_Users" FromRole="User" ToRole="User1" />
-    <NavigationProperty Name="Users2" Relationship="ShahrChap_DBModel.FK_Users_Users" FromRole="User1" ToRole="User" />
-  </EntityType>
-  <Association Name="FK_Users_Roles">
-    <End Role="Roles" Type="Self.Role" Multiplicity="1" />
-    <End Role="Users" Type="Self.User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Roles">
-        <PropertyRef Name="RoleID" />
-      </Principal>
-      <Dependent Role="Users">
-        <PropertyRef Name="RoleID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="ShahrChap_DBEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Roles" EntityType="Self.Role" />
-    <EntitySet Name="Users" EntityType="Self.User" />
-    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
-      <End Role="Roles" EntitySet="Roles" />
-      <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
+    <EntitySet Name="AboutUs" EntityType="ShahrChap_DBModel.AboutUs" />
     <EntitySet Name="city" EntityType="ShahrChap_DBModel.city" />
+    <EntitySet Name="ContactUs" EntityType="ShahrChap_DBModel.ContactUs" />
+    <EntitySet Name="ContactUsInfo" EntityType="ShahrChap_DBModel.ContactUsInfo" />
+    <EntitySet Name="Factor_Details" EntityType="ShahrChap_DBModel.Factor_Details" />
+    <EntitySet Name="Factors" EntityType="ShahrChap_DBModel.Factors" />
+    <EntitySet Name="Features" EntityType="ShahrChap_DBModel.Features" />
+    <EntitySet Name="Order_Details" EntityType="ShahrChap_DBModel.Order_Details" />
+    <EntitySet Name="Order_Files" EntityType="ShahrChap_DBModel.Order_Files" />
+    <EntitySet Name="Product_Attribute" EntityType="ShahrChap_DBModel.Product_Attribute" />
+    <EntitySet Name="Product_Features" EntityType="ShahrChap_DBModel.Product_Features" />
+    <EntitySet Name="Product_Galleries" EntityType="ShahrChap_DBModel.Product_Galleries" />
+    <EntitySet Name="Product_Groups" EntityType="ShahrChap_DBModel.Product_Groups" />
+    <EntitySet Name="Product_Selected_Groups" EntityType="ShahrChap_DBModel.Product_Selected_Groups" />
+    <EntitySet Name="Products" EntityType="ShahrChap_DBModel.Products" />
     <EntitySet Name="province" EntityType="ShahrChap_DBModel.province" />
+    <EntitySet Name="Roles" EntityType="ShahrChap_DBModel.Roles" />
+    <EntitySet Name="Slider" EntityType="ShahrChap_DBModel.Slider" />
+    <EntitySet Name="Tags" EntityType="ShahrChap_DBModel.Tags" />
+    <EntitySet Name="User_Address" EntityType="ShahrChap_DBModel.User_Address" />
+    <EntitySet Name="Users" EntityType="ShahrChap_DBModel.Users" />
     <AssociationSet Name="FK_city_province" Association="ShahrChap_DBModel.FK_city_province">
       <End Role="province" EntitySet="province" />
       <End Role="city" EntitySet="city" />
-    </AssociationSet>
-    <EntitySet Name="Product_Galleries" EntityType="ShahrChap_DBModel.Product_Galleries" />
-    <EntitySet Name="Tags" EntityType="ShahrChap_DBModel.Tags" />
-    <EntitySet Name="Products" EntityType="ShahrChap_DBModel.Products" />
-    <AssociationSet Name="FK_Product_Galleries_Products" Association="ShahrChap_DBModel.FK_Product_Galleries_Products">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="Product_Galleries" EntitySet="Product_Galleries" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tags_Products" Association="ShahrChap_DBModel.FK_Tags_Products">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="Tags" EntitySet="Tags" />
-    </AssociationSet>
-    <EntitySet Name="Features" EntityType="ShahrChap_DBModel.Features" />
-    <EntitySet Name="Product_Features" EntityType="ShahrChap_DBModel.Product_Features" />
-    <AssociationSet Name="FK_Product_Features_Features" Association="ShahrChap_DBModel.FK_Product_Features_Features">
-      <End Role="Features" EntitySet="Features" />
-      <End Role="Product_Features" EntitySet="Product_Features" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Product_Features_Products" Association="ShahrChap_DBModel.FK_Product_Features_Products">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="Product_Features" EntitySet="Product_Features" />
-    </AssociationSet>
-    <EntitySet Name="Factors" EntityType="ShahrChap_DBModel.Factors" />
-    <AssociationSet Name="FK_Factors_Users" Association="ShahrChap_DBModel.FK_Factors_Users">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Factors" EntitySet="Factors" />
-    </AssociationSet>
-    <EntitySet Name="Slider" EntityType="ShahrChap_DBModel.Slider" />
-    <EntitySet Name="Factor_Details" EntityType="ShahrChap_DBModel.Factor_Details" />
-    <EntitySet Name="Order_Groups" EntityType="ShahrChap_DBModel.Order_Groups" />
-    <EntitySet Name="School_Tools_Groups" EntityType="ShahrChap_DBModel.School_Tools_Groups" />
-    <EntitySet Name="User_Address" EntityType="ShahrChap_DBModel.User_Address" />
-    <AssociationSet Name="FK_FactorDetails_Factors1" Association="ShahrChap_DBModel.FK_FactorDetails_Factors1">
-      <End Role="Factors" EntitySet="Factors" />
-      <End Role="Factor_Details" EntitySet="Factor_Details" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Factors_UserAddress1" Association="ShahrChap_DBModel.FK_Factors_UserAddress1">
-      <End Role="User_Address" EntitySet="User_Address" />
-      <End Role="Factors" EntitySet="Factors" />
-    </AssociationSet>
-    <AssociationSet Name="FK_User_Address_Users" Association="ShahrChap_DBModel.FK_User_Address_Users">
-      <End Role="User" EntitySet="Users" />
-      <End Role="User_Address" EntitySet="User_Address" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Users_Users" Association="ShahrChap_DBModel.FK_Users_Users">
-      <End Role="User" EntitySet="Users" />
-      <End Role="User1" EntitySet="Users" />
-    </AssociationSet>
-    <EntitySet Name="Product_Groups" EntityType="ShahrChap_DBModel.Product_Groups" />
-    <AssociationSet Name="FK_Product_Groups_Order_Groups" Association="ShahrChap_DBModel.FK_Product_Groups_Order_Groups">
-      <End Role="Order_Groups" EntitySet="Order_Groups" />
-      <End Role="Product_Groups" EntitySet="Product_Groups" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Product_Groups_Products" Association="ShahrChap_DBModel.FK_Product_Groups_Products">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="Product_Groups" EntitySet="Product_Groups" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Product_Groups_SchoolTools_Groups" Association="ShahrChap_DBModel.FK_Product_Groups_SchoolTools_Groups">
-      <End Role="School_Tools_Groups" EntitySet="School_Tools_Groups" />
-      <End Role="Product_Groups" EntitySet="Product_Groups" />
     </AssociationSet>
     <AssociationSet Name="FK_User_Address_city" Association="ShahrChap_DBModel.FK_User_Address_city">
       <End Role="city" EntitySet="city" />
       <End Role="User_Address" EntitySet="User_Address" />
     </AssociationSet>
-    <AssociationSet Name="FK_province_province" Association="ShahrChap_DBModel.FK_province_province">
-      <End Role="province" EntitySet="province" />
-      <End Role="province1" EntitySet="province" />
+    <AssociationSet Name="FK_Factor_Details_Products" Association="ShahrChap_DBModel.FK_Factor_Details_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Factor_Details" EntitySet="Factor_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FactorDetails_Factors" Association="ShahrChap_DBModel.FK_FactorDetails_Factors">
+      <End Role="Factors" EntitySet="Factors" />
+      <End Role="Factor_Details" EntitySet="Factor_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factors_UserAddress" Association="ShahrChap_DBModel.FK_Factors_UserAddress">
+      <End Role="User_Address" EntitySet="User_Address" />
+      <End Role="Factors" EntitySet="Factors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factors_Users" Association="ShahrChap_DBModel.FK_Factors_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Factors" EntitySet="Factors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Features_Features" Association="ShahrChap_DBModel.FK_Product_Features_Features">
+      <End Role="Features" EntitySet="Features" />
+      <End Role="Product_Features" EntitySet="Product_Features" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Details_Products" Association="ShahrChap_DBModel.FK_Order_Details_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Details_Users" Association="ShahrChap_DBModel.FK_Order_Details_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Gallery_OrderDetails" Association="ShahrChap_DBModel.FK_Order_Gallery_OrderDetails">
+      <End Role="Order_Details" EntitySet="Order_Details" />
+      <End Role="Order_Files" EntitySet="Order_Files" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Attribute_Products" Association="ShahrChap_DBModel.FK_Product_Attribute_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Product_Attribute" EntitySet="Product_Attribute" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Features_Products" Association="ShahrChap_DBModel.FK_Product_Features_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Product_Features" EntitySet="Product_Features" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Galleries_Products" Association="ShahrChap_DBModel.FK_Product_Galleries_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Product_Galleries" EntitySet="Product_Galleries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Groups_SchoolTools_Groups" Association="ShahrChap_DBModel.FK_Product_Groups_SchoolTools_Groups">
+      <End Role="Product_Groups" EntitySet="Product_Groups" />
+      <End Role="Product_Selected_Groups" EntitySet="Product_Selected_Groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Groups_Products" Association="ShahrChap_DBModel.FK_Product_Groups_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Product_Selected_Groups" EntitySet="Product_Selected_Groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tags_Products" Association="ShahrChap_DBModel.FK_Tags_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Tags" EntitySet="Tags" />
     </AssociationSet>
     <AssociationSet Name="FK_User_Address_province" Association="ShahrChap_DBModel.FK_User_Address_province">
       <End Role="province" EntitySet="province" />
       <End Role="User_Address" EntitySet="User_Address" />
     </AssociationSet>
-    <EntitySet Name="Order_Details" EntityType="ShahrChap_DBModel.Order_Details" />
-    <AssociationSet Name="FK_OrderDetails_Products1" Association="ShahrChap_DBModel.FK_OrderDetails_Products1">
-      <End Role="Products" EntitySet="Products" />
-      <End Role="Order_Details" EntitySet="Order_Details" />
+    <AssociationSet Name="FK_Users_Roles" Association="ShahrChap_DBModel.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <EntitySet Name="Order_Files" EntityType="ShahrChap_DBModel.Order_Files" />
-    <AssociationSet Name="FK_Order_Gallery_OrderDetails" Association="ShahrChap_DBModel.FK_Order_Gallery_OrderDetails">
-      <End Role="Order_Details" EntitySet="Order_Details" />
-      <End Role="Order_Files" EntitySet="Order_Files" />
+    <AssociationSet Name="FK_User_Address_Users" Association="ShahrChap_DBModel.FK_User_Address_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="User_Address" EntitySet="User_Address" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="AboutUs">
+    <Key>
+      <PropertyRef Name="AboutUsID" />
+    </Key>
+    <Property Name="AboutUsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
   <EntityType Name="city">
     <Key>
       <PropertyRef Name="cityId" />
@@ -148,6 +117,157 @@
     <NavigationProperty Name="province" Relationship="ShahrChap_DBModel.FK_city_province" FromRole="city" ToRole="province" />
     <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_User_Address_city" FromRole="city" ToRole="User_Address" />
   </EntityType>
+  <EntityType Name="ContactUs">
+    <Key>
+      <PropertyRef Name="CU_ID" />
+    </Key>
+    <Property Name="CU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ContactUsInfo">
+    <Key>
+      <PropertyRef Name="CI_ID" />
+    </Key>
+    <Property Name="CI_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Info" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Factor_Details">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FactorID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Factor_Details_Products" FromRole="Factor_Details" ToRole="Products" />
+    <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_FactorDetails_Factors" FromRole="Factor_Details" ToRole="Factors" />
+    <Property Name="Sum" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Factors">
+    <Key>
+      <PropertyRef Name="FactorID" />
+    </Key>
+    <Property Name="FactorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="AddressID" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsFinally" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Factor_Details" Relationship="ShahrChap_DBModel.FK_FactorDetails_Factors" FromRole="Factors" ToRole="Factor_Details" />
+    <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_Factors_UserAddress" FromRole="Factors" ToRole="User_Address" />
+    <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_Factors_Users" FromRole="Factors" ToRole="Users" />
+    <Property Name="TotalPrice" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Features">
+    <Key>
+      <PropertyRef Name="FeatureID" />
+    </Key>
+    <Property Name="FeatureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FeatureTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Product_Features" Relationship="ShahrChap_DBModel.FK_Product_Features_Features" FromRole="Features" ToRole="Product_Features" />
+  </EntityType>
+  <EntityType Name="Order_Details">
+    <Key>
+      <PropertyRef Name="OT_ID" />
+    </Key>
+    <Property Name="OT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="FrontText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BackText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsDesigned" Type="Boolean" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <Property Name="SocialNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Order_Details_Products" FromRole="Order_Details" ToRole="Products" />
+    <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_Order_Details_Users" FromRole="Order_Details" ToRole="Users" />
+    <NavigationProperty Name="Order_Files" Relationship="ShahrChap_DBModel.FK_Order_Gallery_OrderDetails" FromRole="Order_Details" ToRole="Order_Files" />
+  </EntityType>
+  <EntityType Name="Order_Files">
+    <Key>
+      <PropertyRef Name="OF_ID" />
+    </Key>
+    <Property Name="OF_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OT_ID" Type="Int32" Nullable="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Order_Details" Relationship="ShahrChap_DBModel.FK_Order_Gallery_OrderDetails" FromRole="Order_Files" ToRole="Order_Details" />
+  </EntityType>
+  <EntityType Name="Product_Attribute">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="IsTwoFace" Type="Boolean" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Product_Attribute_Products" FromRole="Product_Attribute" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Product_Features">
+    <Key>
+      <PropertyRef Name="PF_ID" />
+    </Key>
+    <Property Name="PF_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="FeatureID" Type="Int32" Nullable="false" />
+    <Property Name="Value" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Features" Relationship="ShahrChap_DBModel.FK_Product_Features_Features" FromRole="Product_Features" ToRole="Features" />
+    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Product_Features_Products" FromRole="Product_Features" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Product_Galleries">
+    <Key>
+      <PropertyRef Name="GalleryID" />
+    </Key>
+    <Property Name="GalleryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ImageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Product_Galleries_Products" FromRole="Product_Galleries" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Product_Groups">
+    <Key>
+      <PropertyRef Name="GroupID" />
+    </Key>
+    <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupTitle" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="IsOrder" Type="Boolean" />
+    <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Product_Selected_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_SchoolTools_Groups" FromRole="Product_Groups" ToRole="Product_Selected_Groups" />
+  </EntityType>
+  <EntityType Name="Product_Selected_Groups">
+    <Key>
+      <PropertyRef Name="PS_ID" />
+    </Key>
+    <Property Name="PS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="GroupID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Product_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_SchoolTools_Groups" FromRole="Product_Selected_Groups" ToRole="Product_Groups" />
+    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Product_Groups_Products" FromRole="Product_Selected_Groups" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="ImageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsExist" Type="Boolean" Nullable="false" />
+    <Property Name="IsOrder" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Factor_Details" Relationship="ShahrChap_DBModel.FK_Factor_Details_Products" FromRole="Products" ToRole="Factor_Details" />
+    <NavigationProperty Name="Order_Details" Relationship="ShahrChap_DBModel.FK_Order_Details_Products" FromRole="Products" ToRole="Order_Details" />
+    <NavigationProperty Name="Product_Attribute" Relationship="ShahrChap_DBModel.FK_Product_Attribute_Products" FromRole="Products" ToRole="Product_Attribute" />
+    <NavigationProperty Name="Product_Features" Relationship="ShahrChap_DBModel.FK_Product_Features_Products" FromRole="Products" ToRole="Product_Features" />
+    <NavigationProperty Name="Product_Galleries" Relationship="ShahrChap_DBModel.FK_Product_Galleries_Products" FromRole="Products" ToRole="Product_Galleries" />
+    <NavigationProperty Name="Product_Selected_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_Products" FromRole="Products" ToRole="Product_Selected_Groups" />
+    <NavigationProperty Name="Tags" Relationship="ShahrChap_DBModel.FK_Tags_Products" FromRole="Products" ToRole="Tags" />
+  </EntityType>
   <EntityType Name="province">
     <Key>
       <PropertyRef Name="provinceId" />
@@ -155,9 +275,72 @@
     <Property Name="provinceId" Type="Int32" Nullable="false" />
     <Property Name="provinceName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="city" Relationship="ShahrChap_DBModel.FK_city_province" FromRole="province" ToRole="city" />
-    <NavigationProperty Name="province1" Relationship="ShahrChap_DBModel.FK_province_province" FromRole="province" ToRole="province1" />
-    <NavigationProperty Name="province2" Relationship="ShahrChap_DBModel.FK_province_province" FromRole="province1" ToRole="province" />
     <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_User_Address_province" FromRole="province" ToRole="User_Address" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="RoleTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Slider">
+    <Key>
+      <PropertyRef Name="SlideID" />
+    </Key>
+    <Property Name="SlideID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+    <Property Name="ImageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Name="TagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Tag" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Tags_Products" FromRole="Tags" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="User_Address">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="ProvinceID" Type="Int32" Nullable="false" />
+    <Property Name="CityID" Type="Int32" Nullable="false" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="FullAddress" Type="String" Nullable="false" MaxLength="650" FixedLength="false" Unicode="true" />
+    <Property Name="PosteCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="city" Relationship="ShahrChap_DBModel.FK_User_Address_city" FromRole="User_Address" ToRole="city" />
+    <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_Factors_UserAddress" FromRole="User_Address" ToRole="Factors" />
+    <NavigationProperty Name="province" Relationship="ShahrChap_DBModel.FK_User_Address_province" FromRole="User_Address" ToRole="province" />
+    <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_User_Address_Users" FromRole="User_Address" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ActiveCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="IsEmailActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsPhoneActive" Type="Boolean" Nullable="false" />
+    <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_Factors_Users" FromRole="Users" ToRole="Factors" />
+    <NavigationProperty Name="Order_Details" Relationship="ShahrChap_DBModel.FK_Order_Details_Users" FromRole="Users" ToRole="Order_Details" />
+    <NavigationProperty Name="Roles" Relationship="ShahrChap_DBModel.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_User_Address_Users" FromRole="Users" ToRole="User_Address" />
   </EntityType>
   <Association Name="FK_city_province">
     <End Type="ShahrChap_DBModel.province" Role="province" Multiplicity="1" />
@@ -171,42 +354,138 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Product_Galleries">
-    <Key>
-      <PropertyRef Name="GalleryID" />
-    </Key>
-    <Property Name="GalleryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="Int32" Nullable="false" />
-    <Property Name="ImageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Product_Galleries_Products" FromRole="Product_Galleries" ToRole="Products" />
-    <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="Tags">
-    <Key>
-      <PropertyRef Name="TagID" />
-    </Key>
-    <Property Name="TagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="Int32" Nullable="false" />
-    <Property Name="Tag" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Tags_Products" FromRole="Tags" ToRole="Products" />
-  </EntityType>
-  <EntityType Name="Products">
-    <Key>
-      <PropertyRef Name="ProductID" />
-    </Key>
-    <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Title" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
-    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Price" Type="Int32" Nullable="false" />
-    <Property Name="ImageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="IsExist" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Product_Galleries" Relationship="ShahrChap_DBModel.FK_Product_Galleries_Products" FromRole="Products" ToRole="Product_Galleries" />
-    <NavigationProperty Name="Tags" Relationship="ShahrChap_DBModel.FK_Tags_Products" FromRole="Products" ToRole="Tags" />
-    <NavigationProperty Name="Product_Features" Relationship="ShahrChap_DBModel.FK_Product_Features_Products" FromRole="Products" ToRole="Product_Features" />
-    <NavigationProperty Name="Product_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_Products" FromRole="Products" ToRole="Product_Groups" />
-    <NavigationProperty Name="Order_Details" Relationship="ShahrChap_DBModel.FK_OrderDetails_Products1" FromRole="Products" ToRole="Order_Details" />
-  </EntityType>
+  <Association Name="FK_User_Address_city">
+    <End Type="ShahrChap_DBModel.city" Role="city" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.User_Address" Role="User_Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="city">
+        <PropertyRef Name="cityId" />
+      </Principal>
+      <Dependent Role="User_Address">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factor_Details_Products">
+    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Factor_Details" Role="Factor_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Factor_Details">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FactorDetails_Factors">
+    <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Factor_Details" Role="Factor_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Factors">
+        <PropertyRef Name="FactorID" />
+      </Principal>
+      <Dependent Role="Factor_Details">
+        <PropertyRef Name="FactorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factors_UserAddress">
+    <End Type="ShahrChap_DBModel.User_Address" Role="User_Address" Multiplicity="0..1" />
+    <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_Address">
+        <PropertyRef Name="AddressID" />
+      </Principal>
+      <Dependent Role="Factors">
+        <PropertyRef Name="AddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factors_Users">
+    <End Type="ShahrChap_DBModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Factors">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Features_Features">
+    <End Type="ShahrChap_DBModel.Features" Role="Features" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Product_Features" Role="Product_Features" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Features">
+        <PropertyRef Name="FeatureID" />
+      </Principal>
+      <Dependent Role="Product_Features">
+        <PropertyRef Name="FeatureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Details_Products">
+    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Order_Details" Role="Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Details_Users">
+    <End Type="ShahrChap_DBModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Order_Details" Role="Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Gallery_OrderDetails">
+    <End Type="ShahrChap_DBModel.Order_Details" Role="Order_Details" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Order_Files" Role="Order_Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order_Details">
+        <PropertyRef Name="OT_ID" />
+      </Principal>
+      <Dependent Role="Order_Files">
+        <PropertyRef Name="OT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Attribute_Products">
+    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Product_Attribute" Role="Product_Attribute" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Product_Attribute">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Features_Products">
+    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Product_Features" Role="Product_Features" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Product_Features">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Product_Galleries_Products">
     <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
     <End Type="ShahrChap_DBModel.Product_Galleries" Role="Product_Galleries" Multiplicity="*" />
@@ -215,6 +494,30 @@
         <PropertyRef Name="ProductID" />
       </Principal>
       <Dependent Role="Product_Galleries">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Groups_SchoolTools_Groups">
+    <End Type="ShahrChap_DBModel.Product_Groups" Role="Product_Groups" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Product_Selected_Groups" Role="Product_Selected_Groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product_Groups">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="Product_Selected_Groups">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Groups_Products">
+    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Product_Selected_Groups" Role="Product_Selected_Groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Product_Selected_Groups">
         <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
@@ -231,249 +534,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Features">
-    <Key>
-      <PropertyRef Name="FeatureID" />
-    </Key>
-    <Property Name="FeatureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FeatureTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Product_Features" Relationship="ShahrChap_DBModel.FK_Product_Features_Features" FromRole="Features" ToRole="Product_Features" />
-  </EntityType>
-  <EntityType Name="Product_Features">
-    <Key>
-      <PropertyRef Name="PF_ID" />
-    </Key>
-    <Property Name="PF_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="Int32" Nullable="false" />
-    <Property Name="FeatureID" Type="Int32" Nullable="false" />
-    <Property Name="Value" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Features" Relationship="ShahrChap_DBModel.FK_Product_Features_Features" FromRole="Product_Features" ToRole="Features" />
-    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Product_Features_Products" FromRole="Product_Features" ToRole="Products" />
-  </EntityType>
-  <Association Name="FK_Product_Features_Features">
-    <End Type="ShahrChap_DBModel.Features" Role="Features" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.Product_Features" Role="Product_Features" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Features">
-        <PropertyRef Name="FeatureID" />
-      </Principal>
-      <Dependent Role="Product_Features">
-        <PropertyRef Name="FeatureID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Product_Features_Products">
-    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.Product_Features" Role="Product_Features" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="Product_Features">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Factors">
-    <Key>
-      <PropertyRef Name="FactorID" />
-    </Key>
-    <Property Name="FactorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserID" Type="Int32" Nullable="false" />
-    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="IsFinally" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_Factors_Users" FromRole="Factors" ToRole="User" />
-    <Property Name="AddressID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Factor_Details" Relationship="ShahrChap_DBModel.FK_FactorDetails_Factors1" FromRole="Factors" ToRole="Factor_Details" />
-    <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_Factors_UserAddress1" FromRole="Factors" ToRole="User_Address" />
-  </EntityType>
-  <Association Name="FK_Factors_Users">
-    <End Type="ShahrChap_DBModel.User" Role="User" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserID" />
-      </Principal>
-      <Dependent Role="Factors">
-        <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Slider">
-    <Key>
-      <PropertyRef Name="SlideID" />
-    </Key>
-    <Property Name="SlideID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Title" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
-    <Property Name="Url" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
-    <Property Name="ImageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Factor_Details">
-    <Key>
-      <PropertyRef Name="DetailID" />
-    </Key>
-    <Property Name="DetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FactorID" Type="Int32" Nullable="false" />
-    <Property Name="ProductID" Type="Int32" Nullable="false" />
-    <Property Name="Price" Type="Int32" Nullable="false" />
-    <Property Name="Count" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_FactorDetails_Factors1" FromRole="Factor_Details" ToRole="Factors" />
-  </EntityType>
-  <EntityType Name="Order_Groups">
-    <Key>
-      <PropertyRef Name="Order_GroupID" />
-    </Key>
-    <Property Name="Order_GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GroupTitle" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Product_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_Order_Groups" FromRole="Order_Groups" ToRole="Product_Groups" />
-  </EntityType>
-  <EntityType Name="School_Tools_Groups">
-    <Key>
-      <PropertyRef Name="ST_GroupID" />
-    </Key>
-    <Property Name="ST_GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="GroupTitle" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Product_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_SchoolTools_Groups" FromRole="School_Tools_Groups" ToRole="Product_Groups" />
-  </EntityType>
-  <EntityType Name="User_Address">
-    <Key>
-      <PropertyRef Name="AddressID" />
-    </Key>
-    <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserID" Type="Int32" Nullable="false" />
-    <Property Name="ProvinceID" Type="Int32" Nullable="false" />
-    <Property Name="CityID" Type="Int32" Nullable="false" />
-    <Property Name="FullName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-    <Property Name="FullAddress" Type="String" Nullable="false" MaxLength="650" FixedLength="false" Unicode="true" />
-    <Property Name="PosteCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_Factors_UserAddress1" FromRole="User_Address" ToRole="Factors" />
-    <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_User_Address_Users" FromRole="User_Address" ToRole="User" />
-    <NavigationProperty Name="city" Relationship="ShahrChap_DBModel.FK_User_Address_city" FromRole="User_Address" ToRole="city" />
-    <NavigationProperty Name="province" Relationship="ShahrChap_DBModel.FK_User_Address_province" FromRole="User_Address" ToRole="province" />
-  </EntityType>
-  <Association Name="FK_FactorDetails_Factors1">
-    <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.Factor_Details" Role="Factor_Details" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Factors">
-        <PropertyRef Name="FactorID" />
-      </Principal>
-      <Dependent Role="Factor_Details">
-        <PropertyRef Name="FactorID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Factors_UserAddress1">
-    <End Type="ShahrChap_DBModel.User_Address" Role="User_Address" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User_Address">
-        <PropertyRef Name="AddressID" />
-      </Principal>
-      <Dependent Role="Factors">
-        <PropertyRef Name="AddressID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_User_Address_Users">
-    <End Type="ShahrChap_DBModel.User" Role="User" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.User_Address" Role="User_Address" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserID" />
-      </Principal>
-      <Dependent Role="User_Address">
-        <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Users_Users">
-    <End Type="ShahrChap_DBModel.User" Role="User" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.User" Role="User1" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="UserID" />
-      </Principal>
-      <Dependent Role="User1">
-        <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Product_Groups">
-    <Key>
-      <PropertyRef Name="PG_ID" />
-    </Key>
-    <Property Name="PG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ProductID" Type="Int32" Nullable="false" />
-    <Property Name="ST_GroupID" Type="Int32" />
-    <Property Name="Order_GroupID" Type="Int32" />
-    <NavigationProperty Name="Order_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_Order_Groups" FromRole="Product_Groups" ToRole="Order_Groups" />
-    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Product_Groups_Products" FromRole="Product_Groups" ToRole="Products" />
-    <NavigationProperty Name="School_Tools_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_SchoolTools_Groups" FromRole="Product_Groups" ToRole="School_Tools_Groups" />
-  </EntityType>
-  <Association Name="FK_Product_Groups_Order_Groups">
-    <End Type="ShahrChap_DBModel.Order_Groups" Role="Order_Groups" Multiplicity="0..1" />
-    <End Type="ShahrChap_DBModel.Product_Groups" Role="Product_Groups" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Order_Groups">
-        <PropertyRef Name="Order_GroupID" />
-      </Principal>
-      <Dependent Role="Product_Groups">
-        <PropertyRef Name="Order_GroupID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Product_Groups_Products">
-    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.Product_Groups" Role="Product_Groups" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
-      </Principal>
-      <Dependent Role="Product_Groups">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Product_Groups_SchoolTools_Groups">
-    <End Type="ShahrChap_DBModel.School_Tools_Groups" Role="School_Tools_Groups" Multiplicity="0..1" />
-    <End Type="ShahrChap_DBModel.Product_Groups" Role="Product_Groups" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="School_Tools_Groups">
-        <PropertyRef Name="ST_GroupID" />
-      </Principal>
-      <Dependent Role="Product_Groups">
-        <PropertyRef Name="ST_GroupID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_User_Address_city">
-    <End Type="ShahrChap_DBModel.city" Role="city" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.User_Address" Role="User_Address" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="city">
-        <PropertyRef Name="cityId" />
-      </Principal>
-      <Dependent Role="User_Address">
-        <PropertyRef Name="CityID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_province_province">
-    <End Type="ShahrChap_DBModel.province" Role="province" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.province" Role="province1" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="province">
-        <PropertyRef Name="provinceId" />
-      </Principal>
-      <Dependent Role="province1">
-        <PropertyRef Name="provinceId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_User_Address_province">
     <End Type="ShahrChap_DBModel.province" Role="province" Multiplicity="1" />
     <End Type="ShahrChap_DBModel.User_Address" Role="User_Address" Multiplicity="*" />
@@ -486,52 +546,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Order_Details">
-    <Key>
-      <PropertyRef Name="OT_ID" />
-    </Key>
-    <Property Name="OT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OrderID" Type="Int32" Nullable="false" />
-    <Property Name="FrontText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="BackText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="IsDesigned" Type="Boolean" />
-    <Property Name="Count" Type="Int32" Nullable="false" />
-    <Property Name="SocialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_OrderDetails_Products1" FromRole="Order_Details" ToRole="Products" />
-    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Order_Files" Relationship="ShahrChap_DBModel.FK_Order_Gallery_OrderDetails" FromRole="Order_Details" ToRole="Order_Files" />
-  </EntityType>
-  <Association Name="FK_OrderDetails_Products1">
-    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.Order_Details" Role="Order_Details" Multiplicity="*" />
+  <Association Name="FK_Users_Roles">
+    <End Type="ShahrChap_DBModel.Roles" Role="Roles" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Users" Role="Users" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Products">
-        <PropertyRef Name="ProductID" />
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
       </Principal>
-      <Dependent Role="Order_Details">
-        <PropertyRef Name="OrderID" />
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Order_Files">
-    <Key>
-      <PropertyRef Name="OF_ID" />
-    </Key>
-    <Property Name="OF_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OT_ID" Type="Int32" Nullable="false" />
-    <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Order_Details" Relationship="ShahrChap_DBModel.FK_Order_Gallery_OrderDetails" FromRole="Order_Files" ToRole="Order_Details" />
-  </EntityType>
-  <Association Name="FK_Order_Gallery_OrderDetails">
-    <End Type="ShahrChap_DBModel.Order_Details" Role="Order_Details" Multiplicity="1" />
-    <End Type="ShahrChap_DBModel.Order_Files" Role="Order_Files" Multiplicity="*" />
+  <Association Name="FK_User_Address_Users">
+    <End Type="ShahrChap_DBModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.User_Address" Role="User_Address" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Order_Details">
-        <PropertyRef Name="OT_ID" />
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
       </Principal>
-      <Dependent Role="Order_Files">
-        <PropertyRef Name="OT_ID" />
+      <Dependent Role="User_Address">
+        <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

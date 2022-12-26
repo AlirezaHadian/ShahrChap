@@ -19,11 +19,12 @@ namespace DataLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Products()
         {
-            this.Product_Galleries = new HashSet<Product_Galleries>();
-            this.Tags = new HashSet<Tags>();
-            this.Product_Features = new HashSet<Product_Features>();
-            this.Product_Groups = new HashSet<Product_Groups>();
+            this.Factor_Details = new HashSet<Factor_Details>();
             this.Order_Details = new HashSet<Order_Details>();
+            this.Product_Features = new HashSet<Product_Features>();
+            this.Product_Galleries = new HashSet<Product_Galleries>();
+            this.Product_Selected_Groups = new HashSet<Product_Selected_Groups>();
+            this.Tags = new HashSet<Tags>();
         }
     
         public int ProductID { get; set; }
@@ -33,16 +34,20 @@ namespace DataLayer
         public string ImageName { get; set; }
         public System.DateTime CreateDate { get; set; }
         public bool IsExist { get; set; }
+        public bool IsOrder { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product_Galleries> Product_Galleries { get; set; }
+        public virtual ICollection<Factor_Details> Factor_Details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tags> Tags { get; set; }
+        public virtual ICollection<Order_Details> Order_Details { get; set; }
+        public virtual Product_Attribute Product_Attribute { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product_Features> Product_Features { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product_Groups> Product_Groups { get; set; }
+        public virtual ICollection<Product_Galleries> Product_Galleries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order_Details> Order_Details { get; set; }
+        public virtual ICollection<Product_Selected_Groups> Product_Selected_Groups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tags> Tags { get; set; }
     }
 }

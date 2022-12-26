@@ -17,7 +17,7 @@ namespace DataLayer
         public int TagID { get; set; }
         [Display(Name = "محصول")]
         public int ProductID { get; set; }
-        [Display(Name = "تصویر")]
+        [Display(Name = "تگ")]
         public string Tag { get; set; }
     }
 }

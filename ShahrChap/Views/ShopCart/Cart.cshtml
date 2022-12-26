@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<ViewModels.ShowCartViewModel>
-
+@using DataLayer;
 <section class="h-100 h-custom">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -25,7 +25,7 @@
                                                 <h6 class="text-muted">@item.Title</h6>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                <input id="form1" min="1" name="quantity" value="@item.Count" type="number"
+                                                <input id="form1" min="1" value="@item.Count" type="number"
                                                        class="form-control form-control-sm" onchange="CommandCart(@item.ProductID, $(this).val())" />
                                             </div>
                                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
@@ -57,37 +57,43 @@
                                         <h5>@Model.Sum(p => p.Sum).ToString("#,0")</h5>
                                     </div>
 
+                                    @*<h5 class="text-uppercase mb-3">کد تخفیف</h5>
 
-                                    <h5 class="text-uppercase mb-3">کد تخفیف</h5>
-
-                                    <div class="mb-5">
-                                        <div class="form-outline">
-                                            <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                                            <label class="form-label" for="form3Examplea2">کد تخفیف خود را وارد کنید</label>
-                                        </div>
-                                    </div>
-                                    @{ 
-                                        List<DataLayer.User_Address> addresses = ViewBag.Address;
-                                    }
-                                    @if (addresses.Count() > 0)
-                                    {
-                                        <h5 class="text-uppercase mb-3">آدرس:</h5>
-                                        <select id="address" name="adress">
-                                            @foreach (var item in addresses)
+                                        <div class="mb-5">
+                                            <div class="form-outline">
+                                                <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
+                                                <label class="form-label" for="form3Examplea2">کد تخفیف خود را وارد کنید</label>
+                                            </div>
+                                        </div>*@
+                                    <form method="post" action="ShopCart\">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            List<DataLayer.User_Address> addresses = ViewBag.Address;
+                                            if (addresses.Count() > 0)
                                             {
-                                                <option value="">انتخاب آدرس</option>
-                                                <option value="@item.AddressID">@item.FullAddress</option>
+                                                <h5 class="text-uppercase mb-3">آدرس:</h5>
+                                                <select id="address" name="address" class="required">
+                                                    @foreach (var item in addresses)
+                                                    {
+                                                        <option name="address" value="0">انتخاب آدرس</option>
+                                                        <option name="address" value="@item.AddressID">@item.FullAddress</option>
+                                                    }
+                                                </select>
+                                                if (ViewBag.AddressValidate == true)
+                                                {
+                                                    <p class="text text-danger">آدرس خود را انتخاب کنید!</p>
+                                                }
                                             }
-                                        </select>
-                                    }
-                                    <hr class="my-4">
+                                            <hr class="my-4">
 
-                                    <div class="d-flex justify-content-between mb-5">
-                                        <h5 class="text-uppercase">مبلغ قابل پرداخت</h5>
-                                        <h5>33000</h5>
-                                    </div>
-
-                                    <a href="/ShopCart/ConfirmBuy" class="btn btn-dark btn-block btn-lg" value="پرداخت"/>
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <h5 class="text-uppercase">مبلغ قابل پرداخت</h5>
+                                                <h5>@Model.Sum(p => p.Sum).ToString("#,0") تومان</h5>
+                                            </div>
+                                            <input type="submit" class="btn btn-dark btn-block btn-lg" value="پرداخت" />
+                                        }
+                                        @*<a href="/ShopCart/ConfirmBuy/@ViewBag.id" class="btn btn-dark btn-block btn-lg">پرداخت</a>*@
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -96,4 +102,9 @@
             </div>
         </div>
     </div>
+
 </section>
+
+<script>
+    function()
+</script>

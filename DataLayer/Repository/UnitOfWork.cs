@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Context
 {
-    public class UnitOfWork:IDisposable
+    public class UnitOfWork : IDisposable
     {
         ShahrChap_DBEntities db = new ShahrChap_DBEntities();
 
-        private GenericRepository<User> userRepository;
-        private GenericRepository<Role> roleRepository;
+        private GenericRepository<Users> userRepository;
+        private GenericRepository<Roles> roleRepository;
         private GenericRepository<User_Address> user_AddressRepository;
         private GenericRepository<province> provinceRepository;
         private GenericRepository<city> cityRepository;
-        private GenericRepository<School_Tools_Groups> school_Tools_GroupsRepository;
-        private GenericRepository<Products> productsRepository;
         private GenericRepository<Product_Groups> product_GroupsRepository;
+        private GenericRepository<Products> productsRepository;
+        private GenericRepository<Product_Selected_Groups> product_Selected_GroupsRepository;
         private GenericRepository<Product_Galleries> product_GalleriesRepository;
         private GenericRepository<Tags> tagsRepository;
         private GenericRepository<Features> featuresRepository;
@@ -25,30 +25,34 @@ namespace DataLayer.Context
         private GenericRepository<Factors> factorsRepository;
         private GenericRepository<Factor_Details> factor_DetailsRepository;
         private GenericRepository<Slider> sliderRepository;
-        private GenericRepository<Order_Groups> order_GroupsRepository;
         private GenericRepository<Order_Details> order_DetailsRepository;
         private GenericRepository<Order_Files> order_FilesRepository;
+        private GenericRepository<Product_Attribute> product_AttributeRepository;
+        private GenericRepository<AboutUs> aboutUsRepository;
+        private GenericRepository<ContactUs> contactUsRepository;
+        private GenericRepository<ContactUsInfo> contactUsInfoRepository;
 
-        public GenericRepository<User> UserRepository
+
+        public GenericRepository<Users> UserRepository
         {
             get
             {
                 if (userRepository == null)
                 {
-                    userRepository=new GenericRepository<User>(db);
+                    userRepository = new GenericRepository<Users>(db);
                 }
 
                 return userRepository;
             }
         }
 
-        public GenericRepository<Role> RoleRepository
+        public GenericRepository<Roles> RoleRepository
         {
             get
             {
                 if (roleRepository == null)
                 {
-                    roleRepository = new GenericRepository<Role>(db);
+                    roleRepository = new GenericRepository<Roles>(db);
                 }
 
                 return roleRepository;
@@ -91,16 +95,16 @@ namespace DataLayer.Context
                 return cityRepository;
             }
         }
-        public GenericRepository<School_Tools_Groups> School_Tools_GroupsRepository
+        public GenericRepository<Product_Groups> Product_GroupsRepository
         {
             get
             {
-                if (school_Tools_GroupsRepository == null)
+                if (product_GroupsRepository == null)
                 {
-                    school_Tools_GroupsRepository = new GenericRepository<School_Tools_Groups>(db);
+                    product_GroupsRepository = new GenericRepository<Product_Groups>(db);
                 }
 
-                return school_Tools_GroupsRepository;
+                return product_GroupsRepository;
             }
         }
         public GenericRepository<Products> ProductsRepository
@@ -115,16 +119,16 @@ namespace DataLayer.Context
                 return productsRepository;
             }
         }
-        public GenericRepository<Product_Groups> Product_GroupsRepository
+        public GenericRepository<Product_Selected_Groups> Product_Selected_GroupsRepository
         {
             get
             {
-                if (product_GroupsRepository == null)
+                if (product_Selected_GroupsRepository == null)
                 {
-                    product_GroupsRepository = new GenericRepository<Product_Groups>(db);
+                    product_Selected_GroupsRepository = new GenericRepository<Product_Selected_Groups>(db);
                 }
 
-                return product_GroupsRepository;
+                return product_Selected_GroupsRepository;
             }
         }
         public GenericRepository<Product_Galleries> Product_GalleriesRepository
@@ -211,18 +215,6 @@ namespace DataLayer.Context
                 return sliderRepository;
             }
         }
-        public GenericRepository<Order_Groups> Order_GroupsRepository
-        {
-            get
-            {
-                if (order_GroupsRepository == null)
-                {
-                    order_GroupsRepository = new GenericRepository<Order_Groups>(db);
-                }
-
-                return order_GroupsRepository;
-            }
-        }
         public GenericRepository<Order_Details> Order_DetailsRepository
         {
             get
@@ -247,6 +239,56 @@ namespace DataLayer.Context
                 return order_FilesRepository;
             }
         }
+        public GenericRepository<Product_Attribute> Product_AttributeRepository
+        {
+            get
+            {
+                if (product_AttributeRepository == null)
+                {
+                    product_AttributeRepository = new GenericRepository<Product_Attribute>(db);
+                }
+
+                return product_AttributeRepository;
+            }
+        }
+        public GenericRepository<AboutUs> AboutUsRepository
+        {
+            get
+            {
+                if (aboutUsRepository == null)
+                {
+                    aboutUsRepository = new GenericRepository<AboutUs>(db);
+                }
+
+                return aboutUsRepository;
+            }
+        }
+        public GenericRepository<ContactUs> ContactUsRepository
+        {
+            get
+            {
+                if (contactUsRepository == null)
+                {
+                    contactUsRepository = new GenericRepository<ContactUs>(db);
+                }
+
+                return contactUsRepository;
+            }
+        }
+        public GenericRepository<ContactUsInfo> ContactUsInfoRepository
+        {
+            get
+            {
+                if (contactUsInfoRepository == null)
+                {
+                    contactUsInfoRepository = new GenericRepository<ContactUsInfo>(db);
+                }
+
+                return contactUsInfoRepository;
+            }
+        }
+
+
         public void Save()
         {
             db.SaveChanges();

@@ -24,5 +24,9 @@ namespace DataLayer
         public int Price { get; set; }
         [Display(Name ="تعداد")][Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int Count { get; set; }
+        [Display(Name = "جمع کل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int Sum { get; set; }
+
     }
 }

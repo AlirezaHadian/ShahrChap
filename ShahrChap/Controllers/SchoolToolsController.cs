@@ -14,13 +14,13 @@ namespace ShahrChap.Controllers
         UnitOfWork db = new UnitOfWork();
         public ActionResult ShowGroups()
         {
-            var groups = db.School_Tools_GroupsRepository.Get();
+            var groups = db.Product_GroupsRepository.Get(g=> g.IsOrder==false);
             return PartialView(groups);
         }
 
         public ActionResult LastProduct()
         {
-            return PartialView(db.Product_GroupsRepository.Get().Where(p=> p.ST_GroupID!= null && p.Order_GroupID == null).Select(p=> p.Products).OrderByDescending(p=> p.CreateDate).Take(12));
+            return PartialView(db.ProductsRepository.Get().Where(p=> p.IsOrder==false).OrderByDescending(p => p.CreateDate).Take(12));
         }
 
         [Route("ShowProduct/{id}")]
@@ -29,7 +29,7 @@ namespace ShahrChap.Controllers
             var product = db.ProductsRepository.GetById(id);
             ViewBag.ProductFeatures = product.Product_Features.DistinctBy(f => f.FeatureID).Select(f => new ShowProductFeaturesViewModel() {
                 FeatureTitle = f.Features.FeatureTitle,
-                Values = db.Product_FeaturesRepository.Get().Where(fe => fe.FeatureID == f.FeatureID).Select(fe => fe.Value).ToList()
+                Values = db.Product_FeaturesRepository.Get().Where(fe => fe.FeatureID == f.FeatureID && fe.ProductID == id).Select(fe => fe.Value).ToList()
             }).ToList();
             if (product == null)
             {
@@ -41,8 +41,8 @@ namespace ShahrChap.Controllers
         [Route("Archive")]
         public ActionResult ArchiveProduct(int pageId=1, string title = "", int minPrice = 0, int maxPrice = 1000000, List<int> selectedGroups = null)
         {
-            List<Products> products = db.Product_GroupsRepository.Get().Where(p => p.ST_GroupID != null && p.Order_GroupID == null).Select(p => p.Products).ToList();
-            ViewBag.Groups = db.School_Tools_GroupsRepository.Get();
+            List<Products> products = db.ProductsRepository.Get().Where(p=> p.IsOrder==false).ToList();
+            ViewBag.Groups = db.Product_GroupsRepository.Get(g=> g.IsOrder==false);
             ViewBag.productTitle = title;
             ViewBag.minPrice = minPrice;
             ViewBag.maxPrice = maxPrice;
@@ -53,7 +53,7 @@ namespace ShahrChap.Controllers
             {
                 foreach (int group in selectedGroups)
                 {
-                    list.AddRange(db.Product_GroupsRepository.Get().Where(g => g.ST_GroupID == group && g.ST_GroupID != null && g.Order_GroupID == null).Select(g => g.Products).ToList());
+                    list.AddRange(db.Product_Selected_GroupsRepository.Get().Where(g => g.GroupID == group).Select(g => g.Products).ToList());
                 }
                 list = list.Distinct().ToList();
             }
@@ -68,11 +68,11 @@ namespace ShahrChap.Controllers
             }
             if (minPrice > 0)
             {
-                list = list.Where(p => p.Price >= minPrice && p.IsExist != false).ToList();
+                list = list.Where(p => p.Price >= minPrice && p.IsExist == true).ToList();
             }
-            if (maxPrice > 0)
+            if (maxPrice < 1000000)
             {
-                list = list.Where(p => p.Price <= maxPrice && p.IsExist != false).ToList();
+                list = list.Where(p => p.Price <= maxPrice && p.IsExist == true).ToList();
             }
 
             //Pagging
