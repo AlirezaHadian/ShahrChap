@@ -55,12 +55,22 @@
     <EntitySetMapping Name="Factors">
       <EntityTypeMapping TypeName="ShahrChap_DBModel.Factors">
         <MappingFragment StoreEntitySet="Factors">
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
           <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
           <ScalarProperty Name="IsFinally" ColumnName="IsFinally" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="AddressID" ColumnName="AddressID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="FactorID" ColumnName="FactorID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FactorStautus">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.FactorStautus">
+        <MappingFragment StoreEntitySet="FactorStautus">
+          <ScalarProperty Name="Color" ColumnName="Color" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FS_ID" ColumnName="FS_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -75,6 +85,7 @@
     <EntitySetMapping Name="Order_Details">
       <EntityTypeMapping TypeName="ShahrChap_DBModel.Order_Details">
         <MappingFragment StoreEntitySet="Order_Details">
+          <ScalarProperty Name="IsDone" ColumnName="IsDone" />
           <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
           <ScalarProperty Name="SocialNumber" ColumnName="SocialNumber" />
           <ScalarProperty Name="Count" ColumnName="Count" />
@@ -173,6 +184,18 @@
           <ScalarProperty Name="RoleName" ColumnName="RoleName" />
           <ScalarProperty Name="RoleTitle" ColumnName="RoleTitle" />
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopCart">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.ShopCart">
+        <MappingFragment StoreEntitySet="ShopCart">
+          <ScalarProperty Name="Sum" ColumnName="Sum" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="SC_ID" ColumnName="SC_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

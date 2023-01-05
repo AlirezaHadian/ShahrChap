@@ -15,6 +15,7 @@ namespace ShahrChap.Controllers
         public ActionResult Index()
         {
             ViewBag.aboutUs = db.AboutUsRepository.Get().ToList();
+            ViewBag.ContactUsInfo = db.ContactUsInfoRepository.Get();
             return View(db.AboutUsRepository.Get());
         }
         public ActionResult ContactUs()

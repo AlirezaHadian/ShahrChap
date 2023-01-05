@@ -79,7 +79,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">تصویر محصول</div>
                 <div class="panel-body">
-                    <img id="imgPreviewProduct" style="margin: 8px auto" class="thumbnail" src="/Images/ProductImages/@Model.ImageName" />
+                    <img id="imgPreviewProduct" style="margin: 8px auto; max-height:300px" class="thumbnail" src="/Images/ProductImages/@Model.ImageName" />
                     <div class="form-group">
                         @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">

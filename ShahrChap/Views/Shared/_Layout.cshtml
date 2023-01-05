@@ -25,11 +25,6 @@
 </head>
 
 <body>
-    <!--PreLoader-->
-    @*<div class="preloader d-flex justify-content-center align-items-center">
-            <img src="/Content/img/preloader.gif" alt="preloader">
-        </div>*@
-    <!--PreLoader-->
     <!--Header-->
     <header class="main-navigation">
         <div class="navbar navbar-expand-lg navbar-light bg-light ">
@@ -52,7 +47,7 @@
                 </ul>
                 <ul class="nav">
                     @Html.Partial("_LoggedInUser")
-                    <li class="nav-item">
+                    <li class="nav-item"> |
                         <a href="/ShopCart" class="btn btn-primary navbar-link register-button position-relative btn-sm">
                             سبد خرید <i class="fas fa-shopping-cart"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="countShopCart">
@@ -83,8 +78,8 @@
                             <a class="nav-link px-3 px-lg-2" aria-current="page" href="/ArchiveOrder">سفارش محصول</a>
                         </li>
                         @*<li class="nav-item dropdown product-menu">
-                            <a class="nav-link px-3 px-lg-2" aria-current="page" href="/Print">سفارش پرینت</a>
-                        </li>*@
+                                <a class="nav-link px-3 px-lg-2" aria-current="page" href="/Print">سفارش پرینت</a>
+                            </li>*@
                         <li class="nav-item">
                             <a class="nav-link px-3 px-lg-2" href="/AboutUs">درباره ما</a>
                         </li>
@@ -216,25 +211,25 @@
 <script src="/Content/js/bootstrap.bundle.min.js"></script>
 <script src="/Content/js/swiped-events.min.js"></script>
 <script src="/Content/js/script.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="/Scripts/jquery.validate.min.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <script>
+
     $(function () {
         countShopCart();
-    });
+        //updateShopCart();
+        });
 
     function countShopCart() {
         $.get("/Api/Shop", function (res) {
-            if (res == 0) {
-                $("#countShopCart").removeClass("badge rounded-pill bg-danger");
-            }
             $("#countShopCart").html(res);
         });
     }
     function AddToCart(id, count) {
         $.get("/Api/Shop/" + id + "?count=" + count, function (res) {
             $("#countShopCart").html(res);
+            //updateShopCart();
         });
     }
 </script>

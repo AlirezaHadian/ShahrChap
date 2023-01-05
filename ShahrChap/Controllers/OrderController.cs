@@ -82,7 +82,8 @@ namespace ShahrChap.Controllers
                         Description = sendOrder.Description,
                         Count = sendOrder.Count,
                         SocialNumber = sendOrder.SocialNumber,
-                        OrderDate = DateTime.Now
+                        OrderDate = DateTime.Now,
+                        IsDone = false
                     };
                     order.UserID = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name).UserID;
                     db.Order_DetailsRepository.Insert(order);
@@ -118,11 +119,6 @@ namespace ShahrChap.Controllers
             }
             else
             {
-                //if (files == null)
-                //{
-                //    //ModelState.AddModelError("files", "آپلود فایل های طراحی اجباری می باشد");
-                //    ViewBag.filevalidation = true;
-                //}
                 if (files != null)
                 {
                     foreach (HttpPostedFileBase file in files)
@@ -144,7 +140,8 @@ namespace ShahrChap.Controllers
                                 OrderDate = DateTime.Now,
                                 Description = sendOrder.Description,
                                 SocialNumber = sendOrder.SocialNumber,
-                                UserID = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name).UserID
+                                UserID = db.UserRepository.Get().SingleOrDefault(u => u.UserName == User.Identity.Name).UserID,
+                                IsDone = false
                             };
                             db.Order_DetailsRepository.Insert(order);
                             Order_Files orderFiles = new Order_Files()

@@ -25,14 +25,14 @@ namespace ViewModels
     {
         [Display(Name = "شماره موبایل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [RegularExpression(@"09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$", ErrorMessage = "{0} معتبر نمی باشد!")]
+        [RegularExpression(@"09([0-9][0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$", ErrorMessage = "{0} معتبر نمی باشد!")]
         public string Phone { get; set; }
     }
     public class ChangePhoneViewModel
     {
         [Display(Name = "شماره موبایل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [RegularExpression(@"09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$", ErrorMessage = "{0} معتبر نمی باشد!")]
+        [RegularExpression(@"09([0-9][0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}$", ErrorMessage = "{0} معتبر نمی باشد!")]
         public string Phone { get; set; }
     }
     public class AddAddressViewModel
@@ -71,29 +71,4 @@ namespace ViewModels
         [Compare("Password", ErrorMessage = "کلمه های عبور هم خوانی ندارند")]
         public string ConfirmPassword { get; set; }
     }
-    //public class AddressViewModel
-    //{
-    //    [Display(Name = "نام و نام خانوادگی")]
-    //    [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    //    [MaxLength(150, ErrorMessage = "تعداد کاراکتر وارد شده بیش از حد مجاز است.")]
-    //    public string FullName { get; set; }
-    //    [Display(Name = "آدرس")]
-    //    [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    //    public string Address { get; set; }
-    //    [Display(Name = "استان")]
-    //    [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    //    public string Province { get; set; }
-
-    //    [Display(Name = "شهر")]
-    //    [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    //    public string City { get; set; }
-
-    //    [Display(Name = "کد پستی")]
-    //    [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-    //    [DataType(DataType.PostalCode)]
-    //    [RegularExpression(@"\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b", ErrorMessage = "کد پستی وارد شده نامعتبر می باشد.")]
-    //    [MaxLength(50, ErrorMessage = "تعداد کاراکتر وارد شده بیش از حد مجاز است.")]
-    //    public string PostCode { get; set; }
-
-    //}
 }

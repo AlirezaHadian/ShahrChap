@@ -31,6 +31,8 @@ namespace DataLayer.Context
         private GenericRepository<AboutUs> aboutUsRepository;
         private GenericRepository<ContactUs> contactUsRepository;
         private GenericRepository<ContactUsInfo> contactUsInfoRepository;
+        private GenericRepository<ShopCart> shopCartRepository;
+        private GenericRepository<FactorStautus> factorStautusRepository;
 
 
         public GenericRepository<Users> UserRepository
@@ -287,8 +289,30 @@ namespace DataLayer.Context
                 return contactUsInfoRepository;
             }
         }
+        public GenericRepository<ShopCart> ShopCartRepository
+        {
+            get
+            {
+                if (shopCartRepository == null)
+                {
+                    shopCartRepository = new GenericRepository<ShopCart>(db);
+                }
 
+                return shopCartRepository;
+            }
+        }
+        public GenericRepository<FactorStautus> FactorStautusRepository
+        {
+            get
+            {
+                if (factorStautusRepository == null)
+                {
+                    factorStautusRepository = new GenericRepository<FactorStautus>(db);
+                }
 
+                return factorStautusRepository;
+            }
+        }
         public void Save()
         {
             db.SaveChanges();

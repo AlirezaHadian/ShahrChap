@@ -7,9 +7,9 @@
 <section>
     <div class="container internal-style py-5">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">خانه</a></li>
-            <li class="breadcrumb-item"><a href="#">محصولات</a></li>
-            <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+            <li class="breadcrumb-item"><a href="/">خانه</a></li>
+            <li class="breadcrumb-item"><a href="/UserPanel">پنل کاربری</a></li>
+            <li class="breadcrumb-item active" aria-current="page">محصولات خریداری شده</li>
         </ol>
         <div class="Account-panel">
             <div class="row">
@@ -20,24 +20,26 @@
                     <div class="left-content">
                         <section class="section-style box-shadow">
                             <header>
-                                <h2>فاکتور ها </h2>
+                                <h2>محصولات خریداری شده</h2>
                             </header>
                             <div class="inner">
                                 <form action="" class="form-style">
                                     <div class="row">
-                                        @if (Model.Count() > 0)
-                                        {
-                                            foreach (var item in Model)
+                                        <div class="row col-lg-4 col-md-6 col-sm-12 col-4">
+                                            @if (Model.Count() > 0)
                                             {
-                                                @Html.Partial("_Product", item)
+                                                foreach (var item in Model)
+                                                {
+                                                    @Html.Partial("_Product", item.Products)
+                                                }
+                                            }   
+                                            else
+                                            {
+                                                <div class="alert alert-warning">
+                                                    محصولی تابحال خریداری نشده است
+                                                </div>
                                             }
-                                        }
-                                        else
-                                        {
-                                            <div class="alert alert-warning">
-                                                محصولی تابحال خریداری نشده است
-                                            </div>
-                                        }
+                                        </div>
                                     </div>
                                 </form>
                             </div>

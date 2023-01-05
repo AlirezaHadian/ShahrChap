@@ -32,6 +32,7 @@ namespace DataLayer
         public int Count { get; set; }
         public string SocialNumber { get; set; }
         public System.DateTime OrderDate { get; set; }
+        public Nullable<bool> IsDone { get; set; }
     
         public virtual Products Products { get; set; }
         public virtual Users Users { get; set; }

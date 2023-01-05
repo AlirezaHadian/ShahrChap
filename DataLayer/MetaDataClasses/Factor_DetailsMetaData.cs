@@ -15,7 +15,7 @@ namespace DataLayer
     {
         [Key]
         public int DetailID { get; set; }
-        [Display(Name ="فاکتور")][Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Display(Name ="فاکتور")]
         public int FactorID { get; set; }
         [Display(Name = "محصول")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

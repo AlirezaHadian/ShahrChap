@@ -349,6 +349,7 @@ namespace ShahrChap.Controllers
         {
             var username = User.Identity.Name;
             List<Factor_Details> list = db.Factor_DetailsRepository.Get().Where(f => f.Factors.Users.UserName == username && f.Factors.IsFinally==true).ToList();
+            list = list.Distinct().ToList();
             return View(list);
         }
     }

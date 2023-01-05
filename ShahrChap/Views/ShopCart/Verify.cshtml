@@ -5,7 +5,7 @@
 
 <h2>وضعیت پرداخت</h2>
 
-@if (ViewBag.IsSuccess = true)
+@if (ViewBag.IsSuccess == true)
 {
     <div class="alert alert-success">
         <h3>تراکنش شما با موفقیت انجام شد</h3>
@@ -15,7 +15,8 @@
 }
 else
 {
-    <div class="alert alert-success">
-        <h3>تراکنش شما با شکست مواجه شد</h3>
-    </div>
+<div class="alert alert-danger">
+    <h3>تراکنش شما با شکست مواجه شد</h3>
+    <p>در صورت کسر وجه از حساب شما تا 72 ساعت آینده به حساب شما برگشت داده می شود!</p>
+</div>
 }

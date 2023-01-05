@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DataLayer.User_Address>
+@using DataLayer;
+@{
+    ViewBag.Title = "انتخاب آدرس";
+}
+
+
+@if (ViewBag.ValidateAddress == true)
+{
+    <div class="alert alert-danger mt-3">
+        <p>آدرس خود را انتخاب کنید</p>
+    </div>
+}
+<section class="section-style box-shadow address-form mt-3">
+    <div class="inner">
+        <h3>انتخاب آدرس</h3>
+        <form action="/ShopCart/SelectAddress/" method="post" class="form-style">
+
+            <input type="hidden" value="@ViewBag.FactorId" name="factorId" />
+            @foreach (var item in Model)
+            {
+                <div class="row">
+                    <div class="pull-left">
+                        <input type="radio" value="@item.AddressID" name="address" class="pull-left">
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="address">
+                            <label><i class="fas fa-map"></i> @item.FullAddress</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="address-info">
+                            <label><i class="fas fa-city"></i> @item.province.provinceName </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="input-layer">
+                                <label><i class="far fa-user-circle"></i> @item.FullName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            }
+            <input type="submit" class="btn btn-success btn-block btn-lg" value="پرداخت" />
+
+        </form>
+    </div>
+</section>

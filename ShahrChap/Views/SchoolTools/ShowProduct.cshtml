@@ -8,14 +8,15 @@
     <div class="single-product">
         <div class="container internal-style py-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">خانه</a></li>
-                <li class="breadcrumb-item"><a href="#">محصولات</a></li>
-                <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                <li class="breadcrumb-item"><a href="/Archive">محصولات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
             </ol>
             <div class="card-wrapper">
                 <div class="card-single-product row">
                     <!-- card left -->
-                    <div class="product-imgs col-md-4 col-sm-12 col-xs-12 pull-right">
+
+                    <div class="col-md-4 col-sm-12 col-xs-12 product-imgs product-gallery pull-right">
                         <div class="img-display">
                             <div class="img-showcase">
                                 <img src="/Images/ProductImages/@Model.ImageName">
@@ -24,18 +25,21 @@
                         @if (Model.Product_Galleries.Any())
                         {
                             <div class="img-select">
-                                <div class="img-item">
-                                    <img src="~/Images/ProductImages/@Model.ImageName" alt="تصویر اصلی">
-                                </div>
-                                @foreach (var item in Model.Product_Galleries)
-                                {
-                                    <div class="img-item">
-                                        <img src="~/Images/ProductImages/@item.ImageName" alt="@item.Title">
+                                <div class="thumbnails-image">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xs-4 border-radius img-thumbnail"><img class="border-radius" src="/Images/ProductImages/@Model.ImageName"></div>
+                                        @foreach (var item in Model.Product_Galleries)
+                                        {
+                                            <div class="col-md-3 col-sm-3 col-xs-4 border-radius img-thumbnail"><img class="border-radius" alt="@item.Title" src="/Images/ProductImages/@item.ImageName"></div>
+
+                                        }
+                                        <div class="clearfix"></div>
                                     </div>
-                                }
+                                </div>
                             </div>
                         }
                     </div>
+
 
                     <!-- card right -->
                     <div class="product-content col-md-8 col-sm-12 col-xs-12">

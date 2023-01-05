@@ -7,6 +7,7 @@
     <EntitySet Name="ContactUsInfo" EntityType="ShahrChap_DBModel.ContactUsInfo" />
     <EntitySet Name="Factor_Details" EntityType="ShahrChap_DBModel.Factor_Details" />
     <EntitySet Name="Factors" EntityType="ShahrChap_DBModel.Factors" />
+    <EntitySet Name="FactorStautus" EntityType="ShahrChap_DBModel.FactorStautus" />
     <EntitySet Name="Features" EntityType="ShahrChap_DBModel.Features" />
     <EntitySet Name="Order_Details" EntityType="ShahrChap_DBModel.Order_Details" />
     <EntitySet Name="Order_Files" EntityType="ShahrChap_DBModel.Order_Files" />
@@ -18,6 +19,7 @@
     <EntitySet Name="Products" EntityType="ShahrChap_DBModel.Products" />
     <EntitySet Name="province" EntityType="ShahrChap_DBModel.province" />
     <EntitySet Name="Roles" EntityType="ShahrChap_DBModel.Roles" />
+    <EntitySet Name="ShopCart" EntityType="ShahrChap_DBModel.ShopCart" />
     <EntitySet Name="Slider" EntityType="ShahrChap_DBModel.Slider" />
     <EntitySet Name="Tags" EntityType="ShahrChap_DBModel.Tags" />
     <EntitySet Name="User_Address" EntityType="ShahrChap_DBModel.User_Address" />
@@ -37,6 +39,10 @@
     <AssociationSet Name="FK_FactorDetails_Factors" Association="ShahrChap_DBModel.FK_FactorDetails_Factors">
       <End Role="Factors" EntitySet="Factors" />
       <End Role="Factor_Details" EntitySet="Factor_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factors_FactorStautus" Association="ShahrChap_DBModel.FK_Factors_FactorStautus">
+      <End Role="FactorStautus" EntitySet="FactorStautus" />
+      <End Role="Factors" EntitySet="Factors" />
     </AssociationSet>
     <AssociationSet Name="FK_Factors_UserAddress" Association="ShahrChap_DBModel.FK_Factors_UserAddress">
       <End Role="User_Address" EntitySet="User_Address" />
@@ -82,6 +88,10 @@
       <End Role="Products" EntitySet="Products" />
       <End Role="Product_Selected_Groups" EntitySet="Product_Selected_Groups" />
     </AssociationSet>
+    <AssociationSet Name="FK_ShopCart_Products" Association="ShahrChap_DBModel.FK_ShopCart_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ShopCart" EntitySet="ShopCart" />
+    </AssociationSet>
     <AssociationSet Name="FK_Tags_Products" Association="ShahrChap_DBModel.FK_Tags_Products">
       <End Role="Products" EntitySet="Products" />
       <End Role="Tags" EntitySet="Tags" />
@@ -93,6 +103,10 @@
     <AssociationSet Name="FK_Users_Roles" Association="ShahrChap_DBModel.FK_Users_Roles">
       <End Role="Roles" EntitySet="Roles" />
       <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopCart_Users" Association="ShahrChap_DBModel.FK_ShopCart_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ShopCart" EntitySet="ShopCart" />
     </AssociationSet>
     <AssociationSet Name="FK_User_Address_Users" Association="ShahrChap_DBModel.FK_User_Address_Users">
       <End Role="Users" EntitySet="Users" />
@@ -145,9 +159,9 @@
     <Property Name="ProductID" Type="Int32" Nullable="false" />
     <Property Name="Price" Type="Int32" Nullable="false" />
     <Property Name="Count" Type="Int32" Nullable="false" />
+    <Property Name="Sum" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Factor_Details_Products" FromRole="Factor_Details" ToRole="Products" />
     <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_FactorDetails_Factors" FromRole="Factor_Details" ToRole="Factors" />
-    <Property Name="Sum" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Factors">
     <Key>
@@ -158,10 +172,21 @@
     <Property Name="AddressID" Type="Int32" />
     <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="IsFinally" Type="Boolean" Nullable="false" />
+    <Property Name="TotalPrice" Type="Int32" Nullable="false" />
+    <Property Name="StatusID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Factor_Details" Relationship="ShahrChap_DBModel.FK_FactorDetails_Factors" FromRole="Factors" ToRole="Factor_Details" />
+    <NavigationProperty Name="FactorStautus" Relationship="ShahrChap_DBModel.FK_Factors_FactorStautus" FromRole="Factors" ToRole="FactorStautus" />
     <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_Factors_UserAddress" FromRole="Factors" ToRole="User_Address" />
     <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_Factors_Users" FromRole="Factors" ToRole="Users" />
-    <Property Name="TotalPrice" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FactorStautus">
+    <Key>
+      <PropertyRef Name="FS_ID" />
+    </Key>
+    <Property Name="FS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Color" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_Factors_FactorStautus" FromRole="FactorStautus" ToRole="Factors" />
   </EntityType>
   <EntityType Name="Features">
     <Key>
@@ -185,6 +210,7 @@
     <Property Name="Count" Type="Int32" Nullable="false" />
     <Property Name="SocialNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsDone" Type="Boolean" />
     <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_Order_Details_Products" FromRole="Order_Details" ToRole="Products" />
     <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_Order_Details_Users" FromRole="Order_Details" ToRole="Users" />
     <NavigationProperty Name="Order_Files" Relationship="ShahrChap_DBModel.FK_Order_Gallery_OrderDetails" FromRole="Order_Details" ToRole="Order_Files" />
@@ -266,6 +292,7 @@
     <NavigationProperty Name="Product_Features" Relationship="ShahrChap_DBModel.FK_Product_Features_Products" FromRole="Products" ToRole="Product_Features" />
     <NavigationProperty Name="Product_Galleries" Relationship="ShahrChap_DBModel.FK_Product_Galleries_Products" FromRole="Products" ToRole="Product_Galleries" />
     <NavigationProperty Name="Product_Selected_Groups" Relationship="ShahrChap_DBModel.FK_Product_Groups_Products" FromRole="Products" ToRole="Product_Selected_Groups" />
+    <NavigationProperty Name="ShopCart" Relationship="ShahrChap_DBModel.FK_ShopCart_Products" FromRole="Products" ToRole="ShopCart" />
     <NavigationProperty Name="Tags" Relationship="ShahrChap_DBModel.FK_Tags_Products" FromRole="Products" ToRole="Tags" />
   </EntityType>
   <EntityType Name="province">
@@ -285,6 +312,19 @@
     <Property Name="RoleTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="RoleName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="ShopCart">
+    <Key>
+      <PropertyRef Name="SC_ID" />
+    </Key>
+    <Property Name="SC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <Property Name="Sum" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="ShahrChap_DBModel.FK_ShopCart_Products" FromRole="ShopCart" ToRole="Products" />
+    <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_ShopCart_Users" FromRole="ShopCart" ToRole="Users" />
   </EntityType>
   <EntityType Name="Slider">
     <Key>
@@ -340,6 +380,7 @@
     <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_Factors_Users" FromRole="Users" ToRole="Factors" />
     <NavigationProperty Name="Order_Details" Relationship="ShahrChap_DBModel.FK_Order_Details_Users" FromRole="Users" ToRole="Order_Details" />
     <NavigationProperty Name="Roles" Relationship="ShahrChap_DBModel.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="ShopCart" Relationship="ShahrChap_DBModel.FK_ShopCart_Users" FromRole="Users" ToRole="ShopCart" />
     <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_User_Address_Users" FromRole="Users" ToRole="User_Address" />
   </EntityType>
   <Association Name="FK_city_province">
@@ -387,6 +428,18 @@
       </Principal>
       <Dependent Role="Factor_Details">
         <PropertyRef Name="FactorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factors_FactorStautus">
+    <End Type="ShahrChap_DBModel.FactorStautus" Role="FactorStautus" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FactorStautus">
+        <PropertyRef Name="FS_ID" />
+      </Principal>
+      <Dependent Role="Factors">
+        <PropertyRef Name="StatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -522,6 +575,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ShopCart_Products">
+    <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.ShopCart" Role="ShopCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ShopCart">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tags_Products">
     <End Type="ShahrChap_DBModel.Products" Role="Products" Multiplicity="1" />
     <End Type="ShahrChap_DBModel.Tags" Role="Tags" Multiplicity="*" />
@@ -555,6 +620,18 @@
       </Principal>
       <Dependent Role="Users">
         <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopCart_Users">
+    <End Type="ShahrChap_DBModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="ShahrChap_DBModel.ShopCart" Role="ShopCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ShopCart">
+        <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

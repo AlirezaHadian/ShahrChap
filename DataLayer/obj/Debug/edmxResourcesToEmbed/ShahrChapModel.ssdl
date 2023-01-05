@@ -56,6 +56,15 @@
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="IsFinally" Type="bit" Nullable="false" />
     <Property Name="TotalPrice" Type="int" Nullable="false" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FactorStautus">
+    <Key>
+      <PropertyRef Name="FS_ID" />
+    </Key>
+    <Property Name="FS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Color" Type="nvarchar" MaxLength="350" />
   </EntityType>
   <EntityType Name="Features">
     <Key>
@@ -78,6 +87,7 @@
     <Property Name="Count" Type="int" Nullable="false" />
     <Property Name="SocialNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="OrderDate" Type="datetime" Nullable="false" />
+    <Property Name="IsDone" Type="bit" />
   </EntityType>
   <EntityType Name="Order_Files">
     <Key>
@@ -157,6 +167,17 @@
     <Property Name="RoleID" Type="int" Nullable="false" />
     <Property Name="RoleTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="RoleName" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShopCart">
+    <Key>
+      <PropertyRef Name="SC_ID" />
+    </Key>
+    <Property Name="SC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+    <Property Name="Sum" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Slider">
     <Key>
@@ -238,6 +259,18 @@
       </Principal>
       <Dependent Role="Factor_Details">
         <PropertyRef Name="FactorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Factors_FactorStautus">
+    <End Role="FactorStautus" Type="Self.FactorStautus" Multiplicity="1" />
+    <End Role="Factors" Type="Self.Factors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FactorStautus">
+        <PropertyRef Name="FS_ID" />
+      </Principal>
+      <Dependent Role="Factors">
+        <PropertyRef Name="StatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -373,6 +406,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ShopCart_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ShopCart" Type="Self.ShopCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ShopCart">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopCart_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="ShopCart" Type="Self.ShopCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ShopCart">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tags_Products">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
@@ -440,6 +497,7 @@
     <EntitySet Name="ContactUsInfo" EntityType="Self.ContactUsInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Factor_Details" EntityType="Self.Factor_Details" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Factors" EntityType="Self.Factors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FactorStautus" EntityType="Self.FactorStautus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order_Details" EntityType="Self.Order_Details" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order_Files" EntityType="Self.Order_Files" Schema="dbo" store:Type="Tables" />
@@ -451,6 +509,7 @@
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="province" EntityType="Self.province" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ShopCart" EntityType="Self.ShopCart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User_Address" EntityType="Self.User_Address" Schema="dbo" store:Type="Tables" />
@@ -466,6 +525,10 @@
     <AssociationSet Name="FK_FactorDetails_Factors" Association="Self.FK_FactorDetails_Factors">
       <End Role="Factors" EntitySet="Factors" />
       <End Role="Factor_Details" EntitySet="Factor_Details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Factors_FactorStautus" Association="Self.FK_Factors_FactorStautus">
+      <End Role="FactorStautus" EntitySet="FactorStautus" />
+      <End Role="Factors" EntitySet="Factors" />
     </AssociationSet>
     <AssociationSet Name="FK_Factors_UserAddress" Association="Self.FK_Factors_UserAddress">
       <End Role="User_Address" EntitySet="User_Address" />
@@ -510,6 +573,14 @@
     <AssociationSet Name="FK_Product_Groups_SchoolTools_Groups" Association="Self.FK_Product_Groups_SchoolTools_Groups">
       <End Role="Product_Groups" EntitySet="Product_Groups" />
       <End Role="Product_Selected_Groups" EntitySet="Product_Selected_Groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopCart_Products" Association="Self.FK_ShopCart_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ShopCart" EntitySet="ShopCart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopCart_Users" Association="Self.FK_ShopCart_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ShopCart" EntitySet="ShopCart" />
     </AssociationSet>
     <AssociationSet Name="FK_Tags_Products" Association="Self.FK_Tags_Products">
       <End Role="Products" EntitySet="Products" />

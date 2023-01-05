@@ -4,32 +4,35 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ea726e380baa47279e58969744f9c365" Name="Diagram1" ZoomLevel="72">
-        <EntityTypeShape EntityType="ShahrChap_DBModel.AboutUs" Width="1.5" PointX="15.5" PointY="0.875" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.city" Width="1.5" PointX="15.875" PointY="4.875" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.ContactUs" Width="1.5" PointX="19.5" PointY="0.875" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.ContactUsInfo" Width="1.5" PointX="17.5" PointY="0.875" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Factor_Details" Width="1.5" PointX="10.25" PointY="10.5" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Factors" Width="1.5" PointX="15" PointY="8.5" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Features" Width="1.5" PointX="0.625" PointY="1.25" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Order_Details" Width="1.5" PointX="3.625" PointY="7.375" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Order_Files" Width="1.5" PointX="6.375" PointY="8.375" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Attribute" Width="1.5" PointX="5" PointY="4.875" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Features" Width="1.5" PointX="0.625" PointY="3.25" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Galleries" Width="1.5" PointX="5.5" PointY="1.5" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Groups" Width="1.5" PointX="1" PointY="8.75" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Selected_Groups" Width="1.5" PointX="1.25" PointY="5.75" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Products" Width="1.5" PointX="3.125" PointY="0.625" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.province" Width="1.5" PointX="17.625" PointY="4.375" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Roles" Width="1.5" PointX="10.75" PointY="1.25" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Slider" Width="1.5" PointX="21.125" PointY="0.875" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Tags" Width="1.5" PointX="7" PointY="6" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.User_Address" Width="1.5" PointX="13.875" PointY="1.875" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.Users" Width="1.5" PointX="9" PointY="1.375" />
+      <Diagram DiagramId="ea726e380baa47279e58969744f9c365" Name="Diagram1" ZoomLevel="36">
+        <EntityTypeShape EntityType="ShahrChap_DBModel.AboutUs" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.city" Width="1.5" PointX="9.75" PointY="17.5" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.ContactUs" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.ContactUsInfo" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Factor_Details" Width="1.5" PointX="3" PointY="8.625" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Factors" Width="1.5" PointX="0.75" PointY="4.375" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.FactorStautus" Width="1.5" PointX="1.5" PointY="1.25" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Features" Width="1.5" PointX="6" PointY="19" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Order_Details" Width="1.5" PointX="3" PointY="12" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Order_Files" Width="1.5" PointX="5.25" PointY="16" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Attribute" Width="1.5" PointX="13.125" PointY="7" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Features" Width="1.5" PointX="6" PointY="12.875" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Galleries" Width="1.5" PointX="13.125" PointY="1.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Groups" Width="1.5" PointX="3.75" PointY="4.875" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Product_Selected_Groups" Width="1.5" PointX="6" PointY="9.875" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Products" Width="1.5" PointX="0.75" PointY="11.875" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.province" Width="1.5" PointX="9.75" PointY="20.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Roles" Width="1.5" PointX="9.75" PointY="15" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.ShopCart" Width="1.5" PointX="3" PointY="16.625" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Slider" Width="1.5" PointX="5.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Tags" Width="1.5" PointX="13.125" PointY="4.5" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.User_Address" Width="1.5" PointX="9.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Users" Width="1.5" PointX="9.75" PointY="9.875" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_city_province" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_User_Address_city" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Factor_Details_Products" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_FactorDetails_Factors" />
+        <AssociationConnector Association="ShahrChap_DBModel.FK_Factors_FactorStautus" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Factors_UserAddress" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Factors_Users" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Product_Features_Features" />
@@ -41,9 +44,11 @@
         <AssociationConnector Association="ShahrChap_DBModel.FK_Product_Galleries_Products" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Product_Groups_SchoolTools_Groups" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Product_Groups_Products" />
+        <AssociationConnector Association="ShahrChap_DBModel.FK_ShopCart_Products" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Tags_Products" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_User_Address_province" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Users_Roles" />
+        <AssociationConnector Association="ShahrChap_DBModel.FK_ShopCart_Users" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_User_Address_Users" />
       </Diagram>
     </edmx:Diagrams>

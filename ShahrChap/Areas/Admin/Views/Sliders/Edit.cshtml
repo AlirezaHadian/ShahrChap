@@ -68,7 +68,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">تصویر اسلایدر</div>
             <div class="panel-body">
-                <img id="imgPreviewSlide" style="margin: 8px auto" class="thumbnail" src="~/Images/Slider/@Model.ImageName" />
+                <img id="imgPreviewSlide" style="margin: 8px auto; max-width: 400px; max-height: 300px; " class="thumbnail" src="~/Images/Slider/@Model.ImageName" />
                 <div class="form-group">
                     @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">

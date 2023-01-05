@@ -7,9 +7,8 @@
 <section>
     <div class="container internal-style py-5">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">خانه</a></li>
-            <li class="breadcrumb-item"><a href="#">محصولات</a></li>
-            <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+            <li class="breadcrumb-item"><a href="/">خانه</a></li>
+            <li class="breadcrumb-item active" aria-current="page">درباره ما</li>
         </ol>
         <div class="contact-layer">
             <div class="row">
@@ -22,15 +21,15 @@
                                         <i class="fas fa-phone"></i>
                                         ارتباط با ما
                                     </h2>
-                                    <ul >
-                                        @foreach (var aboutus in Model)
+                                    <ul>
+                                        @{
+                                            var contactUsInfo = ViewBag.ContactUsInfo;
+                                        }
+                                        @foreach (var us in contactUsInfo)
                                         {
-                                            foreach (var item in aboutus.ContactUsInfo)
-                                            {
-                                                <li>@item.Title</li>
-                                                <li class="mx-3 mb-2">@item.Info</li>
+                                            <li>@us.Title</li>
+                                            <li class="mx-3 mb-2">@us.Info</li>
 
-                                            }
                                         }
                                     </ul>
                                 </section>
@@ -39,19 +38,19 @@
                     </div>
                 </div>
                 <section class="col-md-7 col-sm-12 col-xs-12">
-                    @Html.Action("ContactUs")
+                    @*@Html.Action("ContactUs")*@
+                    <div class="aboutUs-title">
+                        <h4>درباره ما</h4>
+                    </div>
+                    <div class="underline-aboutUs my-4"></div>
+                    <div class="aboutUs">
+                        @foreach (var item in Model)
+                        {
+                            @item.Text
+                        }
+                    </div>
                 </section>
             </div>
         </div>
-        <div class="aboutUs-title">
-            <h4>درباره ما</h4>
-        </div>
-        <div class="underline-aboutUs my-4"></div>
-        <div class="aboutUs">
-            @foreach (var item in Model)
-            {
-                @item.Text
-            }
-        </div>
-    </div>
+
 </section>

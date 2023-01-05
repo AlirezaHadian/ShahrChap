@@ -8,14 +8,14 @@
     <div class="single-product">
         <div class="container internal-style py-5">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">خانه</a></li>
-                <li class="breadcrumb-item"><a href="#">محصولات</a></li>
-                <li class="breadcrumb-item active" aria-current="page">چاپ و تکثیر شهر چاپ</li>
+                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                <li class="breadcrumb-item"><a href="/ArchiveOrder">محصولات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
             </ol>
             <div class="card-wrapper">
                 <div class="card-single-product row">
                     <!-- card left -->
-                    <div class="product-imgs col-md-4 col-sm-12 col-xs-12 pull-right">
+                    <div class="col-md-4 col-sm-12 col-xs-12 product-imgs product-gallery pull-right">
                         <div class="img-display">
                             <div class="img-showcase">
                                 <img src="/Images/ProductImages/@Model.ImageName">
@@ -24,19 +24,44 @@
                         @if (Model.Product_Galleries.Any())
                         {
                             <div class="img-select">
-                                <div class="img-item img-thumbnail">
-                                    <img src="~/Images/ProductImages/@Model.ImageName" class="" alt="تصویر اصلی">
-                                </div>
-                                @foreach (var item in Model.Product_Galleries)
-                                {
-                                    <div class="img-item">
-                                        <img src="~/Images/ProductImages/@item.ImageName" alt="@item.Title">
+                                <div class="thumbnails-image">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xs-4 border-radius img-thumbnail"><img class="border-radius" src="/Images/ProductImages/@Model.ImageName"></div>
+                                        @foreach (var item in Model.Product_Galleries)
+                                        {
+                                            <div class="col-md-3 col-sm-3 col-xs-4 border-radius img-thumbnail"><img class="border-radius" alt="@item.Title" src="/Images/ProductImages/@item.ImageName"></div>
+
+                                        }
+                                        <div class="clearfix"></div>
                                     </div>
-                                }
+                                </div>
                             </div>
                         }
                     </div>
 
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="img-item img-thumbnail">
+                                        <img src="~/Images/ProductImages/@Model.ImageName" alt="تصویر اصلی">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    @foreach (var item in Model.Product_Galleries)
+                                    {
+                                        <div class="img-item">
+                                            <img src="~/Images/ProductImages/@item.ImageName" alt="@item.Title">
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- card right -->
                     <div class="product-content col-md-8 col-sm-12 col-xs-12">
                         <div class="product-price pull-left">

@@ -13,9 +13,9 @@ namespace ShahrChap.Controllers
         UnitOfWork db = new UnitOfWork();
         public ActionResult Index(string q, int pageId = 1, string title = "", int minPrice = 0, int maxPrice = 1000000, List<int> selectedGroups = null)
         {
-            if(q == null && q == "")
+            if(q == "")
             {
-                RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
             List<Products> list = new List<Products>();
             list.AddRange(db.TagsRepository.Get().Where(t => t.Tag == q).Select(t => t.Products).ToList());
@@ -53,7 +53,7 @@ namespace ShahrChap.Controllers
             {
                 list = list.Where(p => p.Price <= maxPrice && p.IsExist == true).ToList();
             }
-
+            list = list.Distinct().ToList();
             //Pagging
             int take = 9;
             int skip = (pageId - 1) * take;
@@ -70,7 +70,7 @@ namespace ShahrChap.Controllers
             {
                 pageId = 1;
             }
-            return View(list.Distinct().OrderByDescending(p => p.CreateDate).Skip(skip).Take(take).ToList());
+            return View(list.OrderByDescending(p => p.CreateDate).Skip(skip).Take(take).ToList());
 
 
             //return View(list.Distinct());

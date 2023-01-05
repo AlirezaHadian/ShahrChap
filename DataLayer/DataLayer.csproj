@@ -92,6 +92,10 @@
     <Compile Include="Factors.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FactorStautus.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\FactorStautusMetaData.cs" />
     <Compile Include="Factor_Details.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
@@ -167,6 +171,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ShahrChapModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ShopCart.cs">
+      <DependentUpon>ShahrChapModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MetaDataClasses\ShopCartMetaData.cs" />
     <Compile Include="Slider.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
