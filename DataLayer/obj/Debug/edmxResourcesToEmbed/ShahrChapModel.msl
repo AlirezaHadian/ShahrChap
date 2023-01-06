@@ -250,5 +250,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Footer">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Footer">
+        <MappingFragment StoreEntitySet="Footer">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FooterID" ColumnName="FooterID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Links">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.Links">
+        <MappingFragment StoreEntitySet="Links">
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="TItle" ColumnName="TItle" />
+          <ScalarProperty Name="LinkID" ColumnName="LinkID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SiteVisit">
+      <EntityTypeMapping TypeName="ShahrChap_DBModel.SiteVisit">
+        <MappingFragment StoreEntitySet="SiteVisit">
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="VisitID" ColumnName="VisitID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -74,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShopCartViewModel.cs" />
     <Compile Include="UserPanelViewModel.cs" />
+    <Compile Include="VisitSiteViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

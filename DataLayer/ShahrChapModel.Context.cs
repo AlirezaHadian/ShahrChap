@@ -48,5 +48,8 @@ namespace DataLayer
         public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<User_Address> User_Address { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Footer> Footer { get; set; }
+        public virtual DbSet<Links> Links { get; set; }
+        public virtual DbSet<SiteVisit> SiteVisit { get; set; }
     }
 }

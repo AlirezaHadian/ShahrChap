@@ -13006,6 +13006,13 @@
     <Content Include="Areas\Admin\Content\bower_components\tinymce\skins\lightgray\fonts\tinymce.woff" />
     <Content Include="Areas\Admin\Content\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Areas\Admin\Content\plugins\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="Areas\Admin\Views\Home\VisitSite.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ProgressInfo.cshtml" />
+    <Content Include="Areas\Admin\Views\Footers\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Footers\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Footers\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Footers\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Footers\Index.cshtml" />
     <None Include="Connected Services\AmootSMS\webservice2.disco" />
     <None Include="Connected Services\AmootSMS\configuration91.svcinfo" />
     <None Include="Connected Services\AmootSMS\configuration.svcinfo" />
@@ -13124,6 +13131,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Admin\Controllers\FeaturesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FootersController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\Order_GroupsController.cs" />

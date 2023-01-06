@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -9,7 +10,7 @@ using DataLayer.Context;
 
 namespace DataLayer
 {
-    public class GenericRepository<TEntity> where TEntity:class
+    public class GenericRepository<TEntity> where TEntity : class
     {
         private ShahrChap_DBEntities _context;
         private DbSet<TEntity> _dbset;
@@ -21,7 +22,7 @@ namespace DataLayer
         }
 
 
-        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity,bool>> where=null,Func<IQueryable<TEntity>,IOrderedQueryable<TEntity>> orderby=null,string includes="")
+        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> where = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderby = null, string includes = "")
         {
             IQueryable<TEntity> query = _dbset;
 
@@ -58,8 +59,8 @@ namespace DataLayer
 
         public virtual void Update(TEntity entity)
         {
-            _dbset.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+                _dbset.Attach(entity);
+                _context.Entry(entity).State = EntityState.Modified;
         }
 
         public virtual void Delete(TEntity entity)

@@ -1,14 +1,61 @@
-﻿<!--<div class="col-lg-3 col-xs-6">-->
-    <!-- small box -->
-    <!--<div class="small-box bg-aqua">
-        <div class="inner">
-            <h3>150</h3>
+﻿<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>@ViewBag.users</h3>
 
-            <p>سفارش جدید</p>
+                <p>کاربر</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person"></i>
+            </div>
+            <a href="/Admin/Users" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
         </div>
-        <div class="icon">
-            <i class="ion ion-bag"></i>
-        </div>
-        <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
     </div>
-</div>-->
+
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@ViewBag.products</h3>
+
+                <p>محصول</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pricetags"></i>
+            </div>
+            <a href="/Admin/Products" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>@ViewBag.factors</h3>
+
+                <p>سفارش ها</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a href="/Admin/Purchases/Factors" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>@ViewBag.orders</h3>
+
+                <p>طراحی ها</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-paintbrush"></i>
+            </div>
+            <a href="/Admin/Purchases/Orders" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
+</div>

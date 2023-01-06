@@ -1,0 +1,52 @@
+﻿@model ViewModels.VisitSiteViewModel
+
+<div class="thumbnail">
+    <dl class="dl-horizontal">
+        <dt>
+            کاربران آنلاین:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Online)
+        </dd>
+        <dt>
+            بازدید امروز:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VisitToday)
+        </dd>
+
+        <dt>
+            بازدید دیروز:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VisitYesterday)
+        </dd>
+
+        <dt>
+            بازدید ماه جاری:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VisitMonth)
+        </dd>
+
+        <dt>
+            بازدید ماه قبلی:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VisitPrevMonth)
+        </dd>
+
+        <dt>
+            بازدید کل:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalVisit)
+        </dd>
+    </dl>
+</div>

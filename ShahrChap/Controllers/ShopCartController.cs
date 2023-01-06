@@ -104,10 +104,12 @@ namespace ShahrChap.Controllers
                 if (count == 0)
                 {
                     shopList.RemoveAt(index);
+                    db.ShopCartRepository.Delete(shopList[index]);
                 }
                 else
                 {
                     shopList[index].Count = count;
+                    db.ShopCartRepository.Update(shopList[index]);
                 }
                 db.Save();
             }

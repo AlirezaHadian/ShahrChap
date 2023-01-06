@@ -73,6 +73,22 @@
     <Property Name="FeatureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FeatureTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
   </EntityType>
+  <EntityType Name="Footer">
+    <Key>
+      <PropertyRef Name="FooterID" />
+    </Key>
+    <Property Name="FooterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Links">
+    <Key>
+      <PropertyRef Name="LinkID" />
+    </Key>
+    <Property Name="LinkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TItle" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="Order_Details">
     <Key>
       <PropertyRef Name="OT_ID" />
@@ -178,6 +194,14 @@
     <Property Name="Price" Type="int" Nullable="false" />
     <Property Name="Count" Type="int" Nullable="false" />
     <Property Name="Sum" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SiteVisit">
+    <Key>
+      <PropertyRef Name="VisitID" />
+    </Key>
+    <Property Name="VisitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IP" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
   </EntityType>
   <EntityType Name="Slider">
     <Key>
@@ -499,6 +523,8 @@
     <EntitySet Name="Factors" EntityType="Self.Factors" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FactorStautus" EntityType="Self.FactorStautus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Footer" EntityType="Self.Footer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Links" EntityType="Self.Links" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order_Details" EntityType="Self.Order_Details" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order_Files" EntityType="Self.Order_Files" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product_Attribute" EntityType="Self.Product_Attribute" Schema="dbo" store:Type="Tables" />
@@ -510,6 +536,7 @@
     <EntitySet Name="province" EntityType="Self.province" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ShopCart" EntityType="Self.ShopCart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SiteVisit" EntityType="Self.SiteVisit" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User_Address" EntityType="Self.User_Address" Schema="dbo" store:Type="Tables" />

@@ -50,6 +50,9 @@
         <AssociationConnector Association="ShahrChap_DBModel.FK_Users_Roles" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_ShopCart_Users" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_User_Address_Users" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Footer" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.Links" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ShahrChap_DBModel.SiteVisit" Width="1.5" PointX="12.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -29,7 +29,7 @@ namespace ShahrChap.Controllers
             else
             {
                 int userId = db.UserRepository.Get().Single(u => u.UserName == User.Identity.Name).UserID;
-                List<ShopCart> shopCart = db.ShopCartRepository.Get().Where(s=> s.UserID == userId).ToList();
+                List<ShopCart> shopCart = db.ShopCartRepository.Get().Where(s => s.UserID == userId).ToList();
                 return shopCart.Sum(f => f.Count);
             }
         }
@@ -38,43 +38,73 @@ namespace ShahrChap.Controllers
         public int Get(int id, int count)
         {
             var product = db.ProductsRepository.GetById(id);
-            int userId = db.UserRepository.Get().Single(u => u.UserName == User.Identity.Name).UserID;
-            List<ViewModels.ShopCartItem> list = new List<ViewModels.ShopCartItem>();
-            var sessions = HttpContext.Current.Session;
-            if (sessions["ShopCart"] != null)
+            if (User.Identity.IsAuthenticated)
             {
-                list = sessions["ShopCart"] as List<ViewModels.ShopCartItem>;
-            }
-            if (list.Any(p => p.ProductID == id))
-            {
-                int index = list.FindIndex(p => p.ProductID == id);
-                list[index].Count += count;
-
-                ShopCart shop = new ShopCart()
+                int userId = db.UserRepository.Get().Single(u => u.UserName == User.Identity.Name).UserID;
+                List<ShopCart> shopList = new List<ShopCart>();
+                var shop = db.ShopCartRepository.Get(s => s.UserID == userId);
+                if (shop != null)
                 {
-                    Count = list[index].Count,
-                    Sum = product.Price * count
-                };
+                    shopList = shop.ToList();
+                }
+                if (shopList.Any(l => l.ProductID == id))
+                {
+                    int index = shopList.FindIndex(p => p.ProductID == id);
+                    shopList[index].Count += count;
+                    int shopId = shopList[index].SC_ID;
+                    var shopCart = db.ShopCartRepository.GetById(shopId);
+
+                    shopCart.Count = shopList[index].Count;
+                    shopCart.Sum = product.Price * shopList[index].Count;
+                    db.ShopCartRepository.Update(shopCart);
+                    db.Save();
+                }
+                else
+                {
+                    shopList.Add(new ShopCart()
+                    {
+                        ProductID = id,
+                        Count = count,
+                        Price = product.Price,
+                        UserID = userId,
+                        Sum = product.Price * count
+                    });
+                    ShopCart shopCart = new ShopCart()
+                    {
+                        Count = count,
+                        ProductID = id,
+                        Price = product.Price,
+                        Sum = product.Price * count,
+                        UserID = userId,
+                    };
+                    db.ShopCartRepository.Insert(shopCart);
+                    db.Save();
+                }
             }
             else
             {
-                list.Add(new ViewModels.ShopCartItem()
+                List<ViewModels.ShopCartItem> list = new List<ViewModels.ShopCartItem>();
+                var sessions = HttpContext.Current.Session;
+                if (sessions["ShopCart"] != null)
                 {
-                    ProductID = id,
-                    Count = count
-                });
-                ShopCart shop = new ShopCart()
+                    list = sessions["ShopCart"] as List<ViewModels.ShopCartItem>;
+                }
+                if (list.Any(p => p.ProductID == id))
                 {
-                    Count = count,
-                    ProductID = id,
-                    Price = product.Price,
-                    Sum = product.Price * count,
-                    UserID = userId
-                };
-                db.ShopCartRepository.Insert(shop);
+                    int index = list.FindIndex(p => p.ProductID == id);
+                    list[index].Count += count;
+                }
+
+                else
+                {
+                    list.Add(new ViewModels.ShopCartItem()
+                    {
+                        ProductID = id,
+                        Count = count
+                    });
+                }
+                sessions["ShopCart"] = list;
             }
-            db.Save();
-            sessions["ShopCart"] = list;
             return Get();
         }
     }

@@ -1,0 +1,20 @@
+﻿<div class="box box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">نوار وضعیت</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <span class="sr-only">کاربران فعال</span>
+        <div class="progress progress-sm active">
+            <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.Acitve">
+                <span class="sr-only">@ViewBag.Active % کاربر فعال</span>
+            </div>
+        </div>
+
+        <span class="sr-only">سفارشات طراحی ها</span>
+        <div class="progress progress-sm active">
+            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.Done">
+                <span class="sr-only">@ViewBag.Done % طراحی به اتمام رسیده</span>
+            </div>
+        </div>
+    </div>

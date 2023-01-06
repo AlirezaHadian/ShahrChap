@@ -33,6 +33,9 @@ namespace DataLayer.Context
         private GenericRepository<ContactUsInfo> contactUsInfoRepository;
         private GenericRepository<ShopCart> shopCartRepository;
         private GenericRepository<FactorStautus> factorStautusRepository;
+        private GenericRepository<Footer> footerRepository;
+        private GenericRepository<Links> linksRepository;
+        private GenericRepository<SiteVisit> siteVisitRepository;
 
 
         public GenericRepository<Users> UserRepository
@@ -311,6 +314,42 @@ namespace DataLayer.Context
                 }
 
                 return factorStautusRepository;
+            }
+        }
+        public GenericRepository<Footer> FooterRepository
+        {
+            get
+            {
+                if (footerRepository == null)
+                {
+                    footerRepository = new GenericRepository<Footer>(db);
+                }
+
+                return footerRepository;
+            }
+        }
+        public GenericRepository<Links> LinksRepository
+        {
+            get
+            {
+                if (linksRepository == null)
+                {
+                    linksRepository = new GenericRepository<Links>(db);
+                }
+
+                return linksRepository;
+            }
+        }
+        public GenericRepository<SiteVisit> SiteVisitRepository
+        {
+            get
+            {
+                if (siteVisitRepository == null)
+                {
+                    siteVisitRepository = new GenericRepository<SiteVisit>(db);
+                }
+
+                return siteVisitRepository;
             }
         }
         public void Save()

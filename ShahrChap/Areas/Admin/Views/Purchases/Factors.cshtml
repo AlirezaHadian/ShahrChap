@@ -32,8 +32,7 @@
     @foreach (var item in Model)
     {
         bool isFinally = item.Factors.IsFinally;
-        var className = isFinally ? "class=table-success" : "class=table-warning";
-        <tr @className>
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Factors.Users)
             </td>
@@ -49,11 +48,11 @@
             <td>
                 @if (item.Factors.IsFinally == true)
                 {
-                    <p>پرداخت شده</p>
+                    <span class="label label-success">پرداخت شده</span>
                 }
                 else
                 {
-                    <p>در انتظار پرداخت</p>
+                    <span class="label label-warning">در انتظار پرداخت</span>
                 }
             </td>
             <td>

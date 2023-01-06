@@ -112,6 +112,9 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="User_Address" EntitySet="User_Address" />
     </AssociationSet>
+    <EntitySet Name="Footer" EntityType="ShahrChap_DBModel.Footer" />
+    <EntitySet Name="Links" EntityType="ShahrChap_DBModel.Links" />
+    <EntitySet Name="SiteVisit" EntityType="ShahrChap_DBModel.SiteVisit" />
   </EntityContainer>
   <EntityType Name="AboutUs">
     <Key>
@@ -647,4 +650,28 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Footer">
+    <Key>
+      <PropertyRef Name="FooterID" />
+    </Key>
+    <Property Name="FooterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Links">
+    <Key>
+      <PropertyRef Name="LinkID" />
+    </Key>
+    <Property Name="LinkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TItle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SiteVisit">
+    <Key>
+      <PropertyRef Name="VisitID" />
+    </Key>
+    <Property Name="VisitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IP" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
 </Schema>
