@@ -31,43 +31,56 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Users.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Products.Title)
-            </td>
-            @if (item.IsDesigned == false)
-            {
+        if (item.IsDone == true)
+        {
+            
+        }
+            <tr class=@((item.IsDone == true ? "text-decoration-line-through" : ""))>
                 <td>
-                    <span class="label label-danger">طرح آماده ندارد</span>
+                    @Html.DisplayFor(modelItem => item.Users.UserName)
                 </td>
-            }
-            else
-            {
                 <td>
-                    <span class="label label-success">طرح آماده دارد</span>
+                    @Html.DisplayFor(modelItem => item.Products.Title)
                 </td>
-            }
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SocialNumber)
-            </td>
-            <td>
-                @item.OrderDate.ToString("dddd, dd MMMM yyyy")
-            </td>
-            <td>
-                <a class="btn btn-info btn-sm" href="@Url.Action("OrderDetail" , new { id = item.OT_ID })">
-                    جزئیات سفارش
-                </a>
-            @*@Html.ActionLink("Edit", "Edit", new { id = item.OT_ID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.OT_ID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.OT_ID })*@
-            </td>
-        </tr>
-    }
+                @if (item.IsDesigned == false)
+                {
+                    <td>
+                        <span class="label label-danger">طرح آماده ندارد</span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="label label-success">طرح آماده دارد</span>
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SocialNumber)
+                </td>
+                <td>
+                    @item.OrderDate.ToString("dddd, dd MMMM yyyy")
+                </td>
+                <td>
+                    @if (item.IsDone == false)
+                    {
+                        <a class="btn btn-success" href="@Url.Action("Done", new { orderId = item.OT_ID })">
+                            طراحی شد
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger" href="@Url.Action("Done", new { orderId = item.OT_ID })">
+                            طراحی نشده
+                        </a>
+                    } |
+                    <a class="btn btn-info btn-sm" href="@Url.Action("OrderDetail" , new { id = item.OT_ID })">
+                        جزئیات سفارش
+                    </a>
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>

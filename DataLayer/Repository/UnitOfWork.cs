@@ -32,7 +32,6 @@ namespace DataLayer.Context
         private GenericRepository<ContactUs> contactUsRepository;
         private GenericRepository<ContactUsInfo> contactUsInfoRepository;
         private GenericRepository<ShopCart> shopCartRepository;
-        private GenericRepository<FactorStautus> factorStautusRepository;
         private GenericRepository<Footer> footerRepository;
         private GenericRepository<Links> linksRepository;
         private GenericRepository<SiteVisit> siteVisitRepository;
@@ -302,18 +301,6 @@ namespace DataLayer.Context
                 }
 
                 return shopCartRepository;
-            }
-        }
-        public GenericRepository<FactorStautus> FactorStautusRepository
-        {
-            get
-            {
-                if (factorStautusRepository == null)
-                {
-                    factorStautusRepository = new GenericRepository<FactorStautus>(db);
-                }
-
-                return factorStautusRepository;
             }
         }
         public GenericRepository<Footer> FooterRepository

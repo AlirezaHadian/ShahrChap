@@ -17,9 +17,10 @@ namespace DataLayer
         public int LinkID { get; set; }
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public string TItle { get; set; }
+        public string Title { get; set; }
         [Display(Name = "لینک")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [DataType(DataType.Url)]
         public string Link { get; set; }
     }
 }

@@ -6,6 +6,12 @@
     int id = ViewBag.UserId;
 }
 <section class="section-style box-shadow address-form">
+    @if (ViewBag.IsDelete == false)
+    {
+        <div class="alert alert-warning">
+            کاربر گرامی تا ۴۵ روز پس از ثبت آخرین سفارش با این آدرس امکان حذف را ندارید!
+        </div>
+    }
     <header>
         <h2>آدرس <span><a href="/UserPanel/AddAddress/@id" class="edit-user-info"><i class="far fa-plus-square"></i></a></span> </h2>
     </header>

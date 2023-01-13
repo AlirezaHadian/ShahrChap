@@ -56,15 +56,7 @@
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="IsFinally" Type="bit" Nullable="false" />
     <Property Name="TotalPrice" Type="int" Nullable="false" />
-    <Property Name="StatusID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="FactorStautus">
-    <Key>
-      <PropertyRef Name="FS_ID" />
-    </Key>
-    <Property Name="FS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="Color" Type="nvarchar" MaxLength="350" />
+    <Property Name="Ref" Type="int" />
   </EntityType>
   <EntityType Name="Features">
     <Key>
@@ -86,7 +78,7 @@
       <PropertyRef Name="LinkID" />
     </Key>
     <Property Name="LinkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TItle" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
     <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Order_Details">
@@ -283,18 +275,6 @@
       </Principal>
       <Dependent Role="Factor_Details">
         <PropertyRef Name="FactorID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Factors_FactorStautus">
-    <End Role="FactorStautus" Type="Self.FactorStautus" Multiplicity="1" />
-    <End Role="Factors" Type="Self.Factors" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="FactorStautus">
-        <PropertyRef Name="FS_ID" />
-      </Principal>
-      <Dependent Role="Factors">
-        <PropertyRef Name="StatusID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -521,7 +501,6 @@
     <EntitySet Name="ContactUsInfo" EntityType="Self.ContactUsInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Factor_Details" EntityType="Self.Factor_Details" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Factors" EntityType="Self.Factors" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="FactorStautus" EntityType="Self.FactorStautus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Footer" EntityType="Self.Footer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Links" EntityType="Self.Links" Schema="dbo" store:Type="Tables" />
@@ -552,10 +531,6 @@
     <AssociationSet Name="FK_FactorDetails_Factors" Association="Self.FK_FactorDetails_Factors">
       <End Role="Factors" EntitySet="Factors" />
       <End Role="Factor_Details" EntitySet="Factor_Details" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Factors_FactorStautus" Association="Self.FK_Factors_FactorStautus">
-      <End Role="FactorStautus" EntitySet="FactorStautus" />
-      <End Role="Factors" EntitySet="Factors" />
     </AssociationSet>
     <AssociationSet Name="FK_Factors_UserAddress" Association="Self.FK_Factors_UserAddress">
       <End Role="User_Address" EntitySet="User_Address" />

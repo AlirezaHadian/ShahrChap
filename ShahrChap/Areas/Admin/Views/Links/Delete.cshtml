@@ -1,0 +1,41 @@
+﻿@model DataLayer.Links
+
+@{
+    ViewBag.Title = "حذف لینک";
+}
+
+<h2>حذف @Model.Title</h2>
+
+<h3>آیا از حذف لینک @Model.Title مطمئن هستید؟</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Delete" class="btn btn-default" /> |
+    <a class="btn btn-danger" href="@Url.Action("Index")">
+        بازگشت
+    </a>
+
+</div>
+    }
+</div>

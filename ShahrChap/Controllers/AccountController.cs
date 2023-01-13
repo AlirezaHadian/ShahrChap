@@ -68,7 +68,7 @@ namespace ShahrChap.Controllers
                                     IsPhoneActive = false,
                                     IsEmailActive = false
                                 };
-                            Random random = new Random();
+                                Random random = new Random();
                                 string DigitCode = random.Next(10000, 99999).ToString();
                                 SendSMS.SendWithPattern(register.EmailOrPhone, register.UserName, DigitCode);
                                 db.UserRepository.Insert(user);
@@ -168,72 +168,27 @@ namespace ShahrChap.Controllers
                         if (user.IsEmailActive || user.IsPhoneActive)
                         {
                             FormsAuthentication.SetAuthCookie(user.UserName, login.RemmemberMe);
-                            return Redirect("/");
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("EmailOrPhone", "حساب کاربری شما فعال نشده است.");
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("EmailOrPhone", "کاربری با مشخصات وارد شده یافت نشد.");
-                    }
-                }
-                else if (isCaptchaValid == false)
-                {
-                    ModelState.AddModelError("EmailOrPhone", "کپچا نامعتبر می باشد");
-                }
-            }
-
-            return View();
-        }
-
-        public ActionResult ResendOTP(string id = "")
-        {
-            ResendCode();
-            if (id == "")
-            {
-                return RedirectToAction("VerifyPhone", "Account");
-            }
-            else if (id == "ForgotPass")
-            {
-                return RedirectToAction("ForgotPasswordWithPhone", "Account");
-            }
-            return HttpNotFound();
-        }
-        //این اکشن با دریافت شماره موبایل یا ایمیل کاربر یا کد اعتبارسنجی ارسال میکند یا لینک فعالسازی 
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public ActionResult ForgotPassword(ForgotPasswordViewModel forgotPassword)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = db.UserRepository.Get().SingleOrDefault(u => u.Email == forgotPassword.EmailOrPhone || u.Phone == forgotPassword.EmailOrPhone);
-                if (user != null)
-                {
-                    if (user.IsEmailActive || user.IsPhoneActive)
-                    {
-                        if (forgotPassword.EmailOrPhone.Contains("@"))
-                        {
-                            string body = PartialToStringClass.RenderPartialView("ManageEmails", "RecoveryPassword", user);
-                            SendEmail.Send(user.Email, "بازیابی کلمه عبور", body);
-                            return View("SuccessForgotPassword", user);
-                        }
-                        else
-                        {
-                            Random random = new Random();
-                            string DigitCode = random.Next(10000, 99999).ToString();
-                            SendSMS.SendWithPattern(user.Phone, user.UserName, DigitCode);
-                            Session["OTP"] = DigitCode;
-                            Session["ExpireTime"] = DateTime.Now;
-                            Session["PhoneNumber"] = user.Phone;
-                            return RedirectToAction("ForgotPasswordWithPhone", "Account");
-                        }
+                            if (Session["ShopCart"] != null)
+                            {
+                                List<ShopCartItem> list = new List<ViewModels.ShopCartItem>();
+                                var sessions = Session;
+                                list = sessions["ShopCart"] as List<ViewModels.ShopCartItem>;
+                                foreach(var item in list)
+                                {
+                                    var product = db.ProductsRepository.GetById(item.ProductID);
+                                    ShopCart shop = new ShopCart()
+                                    {
+                                        ProductID = item.ProductID,
+                                        Count = item.Count,
+                                        Price = product.Price,
+                                        UserID = user.UserID,
+                                        Sum = product.Price * item.Count
+                                    };
+                                    db.ShopCartRepository.Insert(shop);
+                                }
+                                db.Save();
+                            }
+                        return Redirect("/");
                     }
                     else
                     {
@@ -245,112 +200,177 @@ namespace ShahrChap.Controllers
                     ModelState.AddModelError("EmailOrPhone", "کاربری با مشخصات وارد شده یافت نشد.");
                 }
             }
-            return View();
-        }
-
-        //این اکشن با وارد کردن شماره تلفن و اعتبارسنجی به کاربر امکان تغییر رمز عبور فراموش شده را میدهد
-        public ActionResult ForgotPasswordWithPhone()
-        {
-            ViewBag.Phone = Convert.ToString(Session["PhoneNumber"]);
-            return View();
-        }
-        [HttpPost]
-        public ActionResult ForgotPasswordWithPhone(OTPViewModel validatePhone)
-        {
-            string ValidateCode = Session["OTP"].ToString();
-            string Phone = Session["PhoneNumber"].ToString();
-            var user = db.UserRepository.Get().SingleOrDefault(u => u.Phone == Phone);
-
-            if (validatePhone.OTP == ValidateCode)
+            else if (isCaptchaValid == false)
             {
-                if ((DateTime.Now - Convert.ToDateTime(Session["ExpireTime"])).TotalSeconds < 120)
+                ModelState.AddModelError("EmailOrPhone", "کپچا نامعتبر می باشد");
+            }
+        }
+
+            return View();
+    }
+
+    public ActionResult ResendOTP(string id = "")
+    {
+        ResendCode();
+        if (id == "")
+        {
+            return RedirectToAction("VerifyPhone", "Account");
+        }
+        else if (id == "ForgotPass")
+        {
+            return RedirectToAction("ForgotPasswordWithPhone", "Account");
+        }
+        return HttpNotFound();
+    }
+    //این اکشن با دریافت شماره موبایل یا ایمیل کاربر یا کد اعتبارسنجی ارسال میکند یا لینک فعالسازی 
+    public ActionResult ForgotPassword()
+    {
+        return View();
+    }
+    [ValidateAntiForgeryToken]
+    [HttpPost]
+    public ActionResult ForgotPassword(ForgotPasswordViewModel forgotPassword)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = db.UserRepository.Get().SingleOrDefault(u => u.Email == forgotPassword.EmailOrPhone || u.Phone == forgotPassword.EmailOrPhone);
+            if (user != null)
+            {
+                if (user.IsEmailActive || user.IsPhoneActive)
                 {
-                    return RedirectToAction("RecoveryPassword", "Account", new { id = user.UserID });
+                    if (forgotPassword.EmailOrPhone.Contains("@"))
+                    {
+                        string body = PartialToStringClass.RenderPartialView("ManageEmails", "RecoveryPassword", user);
+                        SendEmail.Send(user.Email, "بازیابی کلمه عبور", body);
+                        return View("SuccessForgotPassword", user);
+                    }
+                    else
+                    {
+                        Random random = new Random();
+                        string DigitCode = random.Next(10000, 99999).ToString();
+                        SendSMS.SendWithPattern(user.Phone, user.UserName, DigitCode);
+                        Session["OTP"] = DigitCode;
+                        Session["ExpireTime"] = DateTime.Now;
+                        Session["PhoneNumber"] = user.Phone;
+                        return RedirectToAction("ForgotPasswordWithPhone", "Account");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("OTP", "کد اعتبارسنجی وارد شده منقضی شده است");
+                    ModelState.AddModelError("EmailOrPhone", "حساب کاربری شما فعال نشده است.");
                 }
             }
             else
             {
-                ModelState.AddModelError("OTP", "کد اعتبارسنجی وارد شده معتبر نمی باشد");
+                ModelState.AddModelError("EmailOrPhone", "کاربری با مشخصات وارد شده یافت نشد.");
             }
-            return View();
         }
+        return View();
+    }
 
-        //این اکشن بعد از اعتبارسنجی ایمیل یا شماره موبایل، کاربر میتواند رمز فراموش شده خود را تغییر دهد
-        public ActionResult RecoveryPassword(string id)
+    //این اکشن با وارد کردن شماره تلفن و اعتبارسنجی به کاربر امکان تغییر رمز عبور فراموش شده را میدهد
+    public ActionResult ForgotPasswordWithPhone()
+    {
+        ViewBag.Phone = Convert.ToString(Session["PhoneNumber"]);
+        return View();
+    }
+    [HttpPost]
+    public ActionResult ForgotPasswordWithPhone(OTPViewModel validatePhone)
+    {
+        string ValidateCode = Session["OTP"].ToString();
+        string Phone = Session["PhoneNumber"].ToString();
+        var user = db.UserRepository.Get().SingleOrDefault(u => u.Phone == Phone);
+
+        if (validatePhone.OTP == ValidateCode)
         {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult RecoveryPassword(RecoveryPasswordViewModel recoveryPassword, string id)
-        {
-            if (ModelState.IsValid)
+            if ((DateTime.Now - Convert.ToDateTime(Session["ExpireTime"])).TotalSeconds < 120)
             {
-                var user = db.UserRepository.Get().SingleOrDefault(u => u.ActiveCode == id || u.UserID.ToString() == id);
-                if (user != null)
-                {
-                    if (id == user.ActiveCode)
-                    {
-                        user.ActiveCode = Guid.NewGuid().ToString();
-                    }
-                    user.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(recoveryPassword.Password, "MD5");
-                    db.UserRepository.Update(user);
-                    db.Save();
-                    return Redirect("/Login?recovery=true");
-                }
-                else
-                {
-                    return HttpNotFound();
-                }
+                return RedirectToAction("RecoveryPassword", "Account", new { id = user.UserID });
             }
-            return View();
-        }
-        public ActionResult SignOut()
-        {
-            FormsAuthentication.SignOut();
-            return Redirect("/");
-        }
-        public void ResendCode()
-        {
-            var phone = Convert.ToString(Session["PhoneNumber"]);
-            var user = db.UserRepository.Get().SingleOrDefault(u => u.Phone == phone);
-            Random random = new Random();
-            string OTP = random.Next(10000, 99999).ToString();
-            SendSMS.SendWithPattern(phone, user.UserName, OTP);
-            Session["OTP"] = OTP;
-            Session["ExpireTime"] = DateTime.Now;
-        }
-        private async Task<bool> IsCaptchaValid(string response, string action)
-        {
-            try
+            else
             {
-                var secret = "6LedXs0eAAAAAM1ch6BbS09NM9JZqupvgNIAtmoQ";
-                using (var client = new HttpClient())
+                ModelState.AddModelError("OTP", "کد اعتبارسنجی وارد شده منقضی شده است");
+            }
+        }
+        else
+        {
+            ModelState.AddModelError("OTP", "کد اعتبارسنجی وارد شده معتبر نمی باشد");
+        }
+        return View();
+    }
+
+    //این اکشن بعد از اعتبارسنجی ایمیل یا شماره موبایل، کاربر میتواند رمز فراموش شده خود را تغییر دهد
+    public ActionResult RecoveryPassword(string id)
+    {
+        return View();
+    }
+    [HttpPost]
+    public ActionResult RecoveryPassword(RecoveryPasswordViewModel recoveryPassword, string id)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = db.UserRepository.Get().SingleOrDefault(u => u.ActiveCode == id || u.UserID.ToString() == id);
+            if (user != null)
+            {
+                if (id == user.ActiveCode)
                 {
-                    var values = new Dictionary<string, string>
+                    user.ActiveCode = Guid.NewGuid().ToString();
+                }
+                user.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(recoveryPassword.Password, "MD5");
+                db.UserRepository.Update(user);
+                db.Save();
+                return Redirect("/Login?recovery=true");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+        return View();
+    }
+    public ActionResult SignOut()
+    {
+        FormsAuthentication.SignOut();
+        return Redirect("/");
+    }
+    public void ResendCode()
+    {
+        var phone = Convert.ToString(Session["PhoneNumber"]);
+        var user = db.UserRepository.Get().SingleOrDefault(u => u.Phone == phone);
+        Random random = new Random();
+        string OTP = random.Next(10000, 99999).ToString();
+        SendSMS.SendWithPattern(phone, user.UserName, OTP);
+        Session["OTP"] = OTP;
+        Session["ExpireTime"] = DateTime.Now;
+    }
+    private async Task<bool> IsCaptchaValid(string response, string action)
+    {
+        try
+        {
+            var secret = "6LedXs0eAAAAAM1ch6BbS09NM9JZqupvgNIAtmoQ";
+            using (var client = new HttpClient())
+            {
+                var values = new Dictionary<string, string>
                     {
                         {"secret", secret},
                         {"response", response},
                         {"remoteip", Request.UserHostAddress}
                     };
 
-                    var content = new FormUrlEncodedContent(values);
-                    var verify = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
-                    var captchaResponseJson = await verify.Content.ReadAsStringAsync();
-                    var captchaResult = JsonConvert.DeserializeObject<CaptchaResponseViewModel>(captchaResponseJson);
-                    return captchaResult.Success
-                           && captchaResult.Action == action
-                           && captchaResult.Score > 0.5;
-                }
+                var content = new FormUrlEncodedContent(values);
+                var verify = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                var captchaResponseJson = await verify.Content.ReadAsStringAsync();
+                var captchaResult = JsonConvert.DeserializeObject<CaptchaResponseViewModel>(captchaResponseJson);
+                return captchaResult.Success
+                       && captchaResult.Action == action
+                       && captchaResult.Score > 0.5;
             }
-            catch (Exception ex)
-            {
-                return false;
-            }
-
         }
+        catch (Exception ex)
+        {
+            return false;
+        }
+
     }
+}
 }

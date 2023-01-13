@@ -13,7 +13,7 @@ namespace ShahrChap.Controllers
 {
     public class HomeController : Controller
     {
-        UnitOfWork db = new UnitOfWork();
+        private UnitOfWork db = new UnitOfWork();
         // GET: Home
         public ActionResult Index()
         {
@@ -25,6 +25,16 @@ namespace ShahrChap.Controllers
             DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0 , 0 ,0);
             return PartialView(db.SliderRepository.Get().Where(s=> s.IsActive && s.StartDate<= dt && s.EndDate >= dt));
         }
+        public ActionResult Footer()
+        {
+            var footer = db.FooterRepository.Get();
+            return PartialView(footer);
+        }
 
+        public ActionResult Links()
+        {
+            var links = db.LinksRepository.Get();
+            return PartialView(links);
+        }
     }
 }

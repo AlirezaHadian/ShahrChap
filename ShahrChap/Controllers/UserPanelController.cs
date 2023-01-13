@@ -289,9 +289,9 @@ namespace ShahrChap.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddAddress(AddAddressViewModel address, string Confirm ="")
+        public ActionResult AddAddress(AddAddressViewModel address, string Confirm = "")
         {
-            if(Confirm != null && Confirm == "NeedAddress")
+            if (Confirm != null && Confirm == "NeedAddress")
             {
                 ViewBag.NeedAddress = true;
             }
@@ -318,8 +318,20 @@ namespace ShahrChap.Controllers
         public void DeleteAddress(int id)
         {
             var address = db.User_AddressRepository.GetById(id);
-            db.User_AddressRepository.Delete(address);
-            db.Save();
+            var factors = db.FactorsRepository.Get(f => f.AddressID == id && f.Date.AddDays(45) < DateTime.Now);
+            int userId = db.UserRepository.Get().Single(u => u.UserName == User.Identity.Name).UserID;
+            if (db.User_AddressRepository.Get().Where(u => u.UserID == userId).Count() > 1)
+            {
+                var firstAddress = db.User_AddressRepository.Get().First(u => u.Users.UserName == User.Identity.Name);
+                foreach (var item in factors)
+                {
+                    item.AddressID = firstAddress.AddressID;
+                    db.FactorsRepository.Update(item);
+                }
+                db.User_AddressRepository.Delete(address);
+                db.Save();
+            }
+            ViewBag.IsDelete = false;
         }
         public void ResendCode()
         {
@@ -337,7 +349,7 @@ namespace ShahrChap.Controllers
             ViewBag.CityList = new SelectList(cities, "cityId", "cityName");
             return PartialView("DisplayCities");
         }
-        
+
         //Factors
         public ActionResult GetFactors()
         {
@@ -348,7 +360,7 @@ namespace ShahrChap.Controllers
         public ActionResult PurchaseProducts()
         {
             var username = User.Identity.Name;
-            List<Factor_Details> list = db.Factor_DetailsRepository.Get().Where(f => f.Factors.Users.UserName == username && f.Factors.IsFinally==true).ToList();
+            List<Factor_Details> list = db.Factor_DetailsRepository.Get().Where(f => f.Factors.Users.UserName == username && f.Factors.IsFinally == true).ToList();
             list = list.Distinct().ToList();
             return View(list);
         }

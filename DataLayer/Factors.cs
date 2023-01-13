@@ -28,11 +28,10 @@ namespace DataLayer
         public System.DateTime Date { get; set; }
         public bool IsFinally { get; set; }
         public int TotalPrice { get; set; }
-        public int StatusID { get; set; }
+        public Nullable<int> Ref { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Factor_Details> Factor_Details { get; set; }
-        public virtual FactorStautus FactorStautus { get; set; }
         public virtual User_Address User_Address { get; set; }
         public virtual Users Users { get; set; }
     }

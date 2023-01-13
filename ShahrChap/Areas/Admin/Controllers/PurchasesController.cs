@@ -1,4 +1,5 @@
-﻿using DataLayer.Context;
+﻿using DataLayer;
+using DataLayer.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +14,19 @@ namespace ShahrChap.Areas.Admin.Controllers
         // GET: Admin/Purchases
         public ActionResult Factors()
         {
-            var list = db.Factor_DetailsRepository.Get().OrderByDescending(f => f.Factors.Date);
+            var list = db.FactorsRepository.Get().OrderByDescending(f => f.Date);
             return View(list);
         }
-
         public ActionResult UserAddress(int id)
         {
-            int addressId = (int)db.FactorsRepository.GetById(id).AddressID;
-            var addressDetail = db.User_AddressRepository.GetById(addressId);
+            var addressDetail = db.User_AddressRepository.GetById(id);
             return View(addressDetail);
+        }
+
+        public ActionResult FactorDetail(int id)
+        {
+            List<Factor_Details> factorDetail = db.Factor_DetailsRepository.Get().Where(f=> f.FactorID == id).ToList();
+            return View(factorDetail);
         }
         public ActionResult Orders()
         {
@@ -36,6 +41,22 @@ namespace ShahrChap.Areas.Admin.Controllers
             return View(detail);
         }
 
+
+        public ActionResult Done(int orderId)
+        {
+            Order_Details order = db.Order_DetailsRepository.GetById(orderId);
+            if(order.IsDone == false)
+            {
+                order.IsDone = true;
+            }
+            else
+            {
+                order.IsDone = false;
+            }
+            db.Order_DetailsRepository.Update(order);
+            db.Save();
+            return RedirectToAction("Orders", new { id = orderId });
+        }
 
         public ActionResult DownloadFile(int id)
         {

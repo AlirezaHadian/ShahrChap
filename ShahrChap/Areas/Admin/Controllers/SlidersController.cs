@@ -73,6 +73,7 @@ namespace ShahrChap.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Slider slider = db.SliderRepository.GetById(id);
+            ViewBag.SliderId= slider.SlideID;
             if (slider == null)
             {
                 return HttpNotFound();

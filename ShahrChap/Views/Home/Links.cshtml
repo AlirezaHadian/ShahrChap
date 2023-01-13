@@ -1,0 +1,8 @@
+﻿@model IEnumerable<DataLayer.Links>
+
+@foreach (var item in Model)
+{
+    <a href="@item.Link" class="text-white text-decoration-none">@item.Title</a>
+}
+
+

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DataLayer.Footer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "مدیریت فوتر";
 }
 
-<h2>Index</h2>
+<h2>مدیریت فوتر</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-primary" href="@Url.Action("Create")">افزودن فوتر جدید</a>
 </p>
 <table class="table">
     <tr>
@@ -29,9 +29,12 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FooterID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FooterID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FooterID })
+            <a class="btn btn-info btn-sm" href="@Url.Action("Edit", new { id = item.FooterID })">
+                <i class="fa fa-fw fa-edit"></i>
+            </a>
+            <a class="btn btn-danger btn-sm" href=@Url.Action("Delete", new {id = @item.FooterID})>
+                <i class="fa fa-fw fa-trash"></i>
+            </a>
         </td>
     </tr>
 }

@@ -31,7 +31,6 @@ namespace DataLayer
         public virtual DbSet<ContactUsInfo> ContactUsInfo { get; set; }
         public virtual DbSet<Factor_Details> Factor_Details { get; set; }
         public virtual DbSet<Factors> Factors { get; set; }
-        public virtual DbSet<FactorStautus> FactorStautus { get; set; }
         public virtual DbSet<Features> Features { get; set; }
         public virtual DbSet<Order_Details> Order_Details { get; set; }
         public virtual DbSet<Order_Files> Order_Files { get; set; }

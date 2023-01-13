@@ -11,7 +11,6 @@
     @Html.AntiForgeryToken()
     <div class="col-md-8">
         <div class="form-horizontal">
-            <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
@@ -31,7 +30,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.StartDate)
+                    <input data-jdp type="text" name="StartDate">
                     @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -39,7 +38,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.EndDate)
+                    <input data-jdp type="text" name="EndDate">
                     @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -69,7 +68,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <input type="file" name="imgUp" id="imgUp"/>
+                        <input type="file" name="imgUp" id="imgUp" />
                         @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -78,10 +77,9 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("بازگشت", "Index")
-</div>
-
+<a class="btn btn-danger" href="@Url.Action("Index")">
+    بازگشت
+</a>
 
 @section Scripts{
 
@@ -103,10 +101,15 @@
             readURL(this);
         });
 
+        //$(document).ready(function () {
+        //    // create DatePicker from input HTML element
+        //    $("#EndDate").kendoDatePicker();
+        //    $("#StartDate").kendoDatePicker();
+        //});
         $(document).ready(function () {
-            // create DatePicker from input HTML element
-            $("#EndDate").kendoDatePicker();
-            $("#StartDate").kendoDatePicker();
+            jalaliDatepicker.startWatch();
+            //$("#EndDate").pDatepicker();
+            //$("#StartDate").pDatepicker();
         });
     </script>
 }

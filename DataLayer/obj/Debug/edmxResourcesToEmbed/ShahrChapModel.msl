@@ -55,22 +55,13 @@
     <EntitySetMapping Name="Factors">
       <EntityTypeMapping TypeName="ShahrChap_DBModel.Factors">
         <MappingFragment StoreEntitySet="Factors">
-          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="Ref" ColumnName="Ref" />
           <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
           <ScalarProperty Name="IsFinally" ColumnName="IsFinally" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="AddressID" ColumnName="AddressID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="FactorID" ColumnName="FactorID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="FactorStautus">
-      <EntityTypeMapping TypeName="ShahrChap_DBModel.FactorStautus">
-        <MappingFragment StoreEntitySet="FactorStautus">
-          <ScalarProperty Name="Color" ColumnName="Color" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="FS_ID" ColumnName="FS_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -262,8 +253,8 @@
     <EntitySetMapping Name="Links">
       <EntityTypeMapping TypeName="ShahrChap_DBModel.Links">
         <MappingFragment StoreEntitySet="Links">
+          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Link" ColumnName="Link" />
-          <ScalarProperty Name="TItle" ColumnName="TItle" />
           <ScalarProperty Name="LinkID" ColumnName="LinkID" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -17,7 +17,7 @@ namespace DataLayer
     public partial class Links
     {
         public int LinkID { get; set; }
-        public string TItle { get; set; }
         public string Link { get; set; }
+        public string Title { get; set; }
     }
 }

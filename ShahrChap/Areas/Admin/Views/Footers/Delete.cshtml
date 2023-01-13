@@ -1,12 +1,12 @@
 ﻿@model DataLayer.Footer
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "حذف فوتر";
 }
 
-<h2>Delete</h2>
+<h2>حذف فوتر</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>آیا از حذف این @Model.Title مطمئن هستید؟</h3>
 <div>
     <h4>Footer</h4>
     <hr />
@@ -32,9 +32,12 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+<div class="form-actions no-color">
+    <input type="submit" value="حذف" class="btn btn-warning" /> |
+    <a class="btn btn-danger" href="@Url.Action("Index")">
+        بازگشت
+    </a>
+
+</div>
     }
 </div>

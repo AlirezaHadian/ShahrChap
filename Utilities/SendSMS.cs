@@ -56,7 +56,7 @@ namespace Utilities
             string UserName = "09397673794";
             string Password = "1274255325";
             string Mobile = phone;
-            int PatternCodeID = 1140;
+            int PatternCodeID = 1460;
             string[] PatternValues = new string[] { name, code };
 
             client = new AmootSMS.AmootSMSWebService2SoapClient("AmootSMSWebService2Soap12");

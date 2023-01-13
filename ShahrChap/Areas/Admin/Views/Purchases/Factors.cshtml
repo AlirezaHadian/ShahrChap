@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataLayer.Factor_Details>
+﻿@model IEnumerable<DataLayer.Factors>
 
 @{
     ViewBag.Title = "فاکتور ها";
@@ -12,13 +12,10 @@
             کاربر
         </th>
         <th>
-            محصول
+            محصولات
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Count)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.TotalPrice)
         </th>
         <th>
             وضعیت
@@ -26,27 +23,34 @@
         <th>
             تاریخ خرید
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ref)
+        </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        bool isFinally = item.Factors.IsFinally;
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Factors.Users)
+                @Html.DisplayFor(modelItem => item.Users.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Products.Title)
+                <ul>
+
+                    @foreach (var products in item.Factor_Details)
+                    {
+                        <li>
+                            @Html.DisplayFor(modelItem => products.Products.Title)
+                        </li>
+                    }
+                </ul>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Count)
+                @Html.DisplayFor(modelItem => item.TotalPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @if (item.Factors.IsFinally == true)
+                @if (item.IsFinally == true)
                 {
                     <span class="label label-success">پرداخت شده</span>
                 }
@@ -56,17 +60,21 @@
                 }
             </td>
             <td>
-                @item.Factors.Date.ToString("dddd, dd MMMM yyyy")
+                @item.Date.ToString("dddd, dd MMMM yyyy")
             </td>
             <td>
-                @if (item.Factors.AddressID != null)
+                @item.Ref
+            </td>
+            <td>
+                @if (item.AddressID != null && item.IsFinally == true)
                 {
-                    <a class="btn btn-info btn-sm" href="@Url.Action("FactorDetail" , new { id = item.DetailID })">
+                    <a class="btn btn-info btn-sm" href="@Url.Action("UserAddress" , new { id = item.AddressID })">
                         آدرس کاربر
                     </a>
+
                 }
-                <a class="btn btn-primary btn-sm" href="@Url.Action("" , new { id = item.DetailID })">
-                    وضعیت سفارش
+                <a class="btn btn-warning btn-sm" href="@Url.Action("FactorDetail" , new { id = item.FactorID })">
+                    ریز فاکتور
                 </a>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.DetailID }) |
         @Html.ActionLink("Details", "Details", new { id = item.DetailID }) |
@@ -76,3 +84,4 @@
     }
 
 </table>
+

@@ -3,7 +3,14 @@
 @{
     ViewBag.Title = "جزئیات سفارش";
 }
-
+@if (Model.IsDone == true)
+{
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <div>
+            طراحی این سفارش انجام شده است
+        </div>
+    </div>
+}
 <h2>جزئیات سفارش</h2>
 
 <div class="col-md-8 col-lg-8">
@@ -90,6 +97,19 @@
         </table>
     }
 </div>
+@if (Model.IsDone == false)
+{
+    <a class="btn btn-success" href="@Url.Action("Done", new { orderId = Model.OT_ID })">
+        طراحی شد
+    </a>
+}
+else
+{
+    <a class="btn btn-danger" href="@Url.Action("Done", new { orderId = Model.OT_ID })">
+        طراحی نشده
+    </a>
+}
+ |
 <a class="btn btn-danger" href="@Url.Action("Orders")">
     بازگشت
 </a>

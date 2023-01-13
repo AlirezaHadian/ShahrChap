@@ -10,6 +10,13 @@
             <li class="breadcrumb-item"><a href="/">خانه</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a href="/UserPanel">پنل کاربری</a></li>
         </ol>
+        @if (ViewBag.IsDelete == false)
+            {
+                <div class="alert alert-warning">
+                    کاربر گرامی تا ۴۵ روز پس از ثبت آخرین سفارش با این آدرس امکان حذف را ندارید!
+                </div>
+            }
+
         <div class="Account-panel">
             <div class="row">
 

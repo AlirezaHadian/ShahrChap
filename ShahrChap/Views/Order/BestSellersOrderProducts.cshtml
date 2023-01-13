@@ -1,0 +1,15 @@
+﻿@model IEnumerable<DataLayer.Factor_Details>
+
+<div class="bestsellers">
+    <div class="title">
+        <h4>پرفروش ترین کارت ویزیت ها و تراکت ها</h4>
+    </div>
+    <div class="underline-bestsellers"></div>
+    <div class="owl-carousel owl-theme">
+        @foreach (var item in Model)
+        {
+            @Html.Partial("_OrderProduct", item.Products)
+        }
+
+    </div>
+</div>

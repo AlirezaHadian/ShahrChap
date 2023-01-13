@@ -22,7 +22,7 @@ namespace DataLayer
         [Display(Name ="تصویر")]
         public string ImageName { get; set; }
         [Display(Name = "تاریخ شروع")]
-        [DisplayFormat(DataFormatString ="{0: yyyy/MM/dd}", ApplyFormatInEditMode =true)]
+        [DisplayFormat(DataFormatString ="{0: yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public System.DateTime StartDate { get; set; }
         [Display(Name ="تاریخ پایان")]
         [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}", ApplyFormatInEditMode = true)]

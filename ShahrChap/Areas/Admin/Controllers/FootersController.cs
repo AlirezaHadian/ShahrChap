@@ -7,32 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DataLayer;
+using DataLayer.Context;
 
 namespace ShahrChap.Areas.Admin.Controllers
 {
     public class FootersController : Controller
     {
-        private ShahrChap_DBEntities db = new ShahrChap_DBEntities();
+        private UnitOfWork db = new UnitOfWork();
 
         // GET: Admin/Footers
         public ActionResult Index()
         {
-            return View(db.Footer.ToList());
-        }
-
-        // GET: Admin/Footers/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Footer footer = db.Footer.Find(id);
-            if (footer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(footer);
+            return View(db.FooterRepository.Get());
         }
 
         // GET: Admin/Footers/Create
@@ -50,8 +36,8 @@ namespace ShahrChap.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Footer.Add(footer);
-                db.SaveChanges();
+                db.FooterRepository.Insert(footer);
+                db.Save();
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +51,7 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Footer footer = db.Footer.Find(id);
+            Footer footer = db.FooterRepository.GetById(id);
             if (footer == null)
             {
                 return HttpNotFound();
@@ -82,8 +68,8 @@ namespace ShahrChap.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(footer).State = EntityState.Modified;
-                db.SaveChanges();
+                db.FooterRepository.Update(footer);
+                db.Save();
                 return RedirectToAction("Index");
             }
             return View(footer);
@@ -96,7 +82,7 @@ namespace ShahrChap.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Footer footer = db.Footer.Find(id);
+            Footer footer = db.FooterRepository.GetById(id);
             if (footer == null)
             {
                 return HttpNotFound();
@@ -109,9 +95,9 @@ namespace ShahrChap.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Footer footer = db.Footer.Find(id);
-            db.Footer.Remove(footer);
-            db.SaveChanges();
+            Footer footer = db.FooterRepository.GetById(id);
+            db.FooterRepository.Delete(footer);
+            db.Save();
             return RedirectToAction("Index");
         }
 

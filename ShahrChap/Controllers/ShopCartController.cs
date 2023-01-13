@@ -103,12 +103,13 @@ namespace ShahrChap.Controllers
                 int index = shopList.FindIndex(p => p.ProductID == id);
                 if (count == 0)
                 {
-                    shopList.RemoveAt(index);
+                    //shopList.RemoveAt(index);
                     db.ShopCartRepository.Delete(shopList[index]);
                 }
                 else
                 {
                     shopList[index].Count = count;
+                    shopList[index].Sum = shopList[index].Price * shopList[index].Count;
                     db.ShopCartRepository.Update(shopList[index]);
                 }
                 db.Save();
@@ -126,7 +127,7 @@ namespace ShahrChap.Controllers
                     sessionList[index].Count = count;
                 }
                 Session["ShopCart"] = sessionList;
-            }            
+            }
             return PartialView("Cart", getListOrder());
         }
 
@@ -138,21 +139,37 @@ namespace ShahrChap.Controllers
             var listDetails = getListOrder();
             if (listDetails.Count > 0)
             {
-                Factors factor = new Factors()
+                if (db.UserRepository.GetById(userId).Factors.Any(f => f.IsFinally == false))
                 {
-                    UserID = userId,
-                    Date = DateTime.Now,
-                    IsFinally = false
-                };
-                factor.TotalPrice = listDetails.Sum(t => t.Sum);
-                db.FactorsRepository.Insert(factor);
-
+                    var factor = db.FactorsRepository.Get().Single(f => f.UserID == userId && f.IsFinally == false);
+                    factor.Date = DateTime.Now;
+                    factor.TotalPrice = listDetails.Sum(t => t.Sum);
+                    db.FactorsRepository.Update(factor);
+                }
+                else
+                {
+                    Factors factor = new Factors()
+                    {
+                        UserID = userId,
+                        Date = DateTime.Now,
+                        IsFinally = false,
+                        TotalPrice = listDetails.Sum(f => f.Sum)
+                    };
+                    db.FactorsRepository.Insert(factor);
+                }
+                db.Save();
+                int factorId = db.FactorsRepository.Get().Single(f=> f.UserID == userId && f.IsFinally == false).FactorID;
+                var factorDetail = db.Factor_DetailsRepository.Get(f=> f.FactorID == factorId);
+                foreach (var item in factorDetail)
+                {
+                    db.Factor_DetailsRepository.Delete(item.DetailID);
+                }
                 foreach (var item in listDetails)
                 {
                     Factor_Details factor_Details = new Factor_Details()
                     {
                         Count = item.Count,
-                        FactorID = factor.FactorID,
+                        FactorID = factorId,
                         Price = item.Price,
                         ProductID = item.ProductID,
                         Sum = item.Count * item.Price
@@ -160,7 +177,7 @@ namespace ShahrChap.Controllers
                     db.Factor_DetailsRepository.Insert(factor_Details);
                 }
                 db.Save();
-                return RedirectToAction("SelectAddress", new { factorId = factor.FactorID });
+                return RedirectToAction("SelectAddress", new { factorId = factorId });
             }
             else
             {
@@ -168,11 +185,23 @@ namespace ShahrChap.Controllers
             }
         }
 
-        public ActionResult SelectAddress(int factorId)
+        public ActionResult SelectAddress(int factorId, bool validate = true)
         {
+            if (validate == false)
+            {
+                ViewBag.ValidateAddress = true;
+            }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             ViewBag.FactorId = db.FactorsRepository.GetById(factorId).FactorID;
             int userId = GetUserId();
             List<User_Address> addressList = db.User_AddressRepository.Get().Where(u => u.UserID == userId).ToList();
+            if (addressList.Count() == 0)
+            {
+                return RedirectToAction("Index", "UserPanel");
+            }
             ViewBag.Address = addressList;
             return View(addressList);
         }
@@ -180,47 +209,35 @@ namespace ShahrChap.Controllers
         public ActionResult SelectAddress(int factorId, int address = 0)
         {
             int userId = GetUserId();
-            int addressCount = db.UserRepository.GetById(userId).User_Address.Count();
-            if (!User.Identity.IsAuthenticated)
+            if (address != 0)
             {
-                return RedirectToAction("Login", "Account");
-            }
-            else if (addressCount == 0)
-            {
-                return RedirectToAction("Index", "UserPanel");
-            }
-            else
-            {
+                var factor = db.FactorsRepository.GetById(factorId);
+                factor.AddressID = address;
+                db.Save();
+                var totalPrice = db.FactorsRepository.Get().Single(f => f.FactorID == factor.FactorID).TotalPrice;
+                System.Net.ServicePointManager.Expect100Continue = false;
+                Zarinpal.PaymentGatewayImplementationServicePortTypeClient zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
+                string Authority;
 
-                if (address != 0)
+                int Status = zp.PaymentRequest("YOUR-ZARINPAL-MERCHANT-CODE", totalPrice, "تست درگاه زرین پال در شهر چاپ", "ali.h.reza8@gmail.com", "09397673794", "https://localhost:44345/ShopCart/Verify/" + factor.FactorID, out Authority);
+
+                if (Status == 100)
                 {
-                    var factor = db.FactorsRepository.GetById(factorId);
-                    factor.AddressID = address;
-                    db.Save();
-                    var totalPrice = db.FactorsRepository.Get().Single(f => f.FactorID == factor.FactorID).TotalPrice;
-                    System.Net.ServicePointManager.Expect100Continue = false;
-                    Zarinpal.PaymentGatewayImplementationServicePortTypeClient zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
-                    string Authority;
-
-                    int Status = zp.PaymentRequest("YOUR-ZARINPAL-MERCHANT-CODE", totalPrice, "تست درگاه زرین پال در شهر چاپ", "ali.h.reza8@gmail.com", "09397673794", "https://localhost:44345/ShopCart/Verify/" + factor.FactorID, out Authority);
-
-                    if (Status == 100)
-                    {
-                        //Response.Redirect("https://www.zarinpal.com/pg/StartPay/" + Authority);
-                        Response.Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + Authority);
-                    }
-                    else
-                    {
-                        Response.Write("error: " + Status);
-                    }
+                    //Response.Redirect("https://www.zarinpal.com/pg/StartPay/" + Authority);
+                    Response.Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + Authority);
                 }
                 else
                 {
-                    ViewBag.ValidateAddress = true;
+                    Response.Write("error: " + Status);
+
                 }
             }
+            else
+            {
+                ViewBag.ValidateAddress = true;
+            }
             List<User_Address> addressList = db.User_AddressRepository.Get().Where(u => u.UserID == userId).ToList();
-            return View(addressList);
+            return RedirectToAction("SelectAddress", new { factorId = factorId, Validate = false });
         }
         public ActionResult Verify(int id)
         {
@@ -240,14 +257,25 @@ namespace ShahrChap.Controllers
 
                     if (Status == 100)
                     {
+                        int userId = GetUserId();
                         factor.IsFinally = true;
+                        factor.Ref = (int)RefID;
                         db.Save();
                         ViewBag.IsSuccess = true;
                         ViewBag.RefId = RefID;
                         Session.Remove("ShopCart");
+                        List<ShopCart> shopCart = db.ShopCartRepository.Get().Where(s => s.UserID == userId).ToList();
+                        foreach (var item in shopCart)
+                        {
+                            db.ShopCartRepository.Delete(item.SC_ID);
+                        }
+                        db.Save();
                     }
                     else
                     {
+                        factor.AddressID = null;
+                        db.FactorsRepository.Update(factor);
+                        db.Save();
                         ViewBag.IsSuccess = false;
                         ViewBag.Status = Status;
                     }
@@ -255,6 +283,9 @@ namespace ShahrChap.Controllers
                 }
                 else
                 {
+                    factor.AddressID = null;
+                    db.FactorsRepository.Update(factor);
+                    db.Save();
                     ViewBag.IsSuccess = false;
                     //Response.Write("Error! Authority: " + Request.QueryString["Authority"].ToString() + " Status: " + Request.QueryString["Status"].ToString());
                 }

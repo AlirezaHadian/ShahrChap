@@ -29,6 +29,8 @@ namespace DataLayer
         [Display(Name = "قیمت کل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int TotalPrice { get; set; }
+        [Display(Name = "شماره تراکنش خرید")]
+        public int Ref { get; set; }
 
     }
 }

@@ -7,7 +7,7 @@
 <h2>درباره ما</h2>
 
 <p>
-    <a class="btn btn-success" href="@Url.Action("Create")">افزودن</a>
+    <a class="btn btn-primary" href="@Url.Action("Create")">افزودن</a>
 </p>
 <table class="table table-bordered">
     <tr>
@@ -25,7 +25,7 @@
             </td>
             <td>
                 <a class="btn btn-info btn-sm" href="@Url.Action("Edit", new { id = item.AboutUsID })">
-                    <i class="fa fa-fw fa-info"></i>
+                    <i class="fa fa-fw fa-edit"></i>
                 </a>
                 <a class="btn btn-danger btn-sm" href=@Url.Action("Delete", new {id = @item.AboutUsID})>
                     <i class="fa fa-fw fa-trash"></i>

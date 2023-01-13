@@ -9591,6 +9591,7 @@
     <Content Include="Areas\Admin\Content\css\alt\AdminLTE-without-plugins.css" />
     <Content Include="Areas\Admin\Content\css\alt\AdminLTE-without-plugins.min.css" />
     <Content Include="Areas\Admin\Content\css\bootstrap-theme.css" />
+    <Content Include="Areas\Admin\Content\css\jalalidatepicker.min.css" />
     <Content Include="Areas\Admin\Content\css\jquery-ui.min.css" />
     <Content Include="Areas\Admin\Content\css\persian-datepicker-0.4.5.min.css" />
     <Content Include="Areas\Admin\Content\css\rtl.css" />
@@ -11707,6 +11708,7 @@
     <Content Include="Areas\Admin\Content\js\adminlte.js" />
     <Content Include="Areas\Admin\Content\js\adminlte.min.js" />
     <Content Include="Areas\Admin\Content\js\demo.js" />
+    <Content Include="Areas\Admin\Content\js\jalalidatepicker.min.js" />
     <Content Include="Areas\Admin\Content\js\pages\dashboard.js" />
     <Content Include="Areas\Admin\Content\js\pages\dashboard2.js" />
     <Content Include="Areas\Admin\Content\js\persian-date-0.1.8.min.js" />
@@ -13010,9 +13012,13 @@
     <Content Include="Areas\Admin\Views\Home\ProgressInfo.cshtml" />
     <Content Include="Areas\Admin\Views\Footers\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Footers\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Footers\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Footers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Footers\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Links\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Links\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Links\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Links\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Purchases\FactorDetail.cshtml" />
     <None Include="Connected Services\AmootSMS\webservice2.disco" />
     <None Include="Connected Services\AmootSMS\configuration91.svcinfo" />
     <None Include="Connected Services\AmootSMS\configuration.svcinfo" />
@@ -13133,6 +13139,7 @@
     <Compile Include="Areas\Admin\Controllers\FeaturesController.cs" />
     <Compile Include="Areas\Admin\Controllers\FootersController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LinksController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\Order_GroupsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
@@ -13152,6 +13159,7 @@
     </Compile>
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageEmailsController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -13249,6 +13257,12 @@
     <Content Include="Views\UserPanel\PurchaseProducts.cshtml" />
     <Content Include="Views\ShopCart\Verify.cshtml" />
     <Content Include="Views\ShopCart\SelectAddress.cshtml" />
+    <Content Include="Views\Home\Footer.cshtml" />
+    <Content Include="Views\Home\Links.cshtml" />
+    <Content Include="Views\UserPanel\LastPurchase.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Order\BestSellersOrderProducts.cshtml" />
+    <Content Include="Views\SchoolTools\BestSellerProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

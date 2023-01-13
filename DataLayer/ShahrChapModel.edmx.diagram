@@ -4,14 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ea726e380baa47279e58969744f9c365" Name="Diagram1" ZoomLevel="36">
+      <Diagram DiagramId="ea726e380baa47279e58969744f9c365" Name="Diagram1" ZoomLevel="70">
         <EntityTypeShape EntityType="ShahrChap_DBModel.AboutUs" Width="1.5" PointX="3.75" PointY="0.75" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.city" Width="1.5" PointX="9.75" PointY="17.5" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.ContactUs" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.ContactUsInfo" Width="1.5" PointX="5.75" PointY="3.75" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.Factor_Details" Width="1.5" PointX="3" PointY="8.625" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.Factors" Width="1.5" PointX="0.75" PointY="4.375" />
-        <EntityTypeShape EntityType="ShahrChap_DBModel.FactorStautus" Width="1.5" PointX="1.5" PointY="1.25" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.Features" Width="1.5" PointX="6" PointY="19" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.Order_Details" Width="1.5" PointX="3" PointY="12" />
         <EntityTypeShape EntityType="ShahrChap_DBModel.Order_Files" Width="1.5" PointX="5.25" PointY="16" />
@@ -32,7 +31,6 @@
         <AssociationConnector Association="ShahrChap_DBModel.FK_User_Address_city" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Factor_Details_Products" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_FactorDetails_Factors" />
-        <AssociationConnector Association="ShahrChap_DBModel.FK_Factors_FactorStautus" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Factors_UserAddress" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Factors_Users" />
         <AssociationConnector Association="ShahrChap_DBModel.FK_Product_Features_Features" />

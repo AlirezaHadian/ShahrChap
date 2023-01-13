@@ -20,6 +20,7 @@ namespace DataLayer
         public string Title { get; set; }
         [Display(Name = "متن")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
     }
 }

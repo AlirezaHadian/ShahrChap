@@ -92,9 +92,6 @@
     <Compile Include="Factors.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="FactorStautus.cs">
-      <DependentUpon>ShahrChapModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Footer.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
@@ -103,7 +100,6 @@
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MetaDataClasses\LinksMetaData.cs" />
-    <Compile Include="MetaDataClasses\FactorStautusMetaData.cs" />
     <Compile Include="Factor_Details.cs">
       <DependentUpon>ShahrChapModel.tt</DependentUpon>
     </Compile>

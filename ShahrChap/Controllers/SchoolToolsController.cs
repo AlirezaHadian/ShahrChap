@@ -3,6 +3,7 @@ using DataLayer.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Configuration;
 using System.Web;
 using System.Web.Mvc;
 using ViewModels;
@@ -18,6 +19,13 @@ namespace ShahrChap.Controllers
             return PartialView(groups);
         }
 
+        public ActionResult BestSellerProducts()
+        {
+            List<Factor_Details> list = new List<Factor_Details>();
+            var products = db.Factor_DetailsRepository.Get(f => f.Factors.IsFinally == true).OrderBy(f => f.Count).ToList();
+            list.AddRange(products.Distinct());
+            return PartialView(list.Where(p => p.Products.IsOrder == false));
+        }
         public ActionResult LastProduct()
         {
             return PartialView(db.ProductsRepository.Get().Where(p=> p.IsOrder==false).OrderByDescending(p => p.CreateDate).Take(12));

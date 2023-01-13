@@ -13,8 +13,6 @@
                 @Html.DisplayNameFor(model => model.province.provinceName)
             </th>
             <th>
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.city.cityName)
             </th>
             <th>
@@ -45,9 +43,8 @@
                     @Html.DisplayFor(modelItem => Model.PosteCode)
                 </td>
             </tr>
-        }
-
     </table>
+    </div>
 
     <a class="btn btn-danger" href="@Url.Action("Orders")">
         بازگشت

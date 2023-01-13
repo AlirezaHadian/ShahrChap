@@ -19,6 +19,14 @@ namespace ShahrChap.Controllers
             return PartialView(db.ProductsRepository.Get().Where(p => p.IsOrder == true).OrderByDescending(p => p.CreateDate).Take(12));
         }
 
+        public ActionResult BestSellersOrderProducts()
+        {
+            List<Factor_Details> list = new List<Factor_Details>();
+            var products = db.Factor_DetailsRepository.Get(f => f.Factors.IsFinally == true).OrderBy(f => f.Count).ToList();
+            list.AddRange(products.Distinct());
+            return PartialView(list.Where(p => p.Products.IsOrder == true).Distinct());
+        }
+
         [Route("ShowOrderProduct/{id}")]
         public ActionResult ShowOrderProduct(int id)
         {

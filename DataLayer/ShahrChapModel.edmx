@@ -61,15 +61,7 @@
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="IsFinally" Type="bit" Nullable="false" />
           <Property Name="TotalPrice" Type="int" Nullable="false" />
-          <Property Name="StatusID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FactorStautus">
-          <Key>
-            <PropertyRef Name="FS_ID" />
-          </Key>
-          <Property Name="FS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="Color" Type="nvarchar" MaxLength="350" />
+          <Property Name="Ref" Type="int" />
         </EntityType>
         <EntityType Name="Features">
           <Key>
@@ -91,7 +83,7 @@
             <PropertyRef Name="LinkID" />
           </Key>
           <Property Name="LinkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TItle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Order_Details">
@@ -288,18 +280,6 @@
             </Principal>
             <Dependent Role="Factor_Details">
               <PropertyRef Name="FactorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Factors_FactorStautus">
-          <End Role="FactorStautus" Type="Self.FactorStautus" Multiplicity="1" />
-          <End Role="Factors" Type="Self.Factors" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FactorStautus">
-              <PropertyRef Name="FS_ID" />
-            </Principal>
-            <Dependent Role="Factors">
-              <PropertyRef Name="StatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -526,7 +506,6 @@
           <EntitySet Name="ContactUsInfo" EntityType="Self.ContactUsInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factor_Details" EntityType="Self.Factor_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factors" EntityType="Self.Factors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FactorStautus" EntityType="Self.FactorStautus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Features" EntityType="Self.Features" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Footer" EntityType="Self.Footer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Links" EntityType="Self.Links" Schema="dbo" store:Type="Tables" />
@@ -557,10 +536,6 @@
           <AssociationSet Name="FK_FactorDetails_Factors" Association="Self.FK_FactorDetails_Factors">
             <End Role="Factors" EntitySet="Factors" />
             <End Role="Factor_Details" EntitySet="Factor_Details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Factors_FactorStautus" Association="Self.FK_Factors_FactorStautus">
-            <End Role="FactorStautus" EntitySet="FactorStautus" />
-            <End Role="Factors" EntitySet="Factors" />
           </AssociationSet>
           <AssociationSet Name="FK_Factors_UserAddress" Association="Self.FK_Factors_UserAddress">
             <End Role="User_Address" EntitySet="User_Address" />
@@ -646,7 +621,6 @@
           <EntitySet Name="ContactUsInfo" EntityType="ShahrChap_DBModel.ContactUsInfo" />
           <EntitySet Name="Factor_Details" EntityType="ShahrChap_DBModel.Factor_Details" />
           <EntitySet Name="Factors" EntityType="ShahrChap_DBModel.Factors" />
-          <EntitySet Name="FactorStautus" EntityType="ShahrChap_DBModel.FactorStautus" />
           <EntitySet Name="Features" EntityType="ShahrChap_DBModel.Features" />
           <EntitySet Name="Order_Details" EntityType="ShahrChap_DBModel.Order_Details" />
           <EntitySet Name="Order_Files" EntityType="ShahrChap_DBModel.Order_Files" />
@@ -678,10 +652,6 @@
           <AssociationSet Name="FK_FactorDetails_Factors" Association="ShahrChap_DBModel.FK_FactorDetails_Factors">
             <End Role="Factors" EntitySet="Factors" />
             <End Role="Factor_Details" EntitySet="Factor_Details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Factors_FactorStautus" Association="ShahrChap_DBModel.FK_Factors_FactorStautus">
-            <End Role="FactorStautus" EntitySet="FactorStautus" />
-            <End Role="Factors" EntitySet="Factors" />
           </AssociationSet>
           <AssociationSet Name="FK_Factors_UserAddress" Association="ShahrChap_DBModel.FK_Factors_UserAddress">
             <End Role="User_Address" EntitySet="User_Address" />
@@ -815,20 +785,10 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsFinally" Type="Boolean" Nullable="false" />
           <Property Name="TotalPrice" Type="Int32" Nullable="false" />
-          <Property Name="StatusID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Factor_Details" Relationship="ShahrChap_DBModel.FK_FactorDetails_Factors" FromRole="Factors" ToRole="Factor_Details" />
-          <NavigationProperty Name="FactorStautus" Relationship="ShahrChap_DBModel.FK_Factors_FactorStautus" FromRole="Factors" ToRole="FactorStautus" />
           <NavigationProperty Name="User_Address" Relationship="ShahrChap_DBModel.FK_Factors_UserAddress" FromRole="Factors" ToRole="User_Address" />
           <NavigationProperty Name="Users" Relationship="ShahrChap_DBModel.FK_Factors_Users" FromRole="Factors" ToRole="Users" />
-        </EntityType>
-        <EntityType Name="FactorStautus">
-          <Key>
-            <PropertyRef Name="FS_ID" />
-          </Key>
-          <Property Name="FS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Color" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Factors" Relationship="ShahrChap_DBModel.FK_Factors_FactorStautus" FromRole="FactorStautus" ToRole="Factors" />
+          <Property Name="Ref" Type="Int32" />
         </EntityType>
         <EntityType Name="Features">
           <Key>
@@ -1073,18 +1033,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Factors_FactorStautus">
-          <End Type="ShahrChap_DBModel.FactorStautus" Role="FactorStautus" Multiplicity="1" />
-          <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FactorStautus">
-              <PropertyRef Name="FS_ID" />
-            </Principal>
-            <Dependent Role="Factors">
-              <PropertyRef Name="StatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Factors_UserAddress">
           <End Type="ShahrChap_DBModel.User_Address" Role="User_Address" Multiplicity="0..1" />
           <End Type="ShahrChap_DBModel.Factors" Role="Factors" Multiplicity="*" />
@@ -1302,8 +1250,8 @@
             <PropertyRef Name="LinkID" />
           </Key>
           <Property Name="LinkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TItle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SiteVisit">
           <Key>
@@ -1373,22 +1321,13 @@
           <EntitySetMapping Name="Factors">
             <EntityTypeMapping TypeName="ShahrChap_DBModel.Factors">
               <MappingFragment StoreEntitySet="Factors">
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Ref" ColumnName="Ref" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="IsFinally" ColumnName="IsFinally" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="AddressID" ColumnName="AddressID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FactorID" ColumnName="FactorID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FactorStautus">
-            <EntityTypeMapping TypeName="ShahrChap_DBModel.FactorStautus">
-              <MappingFragment StoreEntitySet="FactorStautus">
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="FS_ID" ColumnName="FS_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1580,8 +1519,8 @@
           <EntitySetMapping Name="Links">
             <EntityTypeMapping TypeName="ShahrChap_DBModel.Links">
               <MappingFragment StoreEntitySet="Links">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="TItle" ColumnName="TItle" />
                 <ScalarProperty Name="LinkID" ColumnName="LinkID" />
               </MappingFragment>
             </EntityTypeMapping>
